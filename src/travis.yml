@@ -1,0 +1,4 @@
+notifications:
+  slack:
+    rooms:
+      - csci3308team1:TRAVIS_INTEGRATION_KEY#ci-server
