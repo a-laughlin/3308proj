@@ -49,14 +49,14 @@ Use publicly available data (such as on Kaggle or university research websites)
 > * __Risk__: One member not completing a task required for the group to move forward
 > * __Mitigation Strategy__:
 Have each story assigned to two members (one primary, one secondary) to encourage accountability
-Have early deadlines for completion, allowing an assessment on progression and follow-up action to push for a timely completion      
+Have early deadlines for completion, allowing an assessment on progression and follow-up action to push for a timely completion
 
 
 > * __Risk__: Lack of access to test devices
 Building for iOS or Android with only some team members having access
 > * __Mitigation Strategy__:
 Discuss what device we all have access to, possibly loading it onto our roommate’s phone to be able to complete stories on our own
-Look for software that acts like a mobile OS as an environment       
+Look for software that acts like a mobile OS as an environment
 
 
 > * __Risk__: Spending too much time at any point in the development
@@ -71,3 +71,22 @@ Apple Watch, Garmin, FitBit, Jawbone, etc, with different data types
 > * __Mitigation Strategy__:
 This could be luxury if we aren’t able to find time for it.
 Try to find an intermediary, such as Apple’s Health app, who already transforms and stores the data
+
+
+## Building/Testing
+### Building and Testing All Project Parts (should be done before every push)
+```
+$ cd <your dir>/3308proj
+$ python
+>>> from build import build_all_sequence,test_all_sequence
+>>> build_all_sequence() && test_all_sequence()
+```
+### Building/Testing Mobile
+TBD
+### Building/Testing ML
+TBD
+### Building/Testing API
+TBD
+
+
+Fantastic. Saw you added them to the readme too.  I just added an initial build script and did some service integrations (slack, github, travis CI), and did some research on how best to set up the dev flow.  Also added an initial issue to break down for the PM flow, and labels, and ... found a gaping hole in all the milestones.  All the dev tooling, directory structures, etc., necessary to run the project as a whole, and its parts.  I'm getting the basics done, but we're each likely going to need to take parts of it.  Building/testing the mobile parts, for example, will differ greatly from the ML parts, and we all need to know how to do each of them.  Additional documentation needs there, or perhaps training over conference if that's more efficient.
