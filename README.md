@@ -75,7 +75,7 @@ Try to find an intermediary, such as Apple’s Health app, who already transform
 
 ## Project Management Process decided: (e.g., scrum, kanban: with specifics!)
 Yes, we're doing scrum with our weekly meetings.
-We're meeting weekly. 
+We're meeting weekly.
 We're beginning to plan out time based sprints.
 
 1. Issue ownership: determining who is going to take ownership of issues based on skill set, time commitment, availability etc. 
