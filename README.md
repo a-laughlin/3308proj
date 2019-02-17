@@ -1,5 +1,3 @@
-# 3308proj
-
 # Project Title: Heart-a-tracker
 
 # Team member’s names
