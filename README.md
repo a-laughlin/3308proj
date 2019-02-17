@@ -3,13 +3,12 @@
 # Project Title: Heart-a-tracker
 
 # Team member’s names
-Chris Powell
-Adam Laughlin
-Ben Wilson
-Brian Solar
+> * Chris Powell
+> * Adam Laughlin
+> * Ben Wilson
+> * Brian Solar
 
 # Vision statement: what would you tell potential customers?
-(ideas)
 Predict future heart behavior
 
 # Motivation: why are you working on this project?
