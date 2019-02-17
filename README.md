@@ -9,7 +9,7 @@
 > * Brian Solar
 
 # Vision statement: what would you tell potential customers?
-Predict future heart behavior
+Predict future heart behavior.
 
 # Motivation: why are you working on this project?
 This project combines the interests of our group into one cohesive idea.
