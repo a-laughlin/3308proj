@@ -90,20 +90,3 @@ We're beginning to plan out time based sprints.
 6.2 Retrospective meetings (done at the beginning of Sprint planning meetings)
 6.3 Stand up meetings
 
-## Building/Testing
-### Building and Testing All Project Parts (should be done before every push)
-```
-$ cd <your dir>/3308proj
-$ python
->>> from build import build_all_sequence,test_all_sequence
->>> build_all_sequence() && test_all_sequence()
-```
-### Building/Testing Mobile
-TBD
-### Building/Testing ML
-TBD
-### Building/Testing API
-TBD
-
-
-Fantastic. Saw you added them to the readme too.  I just added an initial build script and did some service integrations (slack, github, travis CI), and did some research on how best to set up the dev flow.  Also added an initial issue to break down for the PM flow, and labels, and ... found a gaping hole in all the milestones.  All the dev tooling, directory structures, etc., necessary to run the project as a whole, and its parts.  I'm getting the basics done, but we're each likely going to need to take parts of it.  Building/testing the mobile parts, for example, will differ greatly from the ML parts, and we all need to know how to do each of them.  Additional documentation needs there, or perhaps training over conference if that's more efficient.
