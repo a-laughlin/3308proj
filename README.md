@@ -74,20 +74,21 @@ This could be luxury if we aren’t able to find time for it.
 Try to find an intermediary, such as Apple’s Health app, who already transforms and stores the data
 
 ## Project Management Process decided: (e.g., scrum, kanban: with specifics!)
-1. Issue ownership 
+Yes, we're doing scrum with our weekly meetings.
+We're meeting weekly. 
+We're beginning to plan out time based sprints.
+
+1. Issue ownership: determining who is going to take ownership of issues based on skill set, time commitment, availability etc. 
 2. Issue Selection
 3. Issue Flow
-4. Done defined (should include documentation - docs should generally not be seperate tickets)
+4. Done defined (definition TBD)
 5. Project tracker supports PM process stages
-6. Project tracker supports dev process stages (coordinate with dev process person)
-7. Project tracker comm channel intergration
-8. Project tracker issue type templates (to ensure we include all necessary things to each issue)
-9. Meeting scheduling strategy decided
-10. Schedule coordination method/tool chosen
-11. Comm channels decided
-12. PM process communication plan decided (tentatively, PM process state updates notified in slack channels/guthub for flexible subscription
-13. Process reviewed with team
-14. Initial meetings scheduled
+6. Meetings
+6.1 Sprint planning meetings
+6.1.1 Issue ownership
+6.1.2 Issue selection
+6.2 Retrospective meetings (done at the beginning of Sprint planning meetings)
+6.3 Stand up meetings
 
 ## Building/Testing
 ### Building and Testing All Project Parts (should be done before every push)
