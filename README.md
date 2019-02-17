@@ -90,3 +90,89 @@ We're beginning to plan out time based sprints.
 6.2 Retrospective meetings (done at the beginning of Sprint planning meetings)
 6.3 Stand up meetings
 
+
+
+## Project Management Tooling  
+![image](https://user-images.githubusercontent.com/1176527/52919967-1859df80-32c5-11e9-843f-712d9aef5954.png)  
+**Backlog**  
+- Contains all non-started stories that aren't in the current sprint.  
+- Reviewed during sprint planning.  Stories chosen for sprint moved to Sprint backlog.  
+**Sprint Backlog**  
+- Contains all non-started stories that aren't in the current sprint.  
+- Where we get stories to work on during a sprint  
+- All stories in this column should have at least a version (e.g. v0.0.0) or class milestone (e.g., m1), an hour estimate (e.g., 2h), user or dev value, (e.g., u1, d1) and project part (e.g., mobile, devops).  
+- Contains "pre-assigned" stories - those that a specific person wants to work on.  And non-assigned stories, those up for anyone.  We can re-assign any story to ourselves if it's non-assigned or we talk to the person it's assigned to, and they agree.  
+**In Progress**   
+- What we're currently working on.  
+- All stories must have an assignee.  
+- One story in progress per person.  
+**Review Requested**  
+- Enables requesting a review on a tentatively finished ticket, for learning purposes.  
+- Working async, it may be a while before getting a review.  Helps keeps "In Progress" to one ticket per person.  
+- In addition to moving it to this column, ask a particular person to review your code via slack.  
+**Done**  
+- Contains stories finished for the sprint.  
+- Stories are "closed" github issues.  
+- Github issues that are "closed" will automatically move to this column.  
+- All code stories meet the [Definition of Done](https://github.com/a-laughlin/3308proj/issues/44)
+- All code stories are merged into master branch.  
+
+## Story Labels  
+**Estimates**  
+2h, 4h, 8h, 16h  
+Instead of using story points, we're going with # of hours estimated to eliminate unnecessary indirection.  
+at 16h, it's likely we'll break it down into smaller stories.  
+We may add a shorter one for small admin tasks.  
+**Class Milestones**  
+m1, m2, ... ,m7  
+**Version Milestones**  
+v0.0.0, v0.0.1, v0.0.2, v0.0.... whatever we get to by the course end.  
+**Project Parts**  
+mobile, ML, apiin, apiout, devops, admin, dpipe (data pipeline)  
+**User Value Estimates**  
+u1 (nice to have), u2 (important), u3 (critical)  
+**Dev Value Estimates**  
+d1 (nice to have), d2 (important), d3 (critical)  
+**Issue States**  
+bug, duplicate, regres (Regression - was working, now broke)  
+**Misc**  
+meeting_notes (taken during meetings, like sprint retrospective/planning)  
+
+## Dev Process (i.e., Git Flow, vs Trunk-Based Development)  
+### Code Contribution Flow  
+Mostly trunk-based, with single individual branches to work in.  
+Code Reviews are optional so we don't introduce unnecessary delays from async reviews.  
+![image](https://user-images.githubusercontent.com/1176527/52918815-b6937880-32b8-11e9-8663-8c03599be61f.png)  
+### Build Process Flow  
+![image](https://user-images.githubusercontent.com/1176527/52918848-4e916200-32b9-11e9-9f37-df9837c098ac.png)  
+
+
+## Dev Tooling (for our own reference, and milestone 5)  
+
+**Project Management Stack**  
+- kanban via [GitHub Project Tab](https://github.com/a-laughlin/3308proj/projects/1), for simplicity and keeping all project info in one place  
+
+**Version Control**  
+- Git  
+- GitHub  
+
+**Mobile Stack**  
+- TBD  
+
+**ML Stack**  
+- Python  
+- PyTorch  
+
+**Communication Tools**  
+- Github Issues  
+- Github Issue Comments  
+- Slack  
+- Slack Travis CI Notifications  
+- Slack Github Notifications (minus issues, since they were spammy)  
+
+**CI Tooling**  
+- Travis CI  
+
+
+## Testing Strategy
+TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
