@@ -73,6 +73,21 @@ Apple Watch, Garmin, FitBit, Jawbone, etc, with different data types
 This could be luxury if we aren’t able to find time for it.
 Try to find an intermediary, such as Apple’s Health app, who already transforms and stores the data
 
+## Project Management Process decided: (e.g., scrum, kanban: with specifics!)
+1. Issue ownership 
+2. Issue Selection
+3. Issue Flow
+4. Done defined (should include documentation - docs should generally not be seperate tickets)
+5. Project tracker supports PM process stages
+6. Project tracker supports dev process stages (coordinate with dev process person)
+7. Project tracker comm channel intergration
+8. Project tracker issue type templates (to ensure we include all necessary things to each issue)
+9. Meeting scheduling strategy decided
+10. Schedule coordination method/tool chosen
+11. Comm channels decided
+12. PM process communication plan decided (tentatively, PM process state updates notified in slack channels/guthub for flexible subscription
+13. Process reviewed with team
+14. Initial meetings scheduled
 
 ## Building/Testing
 ### Building and Testing All Project Parts (should be done before every push)
