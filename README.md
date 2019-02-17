@@ -18,11 +18,14 @@ This project combines the interests of our group into one cohesive idea.
 #  Risks and Mitigation Strategies:
  __TODO__
 > * __Risk__: No prior experience working with these team members impacting our success.
-> * __Mitigation Strategy__:
+> * __Mitigation Strategy__: Start with some ice breakers, share experiences from previous classes, 
+find a shared goal we can all get behind
 
 
 > * __Risk__: Schedules interfering
-> * __Mitigation Strategy__:
+> * __Mitigation Strategy__: Find a backup time to meet in case we can't meet at the normal scheduled
+time. We can also meet without someone if they can meet with a group member before hand. 
+If we can project manage well enough we can have our meeting without someone
 
 
 > * __Risk__: Not learning the necessary tools/skills in time:
