@@ -94,23 +94,27 @@ We're beginning to plan out time based sprints.
 
 ## Project Management Tooling  
 ![image](https://user-images.githubusercontent.com/1176527/52919967-1859df80-32c5-11e9-843f-712d9aef5954.png)  
-**Backlog**  
+
+### Backlog  
 - Contains all non-started stories that aren't in the current sprint.  
 - Reviewed during sprint planning.  Stories chosen for sprint moved to Sprint backlog.  
-**Sprint Backlog**  
+
+### Sprint Backlog  
 - Contains all non-started stories that aren't in the current sprint.  
 - Where we get stories to work on during a sprint  
 - All stories in this column should have at least a version (e.g. v0.0.0) or class milestone (e.g., m1), an hour estimate (e.g., 2h), user or dev value, (e.g., u1, d1) and project part (e.g., mobile, devops).  
 - Contains "pre-assigned" stories - those that a specific person wants to work on.  And non-assigned stories, those up for anyone.  We can re-assign any story to ourselves if it's non-assigned or we talk to the person it's assigned to, and they agree.  
-**In Progress**   
+### In Progress  
 - What we're currently working on.  
 - All stories must have an assignee.  
 - One story in progress per person.  
-**Review Requested**  
+
+### Review Requested  
 - Enables requesting a review on a tentatively finished ticket, for learning purposes.  
 - Working async, it may be a while before getting a review.  Helps keeps "In Progress" to one ticket per person.  
 - In addition to moving it to this column, ask a particular person to review your code via slack.  
-**Done**  
+
+### Done  
 - Contains stories finished for the sprint.  
 - Stories are "closed" github issues.  
 - Github issues that are "closed" will automatically move to this column.  
