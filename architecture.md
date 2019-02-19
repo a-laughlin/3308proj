@@ -28,9 +28,9 @@ WHat mobile framework should we use?
 
 
 ML Framework?
-Pytorch - 90%
-\+ we know python
-\+ working example
-Julia - 10%
-\+ may be simpler
-Decision: Pytorch for V0.0.0  Revisit on v0.0.1
+Pytorch - 90%  
+\+ we know python  
+\+ working example  
+Julia - 10%  
+\+ may be simpler  
+Decision: Pytorch for V0.0.0  Revisit on v0.0.1  
