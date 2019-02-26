@@ -4,13 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-
-from torch.autograd import Variable
-
 def makeData(npoints = 100, f = None):
     
     data = np.zeros((npoints, 2))
@@ -74,15 +67,3 @@ if __name__ == '__main__':
     df2 = pd.read_json(args.outputfile + '.json', orient = 'values')
     
     print(checkDataFramesEqual(df, df2, EPS))
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
