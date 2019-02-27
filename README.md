@@ -140,6 +140,12 @@ bug, duplicate, regres (Regression - was working, now broke)
 **Misc**  
 meeting_notes (taken during meetings, like sprint retrospective/planning)  
 
+## Definition of Done (for code stories)
+  - Includes 
+  - Code written
+  - Explanation in appropriate readme (e.g., src/mobile/readme.md) if necessary
+  - CI tests passing (once implemented)
+
 ## Dev Process (i.e., Git Flow, vs Trunk-Based Development)  
 ### Code Contribution Flow  
 Mostly trunk-based, with single individual branches to work in.  
