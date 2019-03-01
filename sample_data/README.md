@@ -1,0 +1,4 @@
+- `/sample_data/readme.md` contains format:
+- `/sample_data/ml_model_foo.pt` for saved pytorch models
+- `/sample_data/ml_input_foo.json` for files that mobile will eventually send to ML as input
+- `/sample_data/ml_output_foo.json` for files that ML will eventually send back to mobile (the [y,y,y,y,...] format)
