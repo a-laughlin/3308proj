@@ -1,4 +1,7 @@
+
 # Project Title: Heart-a-tracker
+
+![image](https://travis-ci.com/a-laughlin/3308proj.svg?token=VENBQopHKmrYbQjPRHSc&branch=master)
 
 # Team member’s names
 > * Chris Powell
