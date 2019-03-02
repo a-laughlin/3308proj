@@ -1,0 +1,50 @@
+notifications:
+  # email:
+    # - yourname@gmail.com
+  slack:
+    rooms:
+      - csci3308team1:"FGvNcChqAkX2WW8xvD5Z5gvQ"#ci-server
+# env:
+#   - DB=postgres
+#   - SH=bash
+#   - PACKAGE_VERSION="1.0.*"
+
+matrix:
+  include:
+    - language: python
+      python: 3.7
+      # before_script:
+      script:
+        - ./build.py test all
+
+    # - language: node_js
+    #   node_js:
+    #     - 10
+    #   before_install:
+    #     - cd src/mobile
+    #     - npm i
+    #   install:
+    #     - npm install
+    #   script:
+    #     - npm test
+
+    # - language: android
+    #   jdk: oraclejdk8
+    #   android:
+    #     components:
+    #       - tools
+    #       - android-25
+    #       - build-tools-25.0.3
+    #   before_script:
+    #     - cd android/AppName
+    #   script:
+    #     - ./gradlew build connectedCheck
+    #
+    # - language: objective-c
+    #   os: osx
+    #   osx_image: xcode8.3
+    #   before_script:
+    #     - cd ios/AppName
+    #   script:
+    #     - xcodebuild -workspace AppName.xcworkspace -scheme AppName
+    #       -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3' build test
