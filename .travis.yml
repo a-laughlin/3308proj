@@ -9,15 +9,13 @@ matrix:
         - ./build.py test ml,api
     - language: node_js
       node_js: 11.10
-      cache: src/mobile/node_modules
+      cache: node_modules
       before_install:
-        - cd ./src/mobile
+        - cd src/mobile
       install:
         - npm i
-      before_script:
-        - cd ../../
       script:
-        - ./src/mobile/node_modules/.bin/jest
+        - ./node_modules/.bin/jest
 notifications:
   # email:
     # - yourname@gmail.com
