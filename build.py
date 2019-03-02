@@ -22,5 +22,4 @@ if __name__ == '__main__':
     print(f"Usage: ./build.py [{'|'.join(default_ops.keys())}] [{','.join(SRC_DIRS)},...]")
   else:
     dirnames = SRC_DIRS if (len(argv)==2 or argv[2]=='all') else argv[2].split(',');
-    print("dirnames",dirnames)
     for dir in dirnames: opdirs[argv[1]][dir](dir,*(argv[3:]));
