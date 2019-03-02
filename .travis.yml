@@ -1,5 +1,3 @@
-
-
 matrix:
   include:
     - language: python
@@ -9,7 +7,7 @@ matrix:
         - ./build.py test ml,api
     - language: node_js
       node_js: 11.10
-      cache: node_modules
+      cache: npm
       before_install:
         - cd src/mobile
       install:
@@ -17,12 +15,6 @@ matrix:
       script:
         - ./node_modules/.bin/jest
 notifications:
-  # email:
-    # - yourname@gmail.com
   slack:
     rooms:
       - csci3308team1:"FGvNcChqAkX2WW8xvD5Z5gvQ"#ci-server
-# env:
-#   - DB=postgres
-#   - SH=bash
-#   - PACKAGE_VERSION="1.0.*"
