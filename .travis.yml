@@ -1,22 +1,23 @@
-script:
-  - ./build.py test all
+
 
 matrix:
   include:
     - language: python
       dist: xenial
-      python: "3.7"
-      # before_script:
+      python: 3.7
+      script:
+        - ./build.py test ml,api
     - language: node_js
       node_js: 11.10
+      cache: src/mobile/node_modules
       before_install:
         - cd ./src/mobile
-        - npm i
-        - cd ../../
-      cache: node_modules
       install:
         - npm i
-
+      before_script:
+        - cd ../../
+      script:
+        - ./src/mobile/node_modules/.bin/jest
 notifications:
   # email:
     # - yourname@gmail.com
