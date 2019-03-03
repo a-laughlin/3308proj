@@ -21,7 +21,6 @@ def makeData(npoints = 100, f = None):
     
     return data
 
-
 def checkDataFramesEqual(df1, df2, eps):
     
     if (df1.shape != df2.shape):
@@ -39,31 +38,43 @@ def checkDataFramesEqual(df1, df2, eps):
             
     return True
 
-
 if __name__ == '__main__':
     
     EPS = 10e-6
     
-    parser = argparse.ArgumentParser(description='Generate Data and Save to csv.')
-    parser.add_argument('--outputfile', type = str, default = 'generatedData')
+    parser = argparse.ArgumentParser(description='Make ML Data.')
+    parser.add_argument('--outputfile', type = str, default = 'ml_input_foo')
     args = parser.parse_args()
     
-    f = lambda x: np.sin(x)
-    npoints = 100
+    df = pd.read_csv('heart_rate_data.csv')
     
-    data = makeData(npoints, f)
+    heart_rates = df['Value']
     
-    plt.scatter(data[:,0], data[:,1])
-    plt.title('Generated Data')
-    plt.xlabel('x')
-    plt.ylabel('y')
+    n = 1000
     
-    df = pd.DataFrame(data = data).round(2)
+    heart_rates[:n].plot()
     
-    #df.to_csv(args.outputfile + '.csv', index = False)
+    ml_input = heart_rates[:n]
     
-    df.to_json(args.outputfile + '.json', orient = 'values')
+    ml_input = ml_input.to_frame()
     
-    df2 = pd.read_json(args.outputfile + '.json', orient = 'values')
+    ml_input.to_json(args.outputfile + '.json', orient = 'values')
     
-    print(checkDataFramesEqual(df, df2, EPS))
+    ml_input2 = pd.read_json(args.outputfile + '.json', orient = 'values')
+    
+    print(checkDataFramesEqual(ml_input, ml_input2, EPS))
+    
+#    plt.scatter(data[:,0], data[:,1])
+#    plt.title('Generated Data')
+#    plt.xlabel('x')
+#    plt.ylabel('y')
+#    
+#    df = pd.DataFrame(data = data).round(2)
+#    
+#    #df.to_csv(args.outputfile + '.csv', index = False)
+#    
+#    df.to_json(args.outputfile + '.json', orient = 'values')
+#    
+#    df2 = pd.read_json(args.outputfile + '.json', orient = 'values')
+#    
+#    print(checkDataFramesEqual(df, df2, EPS))
