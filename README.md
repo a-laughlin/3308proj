@@ -1,4 +1,7 @@
+
 # Project Title: Heart-a-tracker
+
+![image](https://travis-ci.com/a-laughlin/3308proj.svg?token=VENBQopHKmrYbQjPRHSc&branch=master)
 
 # Team member’s names
 > * Chris Powell
@@ -139,6 +142,12 @@ d1 (nice to have), d2 (important), d3 (critical)
 bug, duplicate, regres (Regression - was working, now broke)  
 **Misc**  
 meeting_notes (taken during meetings, like sprint retrospective/planning)  
+
+## Definition of Done (for code stories)
+  - Includes 
+  - Code written
+  - Explanation in appropriate readme (e.g., src/mobile/readme.md) if necessary
+  - CI tests passing (once implemented)
 
 ## Dev Process (i.e., Git Flow, vs Trunk-Based Development)  
 ### Code Contribution Flow  

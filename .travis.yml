@@ -1,0 +1,20 @@
+matrix:
+  include:
+    - language: python
+      dist: xenial
+      python: 3.7
+      script:
+        - ./build.py test ml,api
+    - language: node_js
+      node_js: 11.10
+      cache: npm
+      before_install:
+        - cd src/mobile
+      install:
+        - npm i
+      script:
+        - ./node_modules/.bin/jest
+notifications:
+  slack:
+    rooms:
+      - csci3308team1:"FGvNcChqAkX2WW8xvD5Z5gvQ"#ci-server

@@ -1,0 +1,8 @@
+[requires]
+python_version = "3.7"
+
+[packages]
+torch = "*"
+
+[scripts]
+printspam = "python -c \"print('I am a silly example, no one would need to do this')\""
