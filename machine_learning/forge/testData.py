@@ -51,30 +51,14 @@ if __name__ == '__main__':
     heart_rates = df['Value']
     
     n = 1000
-    
     heart_rates[:n].plot()
     
     ml_input = heart_rates[:n]
-    
-    ml_input = ml_input.to_frame()
-    
+
     ml_input.to_json(args.outputfile + '.json', orient = 'values')
     
+    ml_input = ml_input.to_frame()
     ml_input2 = pd.read_json(args.outputfile + '.json', orient = 'values')
     
     print(checkDataFramesEqual(ml_input, ml_input2, EPS))
-    
-#    plt.scatter(data[:,0], data[:,1])
-#    plt.title('Generated Data')
-#    plt.xlabel('x')
-#    plt.ylabel('y')
-#    
-#    df = pd.DataFrame(data = data).round(2)
-#    
-#    #df.to_csv(args.outputfile + '.csv', index = False)
-#    
-#    df.to_json(args.outputfile + '.json', orient = 'values')
-#    
-#    df2 = pd.read_json(args.outputfile + '.json', orient = 'values')
-#    
-#    print(checkDataFramesEqual(df, df2, EPS))
+   
