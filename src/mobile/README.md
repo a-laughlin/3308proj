@@ -1,12 +1,10 @@
-# React Native
+# Mobile
 
-Instructions to get a dev environment working via the Expo CLI on desktop, and Expo APP on Phone.
+Instructions for setting up, testing, and developing on React Native, our cross-platform mobile environment.
 
-I have no clue how to integrate testing yet.  For our future reference, here are links for [Unit Testing](https://jestjs.io/docs/en/tutorial-react-native) and [E2E Testing](https://medium.com/@reime005/react-native-end-to-end-testing-d488e010e39f).
+## Setting up the Mobile Environment (prerequisite for development and tests)
 
-## Installing the Dev Setup
-
-I first installed the latest version of nvm to manage node versions.
+First Install NVM (Node Version Manager) to manage NodeJS Versions.
 
 ```sh
 $ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
@@ -14,25 +12,41 @@ $ # or
 $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
 
-Then install the latest node version:
+Then install NPM (Node Package Manager) to manage NodeJS Packages:
 
 ```sh
 $ nvm install node --reinstall-packages-from=node
 ```
 
-The [expo cli](https://github.com/creationix/nvm#installation)
+Then the [Expo Client](https://github.com/creationix/nvm#installation) to run and develop on React Native
 
 ```sh
 $ npm install -g expo-cli
 ```
 
-And the Expo App for [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&rdid=host.exp.exponent), or [IPhone](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8).
+Finally, ensure you have the latest pull from master, then install our custom packages (including the test runner Jest):
+```sh
+$ cd src/mobile
+$ npm install # gets our package customizations from package.json
+```
 
 Setup complete!
+
+
+## Running Tests
+To run tests:
+```
+.build.py test mobile
+```
+
+## Running the dev environment (on your phone)
+
+Assuming everything is installed for running tests, install the Expo App for [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&rdid=host.exp.exponent), or [IPhone](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8).
 
 To start the dev environment,
 
 ```sh
+$ cd src/mobile
 $ expo start
 ```
 
@@ -46,3 +60,6 @@ Once you see that screen, open Expo on your phone, scan the QR code, and you sho
 ![image](https://d33wubrfki0l68.cloudfront.net/14c8d3b0f0abfb9197912ed34139da539fe3fdc2/4a976/images/react/expo-intro/first-expo-app.png)
 
 And you're in business!
+
+## Running the dev environment on your desktop
+[Instructions here](https://docs.expo.io/versions/v32.0.0/introduction/installation/)
