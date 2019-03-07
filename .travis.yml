@@ -7,13 +7,13 @@ matrix:
         - ./build.py test ml,api
     - language: node_js
       node_js: 11.10
-      cache: npm
+      cache: yarn
       before_install:
         - cd src/mobile
       install:
-        - npm i
+        - yarn install
       script:
-        - ./node_modules/.bin/jest
+        - jest
 
 notifications:
   slack:
