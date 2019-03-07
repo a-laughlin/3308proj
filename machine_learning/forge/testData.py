@@ -6,20 +6,15 @@ import pandas as pd
 
 def makeData(npoints = 100, f = None):
     
-    data = np.zeros((npoints, 2))
-    
     if f is None:
         f = lambda x: x ** 2
     
     np.random.seed(0)
     
-    x = np.random.rand(npoints) * 40 - 20
+    x = np.arange(npoints) / 5
     y = f(x)
     
-    data[:,0] = x
-    data[:,1] = y
-    
-    return data
+    return y
 
 def checkDataFramesEqual(df1, df2, eps):
     
@@ -43,22 +38,36 @@ if __name__ == '__main__':
     EPS = 10e-6
     
     parser = argparse.ArgumentParser(description='Make ML Data.')
-    parser.add_argument('--outputfile', type = str, default = 'ml_input_foo')
+    parser.add_argument('--outputfile', type = str, default = 'ml_input_foo.json')
+    parser.add_argument('--heartbeat', type = bool, default = True)
+    parser.add_argument('--sine', type = bool, default = True)
+    parser.add_argument('--npoints', type = int, default = 200)
+    parser.add_argument('--plot', type = bool, default = True)
     args = parser.parse_args()
     
-    df = pd.read_csv('heart_rate_data.csv')
+    n = args.npoints
+    outputfile = args.outputfile
     
-    heart_rates = df['Value']
-    
-    n = 1000
-    heart_rates[:n].plot()
-    
-    ml_input = heart_rates[:n]
+    if args.heartbeat:
+        df = pd.read_csv('heart_rate_data.csv')
+        heart_rates = df['Value']
+        
+        ml_input = heart_rates[:n].to_frame()
+        
+    elif args.sine:
+        f = lambda x: np.sin(x)
+        
+        y = makeData(npoints = n, f = f)
+        ml_input = pd.DataFrame(data = y)
 
-    ml_input.to_json(args.outputfile + '.json', orient = 'values')
+    # Write file
+    ml_input.to_json(outputfile, orient = 'values')
     
-    ml_input = ml_input.to_frame()
-    ml_input2 = pd.read_json(args.outputfile + '.json', orient = 'values')
+    # Read file
+    ml_input2 = pd.read_json(args.outputfile, orient = 'values')
     
     print(checkDataFramesEqual(ml_input, ml_input2, EPS))
+    
+    if args.plot:
+        ml_input.plot()
    
