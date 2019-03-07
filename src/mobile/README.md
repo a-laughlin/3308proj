@@ -4,34 +4,9 @@ Instructions for setting up, testing, and developing on React Native, our cross-
 
 ## Setting up the Mobile Environment (prerequisite for development and tests)
 
-First Install NVM (Node Version Manager) to manage NodeJS Versions.
-
-```sh
-$ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-$ # or
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
-
-Then install NPM (Node Package Manager) to manage NodeJS Packages:
-
-```sh
-$ nvm install node --reinstall-packages-from=node
+./setup.sh # from the project root directory, not src/mobile
 ```
-
-Then the [Expo Client](https://github.com/creationix/nvm#installation) to run and develop on React Native
-
-```sh
-$ npm install -g expo-cli
-```
-
-Finally, ensure you have the latest pull from master, then install our custom packages (including the test runner Jest):
-```sh
-$ cd src/mobile
-$ npm install # gets our package customizations from package.json
-```
-
-Setup complete!
-
 
 ## Running Tests
 To run tests:
