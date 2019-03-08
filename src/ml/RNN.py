@@ -32,10 +32,12 @@ class RNN(nn.Module):
         return torch.zeros(1, self.hidden_size)
 
 
-    def train(self, train_input, train_target, lr = 0.001, epochs = 1000, teacher_forcing_ratio = 1):
+    def mytrain(self, y, lr = 0.001, epochs = 1000, teacher_forcing_ratio = 1):
 
         criterion = nn.MSELoss()
         optimizer = optim.Adam(self.parameters(), lr = lr)
+
+        train_input, train_target = y[:-1].view(-1,1,1), y[1:]
 
         try:
             for epoch in range(epochs):
@@ -92,8 +94,6 @@ class RNN(nn.Module):
         for input in input_y.view(-1,1,1):
             output, hidden = self(input, hidden)
             outputs.append(output)
-        
-        print(output.size())
         
         future_outputs = [output]
         for _ in range(future):

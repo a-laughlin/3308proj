@@ -36,9 +36,10 @@ def checkDataFramesEqual(df1, df2, eps):
 if __name__ == '__main__':
     
     EPS = 10e-6
+    SAMPLE_DATA_DIR = '../../src/mobile/assets/sample_data/'
     
     parser = argparse.ArgumentParser(description='Make ML Data.')
-    parser.add_argument('--outputfile', type = str, default = 'ml_input_foo.json')
+    #parser.add_argument('--outputfile', type = str, default = 'ml_input_foo.json')
     parser.add_argument('--heartbeat', type = bool, default = True)
     parser.add_argument('--sine', type = bool, default = True)
     parser.add_argument('--npoints', type = int, default = 200)
@@ -46,15 +47,17 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     n = args.npoints
-    outputfile = args.outputfile
-    
+
     if args.heartbeat:
+        outputfile = SAMPLE_DATA_DIR + 'ml_input_foo.json'
         df = pd.read_csv('heart_rate_data.csv')
         heart_rates = df['Value']
         
         ml_input = heart_rates[:n].to_frame()
         
     elif args.sine:
+        outputfile = SAMPLE_DATA_DIR + 'ml_input_sine.json'
+        
         f = lambda x: np.sin(x)
         
         y = makeData(npoints = n, f = f)
@@ -64,7 +67,7 @@ if __name__ == '__main__':
     ml_input.to_json(outputfile, orient = 'values')
     
     # Read file
-    ml_input2 = pd.read_json(args.outputfile, orient = 'values')
+    ml_input2 = pd.read_json(outputfile, orient = 'values')
     
     print(checkDataFramesEqual(ml_input, ml_input2, EPS))
     
