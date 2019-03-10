@@ -26,13 +26,13 @@ def checkFileName(filename):
     GOOD_FILENAME = 1
     
     if not isinstance(filename, str):
-        print("filename must be string")
+        #raise Exception("filename must be string")
         return BAD_FILENAME
     elif len(filename) < 4:
-        print("filename must consist of at least 4 chars")
+        #raise Exception("filename must consist of at least 4 chars")
         return BAD_FILENAME
     elif filename[-3:] != '.pt':
-        print('filename must end in .pt')
+        #raise Exception('filename must end in .pt')
         return BAD_FILENAME
     else:
         return GOOD_FILENAME
