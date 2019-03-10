@@ -51,15 +51,15 @@ else
     yarn config set prefix ~/.yarn
   fi
 
-
-  if ! [[ $(command -v expo) ]]; then
-    yarn global add expo-cli
-  fi
-
-  # ensure latest mobile dependencies installed
-  cd src/mobile
-  yarn install
-  cd -
+  #
+  # if ! [[ $(command -v expo) ]]; then
+  #   yarn global add expo-cli
+  # fi
+  #
+  # # ensure latest mobile dependencies installed
+  # cd src/mobile
+  # yarn install
+  # cd -
 
 
 
