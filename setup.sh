@@ -16,10 +16,15 @@ else
     fi
   fi
 
+  if ! [[ $(command -v git) ]]; then
+    brew install git
+  fi
+
   # bash scripts can't run another script without permissions, so check if the file exists
   if ! [[ -f $NVM_DIR/nvm.sh ]]; then
     brew install nvm
   fi
+
   # set up nvm if it isn't in the path
   if [[ $PATH != *$HOME/.nvm/* ]]; then
     echo 'export NVM_DIR="$HOME/.nvm"' >> $configfile
@@ -42,9 +47,6 @@ else
     yarn global add expo-cli
   fi
 
-  if ! [[ $(command -v git) ]]; then
-    brew install git
-  fi
 
 
   ginfo=$(git status -sb | head -n1) # outputs ## <branchname>...origin/master [ahead 3]
