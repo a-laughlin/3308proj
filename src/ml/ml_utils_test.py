@@ -30,7 +30,11 @@ class ml_utils_test(unittest.TestCase):
         
         cls.output_file = 'model_test.pt'
         ml_utils.saveModel(cls.trained_model, cls.output_file)
-        
+      
+    @classmethod
+    def tearDownClass(cls):
+        if os.path.exists(cls.output_file):
+            os.remove(cls.output_file)
         
     def test_train(self):
         self.assertTrue(self.trained_model.trained == True)
