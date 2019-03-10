@@ -20,6 +20,13 @@ else
     brew install git
   fi
 
+  ginfo=$(git status -sb | head -n1) # outputs ## <branchname>...origin/master [ahead 3]
+
+  # ensure git always pulls from origin master on this branch
+  [[ $ginfo != *origin/master* ]] && git branch --set-upstream-to origin/master
+
+  # ensure branch up to date
+  [[ $ginfo = *behind* ]] && echo "WARNING: git pull origin master needed, then re-run this script" && exit 1
 
   # set up nvm if it isn't in the path
   if [[ $PATH != *$HOME/.nvm/* ]]; then
@@ -39,30 +46,22 @@ else
     fi
   fi
 
-
   if ! [[ $(command -v yarn) ]]; then
     brew install yarn --ignore-dependencies
     yarn config set prefix ~/.yarn
   fi
 
+
   if ! [[ $(command -v expo) ]]; then
     yarn global add expo-cli
   fi
-
-
-
-  ginfo=$(git status -sb | head -n1) # outputs ## <branchname>...origin/master [ahead 3]
-
-  # ensure git always pulls from origin master on this branch
-  [[ $ginfo != *origin/master* ]] && git branch --set-upstream-to origin/master
 
   # ensure latest mobile dependencies installed
   cd src/mobile
   yarn install
   cd -
 
-  # check branch behind
-  [[ $ginfo = *behind* ]] && echo "WARNING: git pull origin master needed, then re-run this script"
+
 
   if [[ $(python3 --version) != *"3.7.2"* ]]; then
     echo "PLEASE INSTALL PYTHON 3.7.2"
