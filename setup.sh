@@ -20,23 +20,25 @@ else
     brew install git
   fi
 
-  # bash scripts can't run another script without permissions, so check if the file exists
-  if ! [[ -f $NVM_DIR/nvm.sh ]]; then
-    brew install nvm
-  fi
 
   # set up nvm if it isn't in the path
   if [[ $PATH != *$HOME/.nvm/* ]]; then
+    # bash scripts can't run another script without permissions, so check if the file exists
+    if ! [[ -f $NVM_DIR/nvm.sh ]]; then
+      brew install nvm
+    fi
+
     echo 'export NVM_DIR="$HOME/.nvm"' >> $configfile
     echo '[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm'  >> $configfile
     echo '[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion'  >> $configfile
     source $configfile
+
+    if ! [[ $(command -v node) ]]; then
+      nvm install node
+      nvm use node
+    fi
   fi
 
-  if ! [[ $(command -v node) ]]; then
-    nvm install node
-    nvm use node
-  fi
 
   if ! [[ $(command -v yarn) ]]; then
     brew install yarn --ignore-dependencies
