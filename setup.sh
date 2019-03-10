@@ -51,6 +51,9 @@ else
     yarn config set prefix ~/.yarn
   fi
 
+  if ! [[ $(command -v create-react-app) ]]; then
+    yarn global add create-react-app
+  fi
   #
   # if ! [[ $(command -v expo) ]]; then
   #   yarn global add expo-cli
@@ -60,7 +63,6 @@ else
   # cd src/mobile
   # yarn install
   # cd -
-
 
 
   if [[ $(python3 --version) != *"3.7.2"* ]]; then
