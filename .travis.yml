@@ -9,15 +9,15 @@ matrix:
       script:
         - ./build.py test ml,api
 
-    # - language: node_js
-    #   node_js: 11.10
-    #   cache: yarn
-    #   before_install:
-    #     - cd src/web
-    #   install:
-    #     - yarn install
-    #   script:
-    #     - yarn test
+    - language: node_js
+      node_js: 11.10
+      cache: yarn
+      before_install:
+        - cd src/web
+      install:
+        - yarn install
+      script:
+        - yarn test --no-watch
 
 notifications:
   slack:
