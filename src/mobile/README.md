@@ -1,5 +1,7 @@
 # Mobile
 
+NOTE: MOBILE UNUSED EXCEPT FOR `assets/sample_data`
+
 Instructions for setting up, testing, and developing on React Native, our cross-platform mobile environment.
 
 ## Setting up the Mobile Environment (prerequisite for development and tests)

@@ -23,7 +23,7 @@ default_ops = dict(
 opdirs = {op:{d:default_ops[op] for d in SRC_DIRS } for op in default_ops.keys()}
 
 # Customizations
-opdirs['test']['mobile']=lambda dir,*a,**kw:run(['./node_modules/.bin/jest'],cwd=SRC/dir)
+# opdirs['test']['web']=lambda dir:run(['yarn test'],cwd=SRC/dir)
 
 if __name__ == '__main__':
   if len(argv)==1:
