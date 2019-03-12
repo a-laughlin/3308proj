@@ -54,6 +54,7 @@ else
   if ! [[ $(command -v create-react-app) ]]; then
     yarn global add create-react-app
   fi
+
   #
   # if ! [[ $(command -v expo) ]]; then
   #   yarn global add expo-cli
@@ -64,13 +65,12 @@ else
   # yarn install
   # cd -
 
-
-  if [[ $(python3 --version) != *"3.7.2"* ]]; then
-    echo "PLEASE INSTALL PYTHON 3.7.2"
-    echo "if you're unfamiliar with installing different versions, try:"
-    echo "brew install pyenv"
-    echo "pyenv install 3.7.2"
-    echo "pyenv local 3.7.2"
+  if ! [[ $(command -v pipenv) ]]; then
+    echo "WARNING: Pipenv not installed. Please install pyenv and pipenv to run the pipenv virtual environment"
+  else
+    if ! [[ $PIPENV_ACTIVE ]]; then
+      pipenv install --skip-lock
+      pipenv shell
+    fi
   fi
-
 fi
