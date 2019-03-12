@@ -5,7 +5,7 @@ matrix:
       python: 3.7
       cache: pip
       install:
-        - pip install torch numpy matplotlib pandas
+        - pip install torch numpy
       script:
         - ./build.py test ml,api
 
