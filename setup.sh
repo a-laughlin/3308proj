@@ -55,15 +55,10 @@ else
     yarn global add create-react-app
   fi
 
-  #
-  # if ! [[ $(command -v expo) ]]; then
-  #   yarn global add expo-cli
-  # fi
-  #
-  # # ensure latest mobile dependencies installed
-  # cd src/mobile
-  # yarn install
-  # cd -
+  # ensure latest web dependencies installed
+  cd src/web
+  yarn install
+  cd -
 
   if ! [[ $(command -v pipenv) ]]; then
     echo "WARNING: Pipenv not installed. Please install pyenv and pipenv to run the pipenv virtual environment"
