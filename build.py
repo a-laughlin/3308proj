@@ -9,9 +9,15 @@ from subprocess import run
 ROOT, SRC, BUILD, SAMPLE_DATA = [Path()/d for d in ',src,build,sample_data'.split(',')]
 SRC_DIRS = 'ml', 'api', 'mobile'
 
+def runTest(dir):
+  TestRunner = TR()
+  print("\n---Testing : "+dir.upper())
+  result = TestRunner.run(TL().discover(SRC/dir, pattern='*test.py'))
+  if(len(result.errors) + len(result.failures)): exit(1);
+
 default_ops = dict(
   clean=lambda dir,*a,**kw: rmtree(BUILD/dir, *a, ignore_errors=True, **kw),
-  test=lambda dir,*a,**kw: print("\n--TEST "+dir.upper()) or (len(TR().run(TL().discover(SRC/dir, *a, pattern='*test.py', **kw)).errors) and exit(1)),
+  test=runTest,
   build=lambda dir,*a,**kw: copytree(SRC/dir, BUILD/dir, *a, **kw))
 
 opdirs = {op:{d:default_ops[op] for d in SRC_DIRS } for op in default_ops.keys()}
