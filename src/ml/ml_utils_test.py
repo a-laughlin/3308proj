@@ -26,7 +26,7 @@ class ml_utils_test(unittest.TestCase):
         cls.testY = torch.Tensor(y_test).view(-1,1)
 
         # Train a model and save it
-        cls.trained_model = ml_utils.train(cls.trainY, epochs = 100)
+        cls.trained_model = ml_utils.train(cls.trainY, epochs = 300)
 
         cls.output_file = 'model_test.pt'
         ml_utils.saveModel(cls.trained_model, cls.output_file)
