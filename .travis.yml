@@ -5,12 +5,13 @@ matrix:
       python: 3.7
       cache: pip
       install:
-        - pip install torch numpy
+        - pip install torch
       script:
         - ./build.py test ml,api
 
+
     - language: node_js
-      node_js: 11.10
+      node_js: lts/*
       cache: yarn
       before_install:
         - cd src/web
