@@ -1,15 +1,13 @@
 matrix:
   include:
-    # - language: python
-    #   dist: xenial
-    #   python: 3.7
-    #   cache: pip
-    #   install:
-    #     - pip install torch numpy
-    #   script:
-    #     - ./build.py test ml,api
-    #   before_cache:
-    #     - rm -f $HOME/.cache/pip/log/*.log
+    - language: python
+      dist: xenial
+      python: 3.7
+      cache: pip
+      install:
+        - pip install torch numpy
+      script:
+        - ./build.py test ml,api
 
 
     - language: node_js
