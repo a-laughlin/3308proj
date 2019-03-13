@@ -30,10 +30,11 @@ else
   # nvm
   ! [[ $(brew list nvm) ]] && brew install nvm
   [[ "$cfg" != *'export NVM_DIR='* ]] && ensure_active "export NVM_DIR='$HOME/.nvm'"
-  [[ "$cfg" != *'/nvm/nvm.sh'* ]] && ensure_active "[ -s '/usr/local/opt/nvm/nvm.sh' ] && . '/usr/local/opt/nvm/nvm.sh';  # This loads nvm"
+  [[ "$cfg" != *'/nvm/nvm.sh'* ]] && echo "[ -s '/usr/local/opt/nvm/nvm.sh' ] && . '/usr/local/opt/nvm/nvm.sh';  # This loads nvm" >> $configfile
+  [ -s '/usr/local/opt/nvm/nvm.sh' ] && . '/usr/local/opt/nvm/nvm.sh';  # This loads nvm"
   [[ "$cfg" != *'/nvm/etc/bash_completion'* ]] && ensure_active "[ -s '/usr/local/opt/nvm/etc/bash_completion' ] && . '/usr/local/opt/nvm/etc/bash_completion';  # This loads nvm bash_completion"
-  [[ "$cfg" != *'nvm install node'* ]] && ensure_active '! [[ $(command -v node) ]] && nvm install node '
   [[ "$cfg" != *'export PATH="$(nvm which current)'* ]] && ensure_active '[[ "$PATH" != *"/node/"* ]] && export PATH="$(nvm which current):$PATH"'
+  ! [[ $(command -v node) ]] && nvm install lts/* --reinstall-packages-from=node && nvm use --silent lts/* && nvm alias default lts/*
 
   # yarn
   ! [[ $(command -v yarn) ]] && brew install yarn --ignore-dependencies
