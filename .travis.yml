@@ -8,14 +8,17 @@ matrix:
         - pip install torch numpy
       script:
         - ./build.py test ml,api
+      before_cache:
+        - rm -f $HOME/.cache/pip/log/*.log
+
 
     - language: node_js
-      node_js: 11.10
+      node_js: 11
       cache: yarn
       before_install:
         - cd src/web
       install:
-        - yarn install
+        - yarn install --frozen-lockfile
       script:
         - yarn test --no-watch
 
