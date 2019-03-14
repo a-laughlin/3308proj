@@ -8,6 +8,10 @@
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8"
   },
+  "devDependencies": {
+    "react-hooks-testing-library": "*",
+    "react-testing-library": "*"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
