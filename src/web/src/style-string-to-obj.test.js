@@ -3,6 +3,9 @@ import {styleStringToObj as s} from './style-string-to-obj'
 it("converts a string to a styles object", () => {
   expect(s('w100px h100px')).toEqual({width:'100px',height:'100px'});
 });
+it("caches converted styles objects for performance", () => {
+  expect(s('w100px h100px')).toBe(s('w100px h100px'));
+});
 it("warns on invalid strings", () => {
   global.console._warn_temp = global.console.warn;
   global.console.warn = jest.fn();

@@ -24,7 +24,7 @@ export const styleStringToObj = (()=>{
 
   const styleSeparator = ' ';
   const getCachedOrParseThenCache = (str)=>
-    merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]=cache[s]||parser(s)));
+    cache[str]||(cache[str]=merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]||(cache[s]=parser(s)))));
 
   const parseNested = str=>styleStringToObj(str.replace(nestedSplitter,styleSeparator))
   const nestedSplitter = /_/g;
