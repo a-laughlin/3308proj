@@ -1,11 +1,11 @@
 import {
-  pick, pickBy,get,map as mapFP, transform as transformFP,flatten,mapValues as mapValuesFP,mapKeys,
+  pick, pickBy,get,map as mapFP, transform as transformFP,flatten,mapValues as mapValuesFP,
   omit, omitBy,reduce as reduceFP,spread,rest,filter as filterFP,uniqueId,
   matches as matchesFP,concat,constant,overEvery,overSome,
   negate,flatMap,flattenDeep,over, identity, difference,isArray,
   isInteger,isError,isNumber,isObjectLike,hasIn,has,isWeakMap, isWeakSet, isMap, isSet,isEmpty,
   isString, isPlainObject, isFunction, isNull,isUndefined,set,unset,once,
-  sortBy,keyBy,every,values,keys,zip,unzip,zipObject,union,conforms,intersection,nth,first,last
+  sortBy,keyBy,every,values,keys,zip,unzip,union,conforms,intersection,nth,first,last
 } from 'lodash/fp';
 
 import {merge,mergeWith,set as _set} from 'lodash';
@@ -13,15 +13,10 @@ import {merge,mergeWith,set as _set} from 'lodash';
 const [transform,filter,map,mapValues,reduce] = [
   transformFP,filterFP,mapFP,mapValuesFP,reduceFP].map(fn=>fn.convert({cap:false}));
 
-export {
-  identity,pick,spread,rest,
-  uniqueId,concat,
-  pickBy,
-  over
-}
 
 
 // stubs
+
 export const stubNull = ()=>null;
 export const stubArray = ()=>[];
 export const stubObject = ()=>({});
@@ -33,6 +28,8 @@ export const stubFalse = ()=>false;
 
 
 // predicates
+export {isArray,isError,isInteger,isNumber,isObjectLike,hasIn,has,isWeakMap,isWeakSet,isMap,
+  isSet,isEmpty,isString,isPlainObject,isFunction,isNull,isUndefined,every,conforms}
 export const isFalsy = arg=>!arg;
 export const isTruthy = arg=>!!arg;
 export const is = val1=>val2=>val1===val2;
@@ -43,21 +40,22 @@ export const len0 = len(0);
 export const len1 = len(1);
 export const isProductionEnv = ()=>process.env.NODE_ENV === 'production';
 export const matches = arg=>matchesFP(arg);
-export {isArray,isError,isInteger,isNumber,isObjectLike,hasIn,has,isWeakMap,isWeakSet,isMap,
-        isSet,isEmpty,isString,isPlainObject,isFunction,isNull,isUndefined,every,conforms}
 
 // debugging
 export const plog = (msg='')=>pipeVal=>console.log(msg,pipeVal) || pipeVal;
 
 // flow
-export {once};
+export {once,over};
 export const pipe = (fn1=identity,...fns)=>(arg1,...args)=>fns.reduce((a,f)=>f(a),fn1(arg1,...args));
 export const dpipe = (data,...args)=>pipe(...args)(data);
 export const compose = (...fns)=>pipe(...fns.reverse());
 
+// functions
+export {spread,rest,identity}
+export const acceptArrayOrArgs = fn=>(...args)=>args.length>1 ? fn(args) : fn(...args);
+
 // casting
 export {constant};
-export const acceptArrayOrArgs = fn=>(...args)=>args.length>1 ? fn(args) : fn(...args);
 export const ensureArray = (val=[])=>isArray(val) ? val : [val];
 export const ensureFunction = (arg)=>typeof arg==='function'?arg:constant(arg);
 export const ensurePropExists = fn=>(obj,key)=>obj.hasOwnProperty(key) ? obj[key] : (obj[key]=fn());
@@ -78,10 +76,10 @@ export const cond = acceptArrayOrArgs(arrs=>(...args)=>ensureFunction(condNoExec
 
 
 // Array methods
+export {concat,sortBy,zip,unzip,difference,union,intersection};
 export const slice = (...sliceArgs)=>arr=>arr.slice(...sliceArgs);
 export const reverse = arr=>arr.slice(0).reverse(); // immutable array reverse
 export const sort = sortBy(null)
-export {sortBy,zip ,unzip ,difference ,union ,intersection};
 
 
 
@@ -139,6 +137,7 @@ export const groupByValues = ro((o,item,k,c)=>{
 
 
 // Objects
+export {values,keys}
 export const objStringifierFactory = ({
   getPrefix=()=>'',
   getSuffix=()=>'',
@@ -155,3 +154,6 @@ export const objToUrlParams = objStringifierFactory({
   getPrefix:(input,output)=>output ? '?' : '',
   mapPairs:encodeURIComponent,
 });
+
+// content
+export {uniqueId}
