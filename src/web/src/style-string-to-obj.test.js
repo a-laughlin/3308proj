@@ -3,6 +3,15 @@ import {styleStringToObj as s} from './style-string-to-obj'
 it("converts a string to a styles object", () => {
   expect(s('w100px h100px')).toEqual({width:'100px',height:'100px'});
 });
+it("warns on invalid strings", () => {
+  global.console._warn_temp = global.console.warn;
+  global.console.warn = jest.fn();
+  s('wwwww100px');
+  expect(global.console.warn).toHaveBeenCalledWith(
+    'invalid style: "wwwww100px". See style-string-to-obj.test.js for correct syntax.')
+  global.console.warn = global.console._warn_temp;
+  delete global.console._warn_temp;
+});
 
 const units={
   '':'em',
@@ -56,8 +65,8 @@ expect(s('z1')).toEqual({zIndex:'1'})
 
 
 expect(s('z1')).toEqual({zIndex:'1'})
-expect(s('above800px_w1')).toEqual({'@media (min-width: 799px)':{width:'1em'}});
-expect(s('below800px_w1')).toEqual({'@media (max-width: 800px)':{width:'1em'}});
+expect(s('above800_w1')).toEqual({'@media (min-width: 799px)':{width:'1em'}});
+expect(s('below800_w1')).toEqual({'@media (max-width: 800px)':{width:'1em'}});
 
 /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
 // nth:(num,unit)=>({[`:nth-child(${num})`]:parseNested(unit)}),

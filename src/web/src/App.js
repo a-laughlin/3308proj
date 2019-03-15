@@ -7,10 +7,10 @@ import data from './sample_data/ml_output_foo.json';
 
 
 const Div2 = Div(
-  withStyles('w200px h200px bgc090'),
+  withStyles('w200px h200px bg090'),
   (props)=>({...props,data:[{key:'1'},{key:'2'}]}),
   withChildren('div','data',
-    withStyles('w1 h1 m1 bgc00F'),
+    withStyles('w1 h1 m1 bg00F'),
   )
 )
 

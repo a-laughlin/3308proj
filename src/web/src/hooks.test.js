@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { renderHook, cleanup, act } from 'react-hooks-testing-library';
 import {withStyles} from './hooks';
 // for more examples, see https://github.com/mpeyper/react-hooks-testing-library/tree/master/test
@@ -37,9 +37,6 @@ describe('withStyles', () => {
   it('converts functions that return strings to styles', () => {
     const fn = withStyles(()=>'w100px');
     expect(fn({})).toEqual({style:{width:'100px'}})
-  })
-  it('ignores unrecognized strings', () => {
-    expect(withStyles('wwwww100px')({})).toEqual({style:{}})
   })
   it('typerrors on non-(objects|strings|functions)', () => {
     for (const item of [/foo/,null,undefined,1,[],new Map(),new Set()]){

@@ -12,18 +12,15 @@ export const styleStringToObj = (()=>{
         ?`#${num}`
         :`${num}${unit}`
   );
-  let parser = (str,[_,prefix,num,unit]=str.match(styleMatcher))=>prefixes[prefix](num,unit);
-  if(process.env.NODE_ENV !== 'production'){
-    parser = s => {
-      try{
-        const [_,prefix,num,unit]=s.match(styleMatcher); // eslint-disable-line no-unused-vars
-        return prefixes[prefix](num,unit);
-      } catch(e){
-        console.warn(`invalid style: "${s}"`);
-        return {};
-      }
-    };
-  }
+  const parser = (str)=>{
+    try{
+      const [_,prefix,num,unit]=str.match(styleMatcher) // eslint-disable-line no-unused-vars
+      return prefixes[prefix](num,unit)
+    } catch(e){
+      global.console && console.warn(`invalid style: "${str}". See style-string-to-obj.test.js for correct syntax.`);
+      return {};
+    }
+  };
 
   const styleSeparator = ' ';
   const getCachedOrParseThenCache = (str)=>
