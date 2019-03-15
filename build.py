@@ -7,7 +7,7 @@ from pathlib import Path
 from subprocess import run
 
 ROOT, SRC, BUILD, SAMPLE_DATA = [Path()/d for d in ',src,build,sample_data'.split(',')]
-SRC_DIRS = 'ml', 'api', 'mobile'
+SRC_DIRS = 'ml', 'api', 'web'
 
 def runTest(dir):
   TestRunner = TR()
