@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './App';
 import {render, cleanup} from 'react-testing-library';
-import data from '../public/sample_data/ml_output_foo.json';
+import data from './sample_data/ml_output_foo.json';
 
 // More examples at https://github.com/kentcdodds/react-testing-library/tree/master/examples/__tests__
 // Note that these should be integration tests (testing important components combinations).

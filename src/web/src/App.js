@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import {Div,withStyles,withChildren} from './hooks'
-import data from '../public/sample_data/ml_output_foo.json';
+import data from './sample_data/ml_output_foo.json';
 
 
 const Div2 = Div(
