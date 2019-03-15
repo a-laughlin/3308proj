@@ -1,22 +1,33 @@
-import React, {creatElement as el, Component } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import data from '../../mobile/assets/sample_data/ml_output_foo.json';
+import {oo} from './utils';
+
+import {Div,withStyles,withChildren} from './hooks'
+// import data from '../../mobile/assets/sample_data/ml_output_foo.json';
 
 
-export const App = ()=>
-  <div className="App">
+const Div2 = Div(
+  withStyles('w200px h200px bgc090'),
+  (props)=>({...props,data:[{key:'1'},{key:'2'}]}),
+  withChildren('div','data',
+    withStyles('w1 h1 m1 bgc00F'),
+  )
+)
+
+export const App = (props)=>
+  <div className="App" style={props.style}>
     <header className="App-header">
+    <Div2/>
       <img src={logo} className="App-logo" alt="logo" />
       <p>
         Edit <code>src/App.js</code> and save to reload.
       </p>
       <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer"> Learn React </a>
       <svg height="90%" width="100%">
-        <text data-testid='data'>{JSON.stringify(data)}</text>
+        <text>foo{/*JSON.stringify(data)*/}</text>
       </svg>
     </header>
   </div>;
-
 
 export default App;

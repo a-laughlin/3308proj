@@ -1,6 +1,6 @@
 import {
   pick, pickBy,get,map as mapFP, transform as transformFP,flatten,mapValues as mapValuesFP,mapKeys,
-  reduce as reduceFP,spread,rest,filter as filterFP,uniqueId,
+  omit, omitBy,reduce as reduceFP,spread,rest,filter as filterFP,uniqueId,
   matches as matchesFP,concat,constant,overEvery,overSome,
   negate,flatMap,flattenDeep,over, identity, difference,isArray,
   isInteger,isError,isNumber,isObjectLike,hasIn,has,isWeakMap, isWeakSet, isMap, isSet,isEmpty,
@@ -96,16 +96,24 @@ export const ra=fn=>(...args)=>transform(fn,[])(...args);
 export const ma=map;
 export const mo=fn=>ifElse(isArray,ro((acc,v,i,c)=>{acc[i]=fn(v,i,c);}),mapValues)(fn);
 export const fa=filter;
-export const fo=pred=>ifElse(isArray,ro((o,v,k,c)=>{if(pred(v,k,c)){o[k]=v;}}),pickBy(pred));
+export const fo = cond(
+  [isArray,pred=>ife(isArray,ro((o,v,i,c)=>{if(pred.includes(v)){o[i]=v;}}), pick(pred))],
+  [isFunction,pred=>ife(isArray,ro((o,v,i,c)=>{if(pred(v,i,c)){o[i]=v;}}),pickBy(pred))],
+  [isString,pipe(ensureArray,pred=>fo(pred))],
+);
 export const oa=pipe(not,fa);
-export const oo=pipe(not,fo);
+export const oo = cond(
+  [isFunction,pred=>ife(isArray,fo(not(pred)),omitBy(pred))],
+  [isArray,pred=>ife(isArray,ro((o,v,i,c)=>{if(!pred.includes(v)){o[i]=v;}}), omit(pred)) ],
+  [isString,pipe(ensureArray,pred=>oo(pred))],
+);
 export const fma=(pred,fn)=>ra((a,v,k,c)=>{if(pred(v,k,c)){a[a.length]=fn(v,k,c);}});
 export const fmo=(pred,fn)=>ro((o,v,k,c)=>{if(pred(v,k,c)){o[k]=fn(v,k,c);}});
 // partionObject((v,k)=>k=='a',(v,k)=>k!='a')({a:1,b:2,c:3}) =>[{a:1},{b:1,c:2}]
 // partionObject((v,k)=>v==1,(v,k)=>v!=1)({a:1,b:2,c:3}) =>[{a:1,b:1},{c:2}]
 // partionObject((v,k)=>v==1)({a:1,b:2,c:3}) =>[{a:1,b:1},{c:2}]
-const partitionObject = (...preds)=>over([...(preds.map(fo)),fo(none(predicates))]);
-const partitionArray = (...preds)=>over([...(preds.map(fa)),fa(none(predicates))]);
+const partitionObject = (...preds)=>over([...(preds.map(fo)),fo(none(preds))]);
+const partitionArray = (...preds)=>over([...(preds.map(fa)),fa(none(preds))]);
 export const partition = ifElse(isArray,partitionArray,partitionObject);
 
 

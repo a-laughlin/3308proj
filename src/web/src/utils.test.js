@@ -1,4 +1,6 @@
-import {acceptArrayOrArgs,identity,condNoExec,cond,stubTrue,stubFalse,groupByKeys,groupByValues} from './utils'
+import {
+  acceptArrayOrArgs,identity,condNoExec,fo,
+  cond,stubTrue,stubFalse,groupByKeys,groupByValues} from './utils'
 
 describe("acceptArrayOrArgs", () => {
   const testFn = acceptArrayOrArgs(identity);
