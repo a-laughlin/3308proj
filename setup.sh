@@ -28,11 +28,12 @@ else
   [[ $ginfo = *behind* ]] && echo "WARNING: git pull needed, then re-run this script" && exit 1
 
   # nvm
-  ! [[ $(brew list nvm) ]] && brew install nvm
+  ! [[ $(brew --prefix nvm) ]] && brew install nvm
+  nvmdir=$(brew --prefix nvm)
   [[ "$cfg" != *'export NVM_DIR='* ]] && ensure_active "export NVM_DIR='$HOME/.nvm'"
-  [[ "$cfg" != *'/nvm/nvm.sh'* ]] && echo "[ -s '/usr/local/opt/nvm/nvm.sh' ] && . '/usr/local/opt/nvm/nvm.sh';  # This loads nvm" >> $configfile
-  [ -s '/usr/local/opt/nvm/nvm.sh' ] && . '/usr/local/opt/nvm/nvm.sh';  # This loads nvm"
-  [[ "$cfg" != *'/nvm/etc/bash_completion'* ]] && ensure_active "[ -s '/usr/local/opt/nvm/etc/bash_completion' ] && . '/usr/local/opt/nvm/etc/bash_completion';  # This loads nvm bash_completion"
+  [[ "$cfg" != *"$nvmdir/nvm.sh"* ]] && echo "[ -s '$nvmdir/nvm.sh' ] && . '$nvmdir/nvm.sh';  # This loads nvm" >> $configfile
+  [ -s '$nvmdir/nvm.sh' ] && . '$nvmdir/nvm.sh';  # This loads nvm"
+  [[ "$cfg" != *$nvmdir/etc/bash_completion* ]] && ensure_active "[ -s '$nvmdir/etc/bash_completion' ] && . '$nvmdir/etc/bash_completion';  # This loads nvm bash_completion"
   [[ "$cfg" != *'export PATH="$(nvm which current)'* ]] && ensure_active '[[ "$PATH" != *"/node/"* ]] && export PATH="$(nvm which current):$PATH"'
   ! [[ $(command -v node) ]] && nvm install lts/* --reinstall-packages-from=node && nvm use --silent lts/* && nvm alias default lts/*
 
@@ -57,7 +58,7 @@ else
 
   # ensure latest web dependencies installed
   builtin cd src/web
-  yarn install --frozen-lockfile
+  yarn install
   builtin cd -
 
   # ensure latest py dependencies installed
