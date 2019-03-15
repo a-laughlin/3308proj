@@ -1,10 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {oo} from './utils';
 
 import {Div,withStyles,withChildren} from './hooks'
-// import data from '../../mobile/assets/sample_data/ml_output_foo.json';
+import data from '../public/sample_data/ml_output_foo.json';
 
 
 const Div2 = Div(
@@ -25,7 +24,7 @@ export const App = (props)=>
       </p>
       <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer"> Learn React </a>
       <svg height="90%" width="100%">
-        <text>foo{/*JSON.stringify(data)*/}</text>
+        <text>{JSON.stringify(data)}</text>
       </svg>
     </header>
   </div>;
