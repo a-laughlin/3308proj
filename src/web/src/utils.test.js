@@ -1,5 +1,5 @@
 import {
-  acceptArrayOrArgs,identity,condNoExec,fo,
+  acceptArrayOrArgs,identity,condNoExec,
   cond,stubTrue,stubFalse,groupByKeys,groupByValues} from './utils'
 
 describe("acceptArrayOrArgs", () => {
@@ -9,7 +9,7 @@ describe("acceptArrayOrArgs", () => {
 });
 
 describe("condNoExec", () => {
-  const pred = x=>x==1
+  const pred = x=>x===1
   const fn1 = condNoExec([ [pred,'is_1'], [stubTrue,'not_1'] ]);
   it('returns values when passed non-function values', () =>  expect(fn1(1)).toBe('is_1'));
   const fn2 = condNoExec([ [pred,pred], [stubTrue,stubTrue] ]);
@@ -21,7 +21,7 @@ describe("condNoExec", () => {
 });
 
 describe("cond", () => {
-  const pred = x=>x==1
+  const pred = x=>x===1
   const fn1 = cond([ [pred,'is_1'], [stubTrue,'not_1'] ]);
   it('returns values when passed non-function values', () =>  expect(fn1(1)).toBe('is_1'));
   const fn2 = cond([ [pred,()=>'is_1'], [stubTrue,()=>'not_1'] ]);
