@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import data from './assets/sample_data/ml_output_foo.json';
 import {Svg} from 'expo';
 const {Polyline } = Svg;
+const data = [10,20,30,40,30,10,80,70]
 
 const styles = StyleSheet.create({
   container: {
