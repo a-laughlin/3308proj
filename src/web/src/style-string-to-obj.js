@@ -2,7 +2,7 @@ import merge from 'lodash/merge'
 import pipe from 'lodash/flow'
 
 export const styleStringToObj = (()=>{
-  const styleMatcher = /^([a-z]+)([A-Z0-9.:#\+\-]+)(.*)$/;
+  const styleMatcher = /^([a-z]+)([A-Z0-9.:#+-]+)(.*)$/;
   const getSizeVal = (num,unit)=>`${num}${units[unit]}`;
   const getSizeObj = (key)=>(num,unit)=>({[key]:getSizeVal(num,unit)});
   const parseColor = (num,unit)=>(
@@ -12,11 +12,11 @@ export const styleStringToObj = (()=>{
         ?`#${num}`
         :`${num}${unit}`
   );
-  let parser = (s,[_,prefix,num,unit]=s.match(styleMatcher))=>prefixes[prefix](num,unit);
+  let parser = (str,[_,prefix,num,unit]=str.match(styleMatcher))=>prefixes[prefix](num,unit);
   if(process.env.NODE_ENV !== 'production'){
     parser = s => {
       try{
-        const [_,prefix,num,unit]=s.match(styleMatcher);
+        const [_,prefix,num,unit]=s.match(styleMatcher); // eslint-disable-line no-unused-vars
         return prefixes[prefix](num,unit);
       } catch(e){
         console.warn(`invalid style: "${s}"`);
@@ -30,7 +30,7 @@ export const styleStringToObj = (()=>{
     merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]=cache[s]||parser(s)));
 
   const parseNested = str=>styleStringToObj(str.replace(nestedSplitter,styleSeparator))
-  const nestedSplitter = /\_/g;
+  const nestedSplitter = /_/g;
   const prefixes ={
     left:getSizeObj('left'),
     right:getSizeObj('right'),
@@ -68,7 +68,7 @@ export const styleStringToObj = (()=>{
     lh:getSizeObj('lineHeight'),
     t:(num,unit)=>({fontSize:getSizeVal(num,unit),lineHeight:getSizeVal((+num+0.4).toFixed(1),unit)}),
     tc:(num,unit)=>({color:parseColor(num,unit)}),//text color
-    bg:(num,unit)=>({background:parseColor(num,unit)}),//text color
+    bg:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
     bgc:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
 
     /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
