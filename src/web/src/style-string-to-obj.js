@@ -23,9 +23,11 @@ export const styleStringToObj = (()=>{
   };
 
   const styleSeparator = ' ';
-  const getCachedOrParseThenCache = (str)=>
-    cache[str]||(cache[str]=merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]||(cache[s]=parser(s)))));
-
+  let raw,split;
+  const getCachedOrParseThenCache = (str)=>{
+    if(str.raw) str=str.raw[0]; // handle tagged template strings e.g., s`w100px`;
+    return cache[str]||(cache[str]=merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]||(cache[s]=parser(s)))));
+  }
   const parseNested = str=>styleStringToObj(str.replace(nestedSplitter,styleSeparator))
   const nestedSplitter = /_/g;
   const prefixes ={
@@ -50,11 +52,6 @@ export const styleStringToObj = (()=>{
     pr:getSizeObj('paddingRight'),
     pb:getSizeObj('paddingBottom'),
     pl:getSizeObj('paddingLeft'),
-    // b:pipe(getSizeVal,sz=>({borderTop:sz,borderRight:sz,borderBottom:sz,borderLeft:sz})),
-    // bt:getSizeObj('borderTop'),
-    // br:getSizeObj('borderRight'),
-    // bb:getSizeObj('borderBottom'),
-    // bl:getSizeObj('borderLeft'),
     b:pipe(getSizeVal,sz=>({borderTopWidth:sz,borderRightWidth:sz,borderBottomWidth:sz,borderLeftWidth:sz})),
     bt:getSizeObj('borderTopWidth'),
     br:getSizeObj('borderRightWidth'),
@@ -90,11 +87,12 @@ export const styleStringToObj = (()=>{
     below:(num,unit)=>({[`@media (max-width: ${num}px)`]:parseNested(unit)}),
   }
   const units={
-    '':'em',
-    em:'em',
-    x:'px',
-    px:'px',
+    '':'%',
     '%':'%',
+    e:'em',
+    em:'em',
+    p:'px',
+    px:'px',
   };
   const cache = {
     // lists

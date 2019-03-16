@@ -3,8 +3,14 @@ import {styleStringToObj as s} from './style-string-to-obj'
 it("converts a string to a styles object", () => {
   expect(s('w100px h100px')).toEqual({width:'100px',height:'100px'});
 });
+it("converts tagged template strings to styles object", () => {
+  expect(s`w100px h100px`).toEqual({width:'100px',height:'100px'});
+});
 it("caches converted styles objects for performance", () => {
   expect(s('w100px h100px')).toBe(s('w100px h100px'));
+});
+it("handles function calls and string templates the same", () => {
+  expect(s('w100px h100px')).toBe(s`w100px h100px`);
 });
 it("warns on invalid strings", () => {
   global.console._warn_temp = global.console.warn;
@@ -16,12 +22,14 @@ it("warns on invalid strings", () => {
   delete global.console._warn_temp;
 });
 
+
 const units={
-  '':'em',
-  em:'em',
-  x:'px',
-  px:'px',
+  '':'%',
   '%':'%',
+  e:'em',
+  em:'em',
+  p:'px',
+  px:'px',
 };
 const prefixes ={
   left:'left',
@@ -50,26 +58,27 @@ const prefixes ={
   lh:'lineHeight',
 }
 
-let u,prefix;
-for (u in units){
-  for (prefix in prefixes){
+// let u,prefix;
+for (const u in units){
+  for (const prefix in prefixes){
     expect(s(`${prefix}1${u}`)).toEqual({[prefixes[prefix]]:`1${units[u]}`})
+    // expect(s`${prefix}1${u}`).toEqual(s(`${prefix}1${u}`))
   }
 }
 
-expect(s('m1')).toEqual({marginTop:'1em',marginRight:'1em',marginBottom:'1em',marginLeft:'1em'})
-expect(s('p1')).toEqual({paddingTop:'1em',paddingRight:'1em',paddingBottom:'1em',paddingLeft:'1em'})
-expect(s('b1')).toEqual({borderTopWidth:'1em',borderRightWidth:'1em',borderBottomWidth:'1em',borderLeftWidth:'1em'})
+expect(s('m1')).toEqual({marginTop:'1%',marginRight:'1%',marginBottom:'1%',marginLeft:'1%'})
+expect(s('p1')).toEqual({paddingTop:'1%',paddingRight:'1%',paddingBottom:'1%',paddingLeft:'1%'})
+expect(s('b1')).toEqual({borderTopWidth:'1%',borderRightWidth:'1%',borderBottomWidth:'1%',borderLeftWidth:'1%'})
 
-expect(s('t1')).toEqual({fontSize:'1em',lineHeight:`${(1+0.4).toFixed(1)}em`});
+expect(s('t1e')).toEqual({fontSize:'1em',lineHeight:`${(1+0.4).toFixed(1)}em`});
 expect(s('bgc000')).toEqual({backgroundColor:'#000'})
 expect(s('bg000')).toEqual({backgroundColor:'#000'})
 expect(s('z1')).toEqual({zIndex:'1'})
 
 
 expect(s('z1')).toEqual({zIndex:'1'})
-expect(s('above800_w1')).toEqual({'@media (min-width: 799px)':{width:'1em'}});
-expect(s('below800_w1')).toEqual({'@media (max-width: 800px)':{width:'1em'}});
+expect(s('above800_w1')).toEqual({'@media (min-width: 799px)':{width:'1%'}});
+expect(s('below800_w1')).toEqual({'@media (max-width: 800px)':{width:'1%'}});
 
 /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
 // nth:(num,unit)=>({[`:nth-child(${num})`]:parseNested(unit)}),
