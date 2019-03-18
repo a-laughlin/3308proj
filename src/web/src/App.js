@@ -1,32 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+
+/* eslint-disable no-unused-vars */
+import React,{useState} from 'react';
 import './App.css';
+import {Div,Button,style,children,prop,state,onClick} from './hooks'
+import {styleStringToObj as s} from './style-string-to-obj'
+import data from './sample_data/ml_output_foo.json';
+import {plog,pipe,get,oo} from './utils';
 
-import {Div,withStyles,withChildren} from './hooks'
-import data from '../public/sample_data/ml_output_foo.json';
-
-
-const Div2 = Div(
-  withStyles('w200px h200px bgc090'),
-  (props)=>({...props,data:[{key:'1'},{key:'2'}]}),
-  withChildren('div','data',
-    withStyles('w1 h1 m1 bgc00F'),
-  )
-)
-
-export const App = (props)=>
-  <div className="App" style={props.style}>
-    <header className="App-header">
-    <Div2/>
-      <img src={logo} className="App-logo" alt="logo" />
+export const App = props=>
+  <div className="App">
+    <header className="App-header" style={s`bg077`}>
+      <svg style={s`w100 h200px`}>
+        <rect {...s`w100 h100 fillFFF`}/>
+        <text style={{fill:'#000',transform:'translateY(20%)'}}>{JSON.stringify(data)}</text>
+      </svg>
       <p>
         Edit <code>src/App.js</code> and save to reload.
       </p>
-      <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer"> Learn React </a>
-      <svg height="90%" width="100%">
-        <text>{JSON.stringify(data)}</text>
-      </svg>
+      <AdamExperiment2/>
     </header>
   </div>;
 
+
+
+
+const AdamExperiment1 = Div(' AdamExperiment1... ');
+
+const AdamExperiment2 = Div(
+  state('rabbits','more',2),
+  children(
+    AdamExperiment1('Random Text'),
+    p=>Div(`Rabbits:${p.rabbits}`,style('bg4BB')),
+    p=>Button('More Rabbits!',onClick(p.more,fn=>fn(p.rabbits*2))),
+  ),
+  style('w200px h200px bg299 t80 lh140'),
+  oo('more') // oo = "Omit to Object"
+)
+
 export default App;
+/* eslint-enable no-unused-vars */

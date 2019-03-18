@@ -2,7 +2,7 @@ import merge from 'lodash/merge'
 import pipe from 'lodash/flow'
 
 export const styleStringToObj = (()=>{
-  const styleMatcher = /^([a-z]+)([A-Z0-9.:#\+\-]+)(.*)$/;
+  const styleMatcher = /^([a-z]+)([A-Z0-9.:#+-]+)(.*)$/;
   const getSizeVal = (num,unit)=>`${num}${units[unit]}`;
   const getSizeObj = (key)=>(num,unit)=>({[key]:getSizeVal(num,unit)});
   const parseColor = (num,unit)=>(
@@ -12,25 +12,23 @@ export const styleStringToObj = (()=>{
         ?`#${num}`
         :`${num}${unit}`
   );
-  let parser = (s,[_,prefix,num,unit]=s.match(styleMatcher))=>prefixes[prefix](num,unit);
-  if(process.env.NODE_ENV !== 'production'){
-    parser = s => {
-      try{
-        const [_,prefix,num,unit]=s.match(styleMatcher);
-        return prefixes[prefix](num,unit);
-      } catch(e){
-        console.warn(`invalid style: "${s}"`);
-        return {};
-      }
-    };
-  }
+  const parser = (str)=>{
+    try{
+      const [_,prefix,num,unit]=str.match(styleMatcher) // eslint-disable-line no-unused-vars
+      return prefixes[prefix](num,unit)
+    } catch(e){
+      global.console && console.warn(`invalid style: "${str}". See style-string-to-obj.test.js for correct syntax.`);
+      return {};
+    }
+  };
 
   const styleSeparator = ' ';
-  const getCachedOrParseThenCache = (str)=>
-    merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]=cache[s]||parser(s)));
-
+  const getCachedOrParseThenCache = (str)=>{
+    if(str.raw) str=str.raw[0]; // handle tagged template strings e.g., s`w100px`;
+    return cache[str]||(cache[str]=merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]||(cache[s]=parser(s)))));
+  }
   const parseNested = str=>styleStringToObj(str.replace(nestedSplitter,styleSeparator))
-  const nestedSplitter = /\_/g;
+  const nestedSplitter = /_/g;
   const prefixes ={
     left:getSizeObj('left'),
     right:getSizeObj('right'),
@@ -53,11 +51,6 @@ export const styleStringToObj = (()=>{
     pr:getSizeObj('paddingRight'),
     pb:getSizeObj('paddingBottom'),
     pl:getSizeObj('paddingLeft'),
-    // b:pipe(getSizeVal,sz=>({borderTop:sz,borderRight:sz,borderBottom:sz,borderLeft:sz})),
-    // bt:getSizeObj('borderTop'),
-    // br:getSizeObj('borderRight'),
-    // bb:getSizeObj('borderBottom'),
-    // bl:getSizeObj('borderLeft'),
     b:pipe(getSizeVal,sz=>({borderTopWidth:sz,borderRightWidth:sz,borderBottomWidth:sz,borderLeftWidth:sz})),
     bt:getSizeObj('borderTopWidth'),
     br:getSizeObj('borderRightWidth'),
@@ -68,8 +61,9 @@ export const styleStringToObj = (()=>{
     lh:getSizeObj('lineHeight'),
     t:(num,unit)=>({fontSize:getSizeVal(num,unit),lineHeight:getSizeVal((+num+0.4).toFixed(1),unit)}),
     tc:(num,unit)=>({color:parseColor(num,unit)}),//text color
-    bg:(num,unit)=>({background:parseColor(num,unit)}),//text color
+    bg:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
     bgc:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
+    fill:(num,unit)=>({fill:parseColor(num,unit)}),//text color
 
     /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
     nth:(num,unit)=>({[`:nth-child(${num})`]:parseNested(unit)}),
@@ -93,11 +87,12 @@ export const styleStringToObj = (()=>{
     below:(num,unit)=>({[`@media (max-width: ${num}px)`]:parseNested(unit)}),
   }
   const units={
-    '':'em',
-    em:'em',
-    x:'px',
-    px:'px',
+    '':'%',
     '%':'%',
+    e:'em',
+    em:'em',
+    p:'px',
+    px:'px',
   };
   const cache = {
     // lists
@@ -134,6 +129,9 @@ export const styleStringToObj = (()=>{
     tvaM:{verticalAlign:'middle'},
     tvaT:{verticalAlign:'top'},
     tvaB:{verticalAlign:'bottom'},
+    taC:{textAlign:'middle'},
+    taL:{textAlign:'top'},
+    taR:{textAlign:'bottom'},
     // tSans from https://css-tricks.com/snippets/css/system-font-stack/
     tSans:{ fontFamily: `-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,`+
       `Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif`},

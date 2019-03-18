@@ -6,7 +6,7 @@ from unittest import TextTestRunner as TR, TestLoader as TL
 from pathlib import Path
 from subprocess import run
 
-ROOT, SRC, BUILD, SAMPLE_DATA = [Path()/d for d in ',src,build,sample_data'.split(',')]
+ROOT, SRC, BUILD = [Path()/d for d in ',src,build'.split(',')]
 SRC_DIRS = 'ml', 'api', 'web'
 
 def runTest(dir):
