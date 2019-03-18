@@ -2,7 +2,7 @@
 
 import React,{useState, useEffect,Children,isElement,createElement} from 'react';
 import {ma,cond,isFunction,isString,isPlainObject,stubTrue,pipe,oo,ensureArray,identity,ife,last,
-        isArray,pget,over,plog,spread,rest,acceptArrayOrArgs,ensureFunction,ro,get,noop} from './utils'
+        isArray,pget,over,plog,spread,rest,acceptArrayOrArgs,ensureFunction,ro,get,noop,merge} from './utils'
 import {curryN,concat,flatten,capitalize} from 'lodash/fp'
 import {styleStringToObj} from './style-string-to-obj'
 
@@ -50,12 +50,12 @@ export const children = (...fnsOrComponents)=>prop('children',p=>React.Children.
 ],identity));
 
 
-export const style = input=>prop('style',cond(
-  [isString,str=>p=>styleStringToObj(str)],
-  [isFunction,fn=>props=>fn(props)],
-  [isPlainObject,obj=>p=>obj],
+export const style = input=>cond(
+  [isString,str=>style(styleStringToObj(str))],
+  [isFunction,fn=>p=>style(fn(p))(p)],
+  [isPlainObject,obj=>p=>merge({},p,{style:obj})],
   [stubTrue,arg=>{throw new TypeError('styles only works with objects, strings, or functions that return those');}]
-)(input));
+)(input);
 
 
 export const eventFactory = eventName => (setter=noop,fn=identity)=>p=>{

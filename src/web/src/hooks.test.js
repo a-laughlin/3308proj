@@ -14,9 +14,6 @@ describe('useStateExample', () => {
 
 describe('style', () => {
   afterEach(cleanup)
-  it('returns a function starting with "use"', () => {
-    expect(style('w100px').name).toMatch(/^use/);
-  })
   it('converts strings to styles', () => {
     const fn = style('w100px');
     expect(fn({})).toEqual({style:{width:'100px'}})
