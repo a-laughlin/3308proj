@@ -23,7 +23,6 @@ export const styleStringToObj = (()=>{
   };
 
   const styleSeparator = ' ';
-  let raw,split;
   const getCachedOrParseThenCache = (str)=>{
     if(str.raw) str=str.raw[0]; // handle tagged template strings e.g., s`w100px`;
     return cache[str]||(cache[str]=merge({},...str.split(styleSeparator).filter(s=>!!s).map(s=>cache[s]||(cache[s]=parser(s)))));
@@ -64,6 +63,7 @@ export const styleStringToObj = (()=>{
     tc:(num,unit)=>({color:parseColor(num,unit)}),//text color
     bg:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
     bgc:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
+    fill:(num,unit)=>({fill:parseColor(num,unit)}),//text color
 
     /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
     nth:(num,unit)=>({[`:nth-child(${num})`]:parseNested(unit)}),
@@ -129,6 +129,9 @@ export const styleStringToObj = (()=>{
     tvaM:{verticalAlign:'middle'},
     tvaT:{verticalAlign:'top'},
     tvaB:{verticalAlign:'bottom'},
+    taC:{textAlign:'middle'},
+    taL:{textAlign:'top'},
+    taR:{textAlign:'bottom'},
     // tSans from https://css-tricks.com/snippets/css/system-font-stack/
     tSans:{ fontFamily: `-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,`+
       `Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif`},

@@ -23,7 +23,7 @@ export const stubObject = ()=>({});
 export const stubString = ()=>'';
 export const stubTrue = ()=>true;
 export const stubFalse = ()=>false;
-
+export const noop = ()=>{};
 
 
 
@@ -46,13 +46,26 @@ export const plog = (msg='')=>pipeVal=>console.log(msg,pipeVal) || pipeVal;
 
 // flow
 export {once,over};
-export const pipe = (fn1=identity,...fns)=>(arg1,...args)=>fns.reduce((a,f)=>f(a),fn1(arg1,...args));
+export const pipe = (fn=identity,...fns)=>(arg1,...args)=>{
+  let nextfn;
+  let result = fn(arg1,...args);
+  for (nextfn of fns){
+    result=nextfn(result);
+  }
+  return result;
+}
 export const dpipe = (data,...args)=>pipe(...args)(data);
 export const compose = (...fns)=>pipe(...fns.reverse());
 
 // functions
 export {spread,rest,identity}
 export const acceptArrayOrArgs = fn=>(...args)=>args.length>1 ? fn(args) : fn(...args);
+export const invokeArgsOnObj = (...args) => mapValues(fn=>fn(...args));
+export const invokeObjectWithArgs = (obj)=>(...args) => mapValues(fn=>isFunction(fn) ? fn(...args) : fn)(obj);
+export const mergeToBlank = acceptArrayOrArgs(vals => merge({},...vals));
+
+export const overObj = obj=>(...args)=>mo(f=>f(...args))(obj);
+export const converge = (arg)=>(isArray(arg)?over:overObj)(arg);
 
 // casting
 export {constant};
