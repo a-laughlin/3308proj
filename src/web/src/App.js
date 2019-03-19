@@ -10,7 +10,7 @@ import {plog,pipe,get,oo} from './utils';
 
    const text_style = {fill:'#000',transform:'translateY(20%)'}
    const x_vals = [100,20,40,60,20,90,80,60,20,100,40,20,20,40,40]
-   const y_vals = [500,10,15,20,30,40,60,80,120,160,240,320,400,480]
+   const y_vals = [0,10,15,20,30,40,60,80,120,160,240,320,400,480]
    const xy_vals = y_vals.map((y, x) => [x*10, 500-y].join(" ")) 
    console.log(xy_vals)
 
