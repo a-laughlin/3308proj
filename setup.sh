@@ -108,13 +108,19 @@ else
   # ensure_alias pstart "./setup.sh;"
   # ensure_alias ptest "./build.py test;"
 
+  # remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+  # remote:
+  # remote: Create a pull request for 'adam' on GitHub by visiting:
+  # remote:      https://github.com/a-laughlin/3308proj/pull/new/adam
+  # remote:
+
   # installations
-  ensure latest web dependencies installed
+  # ensure latest web dependencies installed
   builtin cd src/web
   yarn install
   builtin cd -
 
-  ensure latest py dependencies installed
+  # ensure latest py dependencies installed
   pipenv install --dev --skip-lock
   pipenv shell
 fi
