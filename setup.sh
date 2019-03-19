@@ -24,15 +24,19 @@ else
   ! [[ $(command -v git) ]] && brew install git
   ! [[ $(command -v git) ]] && echo "ERROR installing git" && exit 1;
 
+
   # git configuration for push/pull
   ginfo=$(git status -sb | head -n1) # outputs ## <branchname>...origin/master [ahead 3]
-  [[ $ginfo != *"origin/master"* ]] && git branch --set-upstream-to origin/master # ensure git always pulls from origin master on this branch
+  [[ $ginfo = *"master..."* ]] && echo "WARNING: on master branch - create a new branch like 'git checkout -b $USER' and re-run this script" && exit 1;
   [[ $ginfo = *"behind"* ]] && echo "WARNING: git pull needed, then re-run this script" && exit 1
+  [[ $ginfo != *"origin/master"* ]] && git branch --set-upstream-to origin/master; # ensure git always pulls from origin master on this branch
+  [[ $( git config push.default ) != current ]] && config push.default current
+
 
   # nvm
   ! [[ $(brew --prefix nvm) ]] && brew install nvm;
   ! [[ $(brew --prefix nvm) ]] && echo "ERROR installing nvm (1)" && exit 1;
-  [[ $NVM_DIR ]] && ! [[ "$NVM_DIR" != "$HOME/.nvm" ]] && echo "ERROR conflicting NVM_DIR... Remove it wherever it's defined." && exit 1;
+  [[ $NVM_DIR ]] && [[ "$NVM_DIR" != "$HOME/.nvm" ]] && echo "ERROR conflicting NVM_DIR... Remove it wherever it's defined." && exit 1;
   export NVM_DIR="$HOME/.nvm";
   nvm_scripts_dir="$(brew --prefix nvm)";
   nvm_shell="$nvm_scripts_dir/nvm.sh";
@@ -60,11 +64,6 @@ else
   ! [[ $(command -v create-react-app) ]] && yarn global add create-react-app
   ! [[ $(command -v create-react-app) ]] && echo "ERROR installing create-react-app" && exit 1;
 
-  # ensure latest web dependencies installed
-  builtin cd src/web
-  yarn install
-  builtin cd -
-
 
 
   # pyenv
@@ -74,16 +73,52 @@ else
   ! [[ $(pyenv global) ]] && echo "ERROR setting pyenv global" && exit 1;
   export PYENV_ROOT=$(pyenv root)
   [[ "$PATH" != *"$PYENV_ROOT"* ]] && export PATH="$PYENV_ROOT:$PATH";
-  [[ "$cfg" != *"$PYENV_ROOT"* ]] && echo "export PYENV_ROOT=$PYENV_ROOT;" >> $configfile;
-  [[ "$cfg" != *'export PATH="$PYENV_ROOT:$PATH"'* ]] && echo 'export PATH="$PYENV_ROOT:$PATH";' >> $configfile;
+  [[ "$cfg" != *"$PYENV_ROOT"* ]] && echo "export PYENV_ROOT='$PYENV_ROOT';" >> $configfile;
+  [[ "$cfg" != *'[[ "$PATH" != *"$PYENV_ROOT"* ]] && export PATH="$PYENV_ROOT:$PATH";'* ]] && echo '[[ "$PATH" != *"$PYENV_ROOT"* ]] && export PATH="$PYENV_ROOT:$PATH";' >> $configfile;
+
 
   # pipenv
   export PIPENV_CACHE_DIR="$HOME/.pipenv/.packages/"
   export WORKON_HOME="$HOME/.pipenv/.venvs/"
-  [[ "$cfg" != *'PIPENV_CACHE_DIR'* ]] && echo "export PIPENV_CACHE_DIR='$PIPENV_CACHE_DIR'" >> $configfile;
-  [[ "$cfg" != *'WORKON_HOME'* ]] && echo "export WORKON_HOME='$WORKON_HOME'" >> $configfile;
+  [[ "$cfg" != *'PIPENV_CACHE_DIR'* ]] && echo "export PIPENV_CACHE_DIR='$PIPENV_CACHE_DIR';" >> $configfile;
+  [[ "$cfg" != *'WORKON_HOME'* ]] && echo "export WORKON_HOME='$WORKON_HOME';" >> $configfile;
   ! [[ $(brew --prefix pipenv) ]] && brew install pipenv
   ! [[ $(command -v pipenv) ]] && echo "ERROR installing pipenv" && exit 1
+
+
+
+
+  # ensure_alias(){
+  #   cmd="alias $1=\"${@:2}\";";
+  #   ! [[ $(command -v $1 ) ]] && (echo "setting $cmd" && eval "$cmd") || (echo "$cmd didn't work... exiting" && exit 1);
+  #   [[ "$cfg" != *"$cmd"* ]] && echo "$cmd" >> $configfile;
+  # }
+  # add "git push origin Chris" to config
+  # add check that it isnt master branch
+  # git push | sed (get url) | open PR page in chrome
+  # set up some aliases
+  # ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
+  #
+  # ensure_config_comment "3308 Project Aliases";
+  # ensure_alias pdir "cd '$PWD'";
+  # ensure_alias pweb "cd '$PWD/src/web'";
+  # ensure_alias pml "cd '$PWD/src/ML'";
+  # ensure_alias ppull "git pull"
+  # ensure_alias ppush "[[ \$(git pull) = 'Already up to date.' ]] && ./build.py test &&  git push;";
+  # ensure_alias pstart "./setup.sh;"
+  # ensure_alias ptest "./build.py test;"
+
+  # remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+  # remote:
+  # remote: Create a pull request for 'adam' on GitHub by visiting:
+  # remote:      https://github.com/a-laughlin/3308proj/pull/new/adam
+  # remote:
+
+  # installations
+  # ensure latest web dependencies installed
+  builtin cd src/web
+  yarn install
+  builtin cd -
 
   # ensure latest py dependencies installed
   pipenv install --dev --skip-lock
