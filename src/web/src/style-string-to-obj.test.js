@@ -66,6 +66,8 @@ for (const u in units){
   }
 }
 
+expect(s`transx1`).toEqual({transform:'translateX(1%)'});
+expect(s`transy1`).toEqual({transform:'translateY(1%)'});
 expect(s('m1')).toEqual({marginTop:'1%',marginRight:'1%',marginBottom:'1%',marginLeft:'1%'})
 expect(s('p1')).toEqual({paddingTop:'1%',paddingRight:'1%',paddingBottom:'1%',paddingLeft:'1%'})
 expect(s('b1')).toEqual({borderTopWidth:'1%',borderRightWidth:'1%',borderBottomWidth:'1%',borderLeftWidth:'1%'})

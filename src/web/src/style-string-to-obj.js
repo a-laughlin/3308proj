@@ -3,15 +3,19 @@ import pipe from 'lodash/flow'
 
 export const styleStringToObj = (()=>{
   const styleMatcher = /^([a-z]+)([A-Z0-9.:#+-]+)(.*)$/;
+  const valSetterFactory = fn=>(...keys)=>pipe(fn,sz=>keys.reduce((o,k)=>{o[k]=sz;return o;},{}));
+  const parseColor = (num,unit)=>{
+    if (num==='T') return 'transparent';
+    if (num==='N') return 'none';
+    if (num.length===1) return `#${num}${num}${num}`;
+    if (num.length===2) return `#${num}${num[1]}`;
+    if (num.length===3) return `#${num}`;
+    if (num.length===6) return `#${num}`;
+    return `${num}${unit}`;
+  };
   const getSizeVal = (num,unit)=>`${num}${units[unit]}`;
-  const getSizeObj = (key)=>(num,unit)=>({[key]:getSizeVal(num,unit)});
-  const parseColor = (num,unit)=>(
-    num.length===1&&num!=='#'
-      ?`#${num}${num}${num}`
-      :num.length===3
-        ?`#${num}`
-        :`${num}${unit}`
-  );
+  const getSizeObj = valSetterFactory(getSizeVal);
+  const getColorObj = valSetterFactory(parseColor);
   const parser = (str)=>{
     try{
       const [_,prefix,num,unit]=str.match(styleMatcher) // eslint-disable-line no-unused-vars
@@ -41,30 +45,35 @@ export const styleStringToObj = (()=>{
     maxw:getSizeObj('maxWidth'),
     minh:getSizeObj('minHeight'),
     maxh:getSizeObj('maxHeight'),
-    m:pipe(getSizeVal,sz=>({marginTop:sz,marginRight:sz,marginBottom:sz,marginLeft:sz})),
+    m:getSizeObj('marginTop','marginRight','marginBottom','marginLeft'),
     mt:getSizeObj('marginTop'),
     mr:getSizeObj('marginRight'),
     mb:getSizeObj('marginBottom'),
     ml:getSizeObj('marginLeft'),
-    p:pipe(getSizeVal,sz=>({paddingTop:sz,paddingRight:sz,paddingBottom:sz,paddingLeft:sz})),
+    p:getSizeObj('paddingTop','paddingRight','paddingBottom','paddingLeft'),
     pt:getSizeObj('paddingTop'),
     pr:getSizeObj('paddingRight'),
     pb:getSizeObj('paddingBottom'),
     pl:getSizeObj('paddingLeft'),
-    b:pipe(getSizeVal,sz=>({borderTopWidth:sz,borderRightWidth:sz,borderBottomWidth:sz,borderLeftWidth:sz})),
+    b:getSizeObj('borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth'),
     bt:getSizeObj('borderTopWidth'),
     br:getSizeObj('borderRightWidth'),
     bb:getSizeObj('borderBottomWidth'),
     bl:getSizeObj('borderLeftWidth'),
-    bc:(num,unit)=>({borderColor:parseColor(num,unit)}),
+    bc:getColorObj('borderColor'),
     brad:getSizeObj('borderRadius'),
     lh:getSizeObj('lineHeight'),
     t:(num,unit)=>({fontSize:getSizeVal(num,unit),lineHeight:getSizeVal((+num+0.4).toFixed(1),unit)}),
-    tc:(num,unit)=>({color:parseColor(num,unit)}),//text color
-    bg:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
-    bgc:(num,unit)=>({backgroundColor:parseColor(num,unit)}),//text color
-    fill:(num,unit)=>({fill:parseColor(num,unit)}),//text color
-
+    tc:getColorObj('color'),//text color
+    bg:getColorObj('backgroundColor'),//text color
+    bgc:getColorObj('backgroundColor'),//text color
+    op:(num,unit)=>({opacity:num}),
+    // svg-specific
+    fill:getColorObj('fill'),
+    strk:getColorObj('stroke'),
+    strkw:getSizeObj('strokeWidth'),
+    transx:pipe(getSizeVal,sz=>({transform:`translateX(${sz})`})),
+    transy:pipe(getSizeVal,sz=>({transform:`translateY(${sz})`})),
     /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
     nth:(num,unit)=>({[`:nth-child(${num})`]:parseNested(unit)}),
     // select = 6 nth6
@@ -183,6 +192,7 @@ export const styleStringToObj = (()=>{
     dN:{display:'none'},
     dIF:{display:'inline-flex'},
     dI:{display:'inline'},
+
     // visibility
     vV:{visibility:'visible'},
     vH:{visibility:'hidden'},
