@@ -65,7 +65,7 @@ else
   ! [[ $(command -v create-react-app) ]] && echo "ERROR installing create-react-app" && exit 1;
 
 
-  # commenting pyenv and pipenv out since they'll break Brian's setup
+  # # commenting pyenv and pipenv out since they'll break Brian's setup
   # pyenv
   # ! [[ $(command -v pyenv) ]] &&  brew install pyenv
   # ! [[ $(command -v pyenv) ]] &&  echo "ERROR installing pyenv" && exit 1;
@@ -77,8 +77,8 @@ else
   # [[ "$PATH" != *"$PYENV_ROOT"* ]] && export PATH="$PYENV_ROOT:$PATH";
   # [[ "$cfg" != *"$PYENV_ROOT"* ]] && echo "export PYENV_ROOT='$PYENV_ROOT';" >> $configfile;
   # [[ "$cfg" != *'[[ "$PATH" != *"$PYENV_ROOT"* ]] && export PATH="$PYENV_ROOT:$PATH";'* ]] && echo '[[ "$PATH" != *"$PYENV_ROOT"* ]] && export PATH="$PYENV_ROOT:$PATH";' >> $configfile;
-
-
+  #
+  #
   # pipenv
   # export PIPENV_CACHE_DIR="$HOME/.pipenv/.packages/"
   # export WORKON_HOME="$HOME/.pipenv/.venvs/"
@@ -91,39 +91,42 @@ else
   # add check that it isnt master branch
   # set up some aliases
   ensure_alias(){
-    cmd="alias $1=\"${@:2}\";";
+    cmd="alias $1='${@:2}';";
     ! [[ $(command -v $1 ) ]] && eval "$cmd" || (echo "$cmd didn't work... exiting" && exit 1);
     [[ "$cfg" != *"alias $1="* ]] && echo "$cmd" >> $configfile;
   }
   ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
 
   # project aliases
-  ensure_config_comment "3308 Project Aliases";
-  ensure_alias 'pdir' "builtin cd '$PWD'";
-  ensure_alias 'pweb' "builtin cd '$PWD/src/web/src'";
-  ensure_alias 'pstart' "pdir && ./setup.sh";
-  ensure_alias 'pgo' "pstart";
+  ensure_config_comment '3308 Project Aliases';
+  ensure_alias 'pdir' "builtin cd \"$PWD\"";
+  ensure_alias 'pstart' 'pdir && ./setup.sh';
+  ensure_alias 'pgo' 'pstart';
   ensure_alias 'pstop' '[[ $PIPENV_ACTIVE = 1 ]] && exit 0';
-  ensure_alias 'ptest' "pdir && ./build.py test";
-  ensure_alias 'ppull' "git pull";
+  ensure_alias 'ptest' 'pdir && ./build.py test';
+  ensure_alias 'ppull' 'pdir && git pull';
   # pull | run tests | push | sed (get new pull request url) | open url in browser
-  ensure_alias 'ppush' '[[ \"\$(git pull)\" = \"Already up to date.\" ]] && (./build.py test all) && git push && open \"https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)\"';
+  ensure_alias 'ppush' 'pdir && [[ "$(git pull)" = "Already up to date." ]] && (./build.py test all) && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
 
-  ensure_config_comment "3308 Project ML Aliases";
-  ensure_alias 'pml' "builtin cd '$PWD/src/ml'";
+  ensure_config_comment '3308 Project ML Aliases';
+  ensure_alias 'pml' "builtin cd \"$PWD/src/ml\"";
+  ensure_alias 'pmtest' "pdir \"$PWD/src/ml\"";
 
   # web aliases
-  ensure_config_comment "3308 Project Web Aliases";
-  ensure_alias 'pwstart' "pweb && yarn start";
-  ensure_alias 'pwgo' "pwstart";
-  ensure_alias 'pwtest' "pweb && yarn test";
+  ensure_config_comment '3308 Project Web Aliases';
+  ensure_alias 'pweb' "builtin cd \"$PWD/src/web/src\"";
+  ensure_alias 'pwstart' 'pweb && yarn start';
+  ensure_alias 'pwgo' 'pwstart';
+  ensure_alias 'pwtest' 'pweb && yarn test';
+
+
   # installations
-  # ensure latest web dependencies installed
+  ensure latest web dependencies installed
   builtin cd src/web
   yarn install
   builtin cd -
 
-  # ensure latest py dependencies installed
+  ensure latest py dependencies installed
   pipenv install --dev --skip-lock
   pipenv shell
   exit 0
