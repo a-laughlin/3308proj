@@ -121,12 +121,12 @@ else
 
 
   # installations
-  ensure latest web dependencies installed
+
   builtin cd src/web
-  yarn install
+  yarn install || (echo "ERROR installing yarn" && exit 1);
   builtin cd -
 
-  ensure latest py dependencies installed
+
   pipenv install --dev --skip-lock
   pipenv shell
   exit 0
