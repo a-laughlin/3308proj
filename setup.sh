@@ -96,20 +96,27 @@ else
     [[ "$cfg" != *"alias $1="* ]] && echo "$cmd" >> $configfile;
   }
   ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
+
+  # project aliases
   ensure_config_comment "3308 Project Aliases";
   ensure_alias 'pdir' "builtin cd '$PWD'";
   ensure_alias 'pweb' "builtin cd '$PWD/src/web/src'";
-  ensure_alias 'pwtest' "pweb && yarn test;";
-  ensure_alias 'pwstart' "pweb && yarn start;";
-  ensure_alias 'pwgo' "pwstart";
-  ensure_alias 'pml' "builtin cd '$PWD/src/ml'";
-  ensure_alias 'pstart' "pdir && ./setup.sh;";
+  ensure_alias 'pstart' "pdir && ./setup.sh";
   ensure_alias 'pgo' "pstart";
-  ensure_alias 'pstop' '[[ $PIPENV_ACTIVE = 1 ]] && exit 0;';
-  ensure_alias 'ptest' "pdir && ./build.py test;";
+  ensure_alias 'pstop' '[[ $PIPENV_ACTIVE = 1 ]] && exit 0';
+  ensure_alias 'ptest' "pdir && ./build.py test";
   ensure_alias 'ppull' "git pull";
   # pull | run tests | push | sed (get new pull request url) | open url in browser
   ensure_alias 'ppush' '[[ \"$(git pull)\" = \"Already up to date.\" ]] && (./build.py test all) && git push && open \"https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)\"';
+
+  ensure_config_comment "3308 Project ML Aliases";
+  ensure_alias 'pml' "builtin cd '$PWD/src/ml'";
+
+  # web aliases
+  ensure_config_comment "3308 Project Web Aliases";
+  ensure_alias 'pwstart' "pweb && yarn start";
+  ensure_alias 'pwgo' "pwstart";
+  ensure_alias 'pwtest' "pweb && yarn test";
   # installations
   # ensure latest web dependencies installed
   builtin cd src/web
