@@ -4,13 +4,15 @@ import pipe from 'lodash/flow'
 export const styleStringToObj = (()=>{
   const styleMatcher = /^([a-z]+)([A-Z0-9.:#+-]+)(.*)$/;
   const valSetterFactory = fn=>(...keys)=>pipe(fn,sz=>keys.reduce((o,k)=>{o[k]=sz;return o;},{}));
-  const parseColor = (num,unit)=>(
-    num.length===1&&num!=='#'
-      ?`#${num}${num}${num}`
-      :num.length===3
-        ?`#${num}`
-        :`${num}${unit}`
-  );
+  const parseColor = (num,unit)=>{
+    if (num==='T') return 'transparent';
+    if (num==='N') return 'none';
+    if (num.length===1) return `#${num}${num}${num}`;
+    if (num.length===2) return `#${num}${num[1]}`;
+    if (num.length===3) return `#${num}`;
+    if (num.length===6) return `#${num}`;
+    return `${num}${unit}`;
+  };
   const getSizeVal = (num,unit)=>`${num}${units[unit]}`;
   const getSizeObj = valSetterFactory(getSizeVal);
   const getColorObj = valSetterFactory(parseColor);
@@ -65,10 +67,10 @@ export const styleStringToObj = (()=>{
     tc:getColorObj('color'),//text color
     bg:getColorObj('backgroundColor'),//text color
     bgc:getColorObj('backgroundColor'),//text color
-
+    op:(num,unit)=>({opacity:num}),
     // svg-specific
-    fill:(num,unit)=>({fill:parseColor(num,unit)}),//text color
-    strk:getSizeObj('stroke'),
+    fill:getColorObj('fill'),
+    strk:getColorObj('stroke'),
     strkw:getSizeObj('strokeWidth'),
     transx:pipe(getSizeVal,sz=>({transform:`translateX(${sz})`})),
     transy:pipe(getSizeVal,sz=>({transform:`translateY(${sz})`})),
@@ -190,6 +192,7 @@ export const styleStringToObj = (()=>{
     dN:{display:'none'},
     dIF:{display:'inline-flex'},
     dI:{display:'inline'},
+
     // visibility
     vV:{visibility:'visible'},
     vH:{visibility:'hidden'},
