@@ -107,7 +107,7 @@ else
   ensure_alias 'ptest' "pdir && ./build.py test";
   ensure_alias 'ppull' "git pull";
   # pull | run tests | push | sed (get new pull request url) | open url in browser
-  ensure_alias 'ppush' '[[ \"$(git pull)\" = \"Already up to date.\" ]] && (./build.py test all) && git push && open \"https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)\"';
+  ensure_alias 'ppush' '[[ \"\$(git pull)\" = \"Already up to date.\" ]] && (./build.py test all) && git push && open \"https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)\"';
 
   ensure_config_comment "3308 Project ML Aliases";
   ensure_alias 'pml' "builtin cd '$PWD/src/ml'";

@@ -6,7 +6,9 @@
     "lodash": "^4.17.11",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "react-apollo-hooks": "^0.4.3",
+    "apollo-boost": "*"
   },
   "devDependencies": {
     "react-hooks-testing-library": "*",

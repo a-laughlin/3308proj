@@ -36,8 +36,6 @@ export const App = props=>
   </div>;
 
 
-
-
 const AdamExperiment1 = Div(' AdamExperiment1... ');
 
 const AdamExperiment2 = Div(
@@ -46,6 +44,7 @@ const AdamExperiment2 = Div(
     AdamExperiment1('Random Text'),
     p=>Div(`Rabbits:${p.rabbits}`,style('bg4BB')),
     p=>Button('More Rabbits!',onClick(p.more,fn=>fn(p.rabbits*2))),
+    pipe()
   ),
   style('w200px h200px bg299 t80 lh140'),
   oo('more') // oo = "Omit to Object"
