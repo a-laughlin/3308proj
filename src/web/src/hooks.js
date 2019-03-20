@@ -50,12 +50,12 @@ export const children = (...fnsOrComponents)=>prop('children',p=>React.Children.
 ],identity));
 
 
-export const style = input=>cond(
+export const style = cond(
   [isString,str=>style(styleStringToObj(str))],
   [isFunction,fn=>p=>style(fn(p))(p)],
   [isPlainObject,obj=>p=>merge({},p,{style:obj})],
   [stubTrue,arg=>{throw new TypeError('styles only works with objects, strings, or functions that return those');}]
-)(input);
+);
 
 
 export const eventFactory = eventName => (setter=noop,fn=identity)=>p=>{
