@@ -16,56 +16,53 @@ const xy_vals = y_vals.map((y, x) => [x*10, 500-y].join(" "))
 
 export const App = props=>
   <GraphQLProvider>
-    <div style={s`taC`}>
-      <header style={s`bg077 minh100 fv fAIC tcF`}>
-        <AdamExperiment2/>
-        <svg style={s`w100 h50 posA z1 op.7`}>
-          <rect style={s`w100 h100 fillF`}/>
-          <polyline
-            points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145"
-            {...s`strk990 strkw1 fillT`}/>
-          <polyline points={xy_vals} {...s`strkw1 strk009 fillT`}/>
-          {x_vals.map((x,i) =>
-            <text key={i} style={s(`fill0 transy${i*10}`)}>{x}</text>
-          )}
-          <text style={s`fill0 transy100`}>{JSON.stringify(data)}</text>
+    <div style={s`taC bg077 minh100 fv fAIC tcF`}>
+      <img src="https://news.bitcoin.com/wp-content/uploads/2017/08/Markcap.png" alt="" style={s`w100`} />
+      <div>
+        <svg style={s`w100 h50 posA top0 left0 z1 op.7`}>
+        <rect style={s`w100 h100 fillF`}/>
+        <polyline
+        points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145"
+        {...s`strk990 strkw1 fillT`}/>
+        <polyline points={xy_vals} {...s`strkw1 strk009 fillT`}/>
+        {x_vals.map((x,i) =>
+          <text key={i} style={s(`fill0 transy${i*10}`)}>{x}</text>
+        )}
+        <text style={s`fill0 transy100`}>{JSON.stringify(data)}</text>
         </svg>
-        <img src="https://news.bitcoin.com/wp-content/uploads/2017/08/Markcap.png" alt="" style={s`w100 posA`} />
-      </header>
+      </div>
+      <AdamExperiment2/>
     </div>
   </ GraphQLProvider>;
-// query()get('beats'),ma((y,x)=>`${x*10} ${y}`))
 
-const AdamExperiment1 = Div(' AdamExperiment1... ');
+// hr {start,end,frequency,beats} is a graphql query.
+// using start and end datetime strings makes handling different ranges the most flexible
+  // converting start + end into x coords interpolated with
+  // "frequency" steps would make sense to me
+// {hr:[hist,pred]} is called object and array destructuring
 const Svg2 = Svg(
-  style(s`w100 h100 z5`),
+  style(s`w200px h200px`),
   children(pipe(
-    query(`hr {start,frequency,beats}`),
+    query(`hr {start,end,frequency,beats}`),
     ifLoad(l=>Pre('loading')),
     ifErr(e=>Pre(`${e}`)),
-    ifData(({hr:[hist,pred]})=>[
-      Text(hist.start,style(`fill009 transy10`)),
-      Text(hist.frequency,style(`fill009 transy20`)),
-      Polyline(style(`strkw1 fillT strk009 transy30`),
+    ifData(({hr:[hist,pred]})=>{return [
+      Text(hist.frequency,style(`fill009 transy10`)),
+      Polyline(style(`strkw1 fillT strk009 transy10`),
         prop('points',p=>hist.beats.map((y,x)=>`${x*10} ${100-y}`).join(' '))),
-      Text(pred.start,style(`fill990 transy50`)),
-      Text(pred.frequency,style(`fill990 transy60`)),
-      Polyline(style(`strkw1 fillT strk990 transy70`),
+      Polyline(style(`strkw1 fillT strk990 transy50`),
         prop('points',p=>pred.beats.map((y,x)=>`${x*10} ${100-y}`).join(' '))),
-    ]),
+    ]}),
   ))
 );
 const AdamExperiment2 = Div(
   state('rabbits','more',2),
   children(
-    p=>[Div('foo')],
-    Svg2
-    // AdamExperiment1('Random Text'),
-    // p=>Div(`Rabbits:${p.rabbits}`,style('bg4BB w100 fh fJCC')),
-    // p=>Button('More Rabbits!',onClick(p.more,fn=>fn(p.rabbits*2))),
+    Svg2,
+    p=>Div(`Rabbits:${p.rabbits}`,style('bg4BB w100 fh fJCC')),
+    p=>Button('More Rabbits!',onClick(p.more,fn=>fn(p.rabbits*2))),
   ),
-  plog(`children`),
-  style('w200px h200px bg299 t80 lh140 fv fAIC fJCSE z2'),
+  style('w200px h200px bg299 t80 lh140 fv fAIC fJCSE'),
   oo('more')
 )
 

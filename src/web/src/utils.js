@@ -131,7 +131,11 @@ export const partition = ifElse(isArray,partitionArray,partitionObject);
 // getters
 export {get,set,_set,unset,nth,first,last,keyBy};
 export const pget = cond(
-  [isString,get],
+  [isString,s=>targ=>{
+    // eslint-disable-next-line no-loop-func
+    for (s of s.split('.')) targ = isArray(targ) ? targ.map(o=>o[s]) : targ[s];
+    return targ
+  }],
   [isArray,pick],
   [isPlainObject, obj=>target=>mo(f=>pget(f)(target))(obj)],
   [stubTrue,identity], // handles the function case

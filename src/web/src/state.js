@@ -33,16 +33,9 @@ const client = new ApolloClient({
   //   }
   // `,
   // resolvers: {
-  //   hrh:
+  //   hr:
   // }
 });
-// extend type hr_hist {
-  //   id: ID!
-  //   beats: []
-  // }
-  // extend type Mutation {
-    //   addOrRemoveFromCart(id: ID!): [Launch]
-    // }
 
 client.writeData({data:{
   hr:[
