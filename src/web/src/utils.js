@@ -2,7 +2,7 @@ import {
   pick, pickBy,get,map as mapFP, transform as transformFP,flatten,mapValues as mapValuesFP,
   omit, omitBy,reduce as reduceFP,spread,rest,filter as filterFP,uniqueId,
   matches as matchesFP,concat,constant,overEvery,overSome,
-  negate,flatMap,flattenDeep,over, identity, difference,isArray,
+  negate,flatMap as flatMapFP,flattenDeep,over, identity, difference,isArray,
   isInteger,isError,isNumber,isObjectLike,hasIn,has,isWeakMap, isWeakSet, isMap, isSet,isEmpty,
   isString, isPlainObject, isFunction, isNull,isUndefined,set,unset,once,
   sortBy,keyBy,every,values,keys,zip,unzip,union,conforms,intersection,nth,first,last
@@ -10,8 +10,8 @@ import {
 
 import {merge,mergeWith,set as _set} from 'lodash';
 
-const [transform,filter,map,mapValues,reduce] = [
-  transformFP,filterFP,mapFP,mapValuesFP,reduceFP].map(fn=>fn.convert({cap:false}));
+const [transform,filter,map,mapValues,reduce,flatMap] = [
+  transformFP,filterFP,mapFP,mapValuesFP,reduceFP,flatMapFP].map(fn=>fn.convert({cap:false}));
 
 
 
