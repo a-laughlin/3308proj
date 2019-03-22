@@ -2,9 +2,8 @@
 /* eslint-disable no-unused-vars */
 import React,{useState} from 'react';
 import './App.css';
-import {GraphQLProvider} from './state';
-import {Div,Pre,Button,Polyline,Svg,Text,style,children,prop,state,query,mutate,
-  ifLoad,ifErr,ifData, onClick,toDstr,fromDstr
+import {useHeartRateQuery,ifLoad,ifErr,ifData,query,mutate} from './state';
+import {Div,Pre,Button,Polyline,Svg,Text,style,children,prop,state,onClick,toDstr,fromDstr
 } from './hooks'
 import {styleStringToObj as s} from './style-string-to-obj'
 import data from './sample_data/ml_output_foo.json';
@@ -14,7 +13,7 @@ const x_vals = [100,20,40,60,20,90,80,60,20,100,40,20,20,40,40]
 const y_vals = [0,10,15,20,30,40,60,80,120,160,240,320,400,480]
 const xy_vals = y_vals.map((y, x) => [x*10, 500-y].join(" "))
 
-const useHeartRateQuery = query(`hr {start,end,frequency,beats}`);
+
 const beatsToXYStr = b=>b.map((y,x)=>`${x*10} ${100-y}`).join(' ');
 
 export const SvgMain = (props)=>{
@@ -57,7 +56,7 @@ const Svg2 = Svg(
 const AdamExperiment2 = Div(
   state('rabbits','more',2),
   onClick(()=>{},(x,evt)=>{
-    mutate('hr {beats}');
+    mutate({query:'hr {beats}'});
   }),
   children(
     Svg2,
