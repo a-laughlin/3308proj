@@ -132,8 +132,8 @@ export const partition = ifElse(isArray,partitionArray,partitionObject);
 export {get,set,_set,unset,nth,first,last,keyBy};
 export const pget = cond(
   [isString,s=>targ=>{
-    // eslint-disable-next-line no-loop-func
-    for (s of s.split('.')) targ = isArray(targ) ? targ.map(o=>o[s]) : targ[s];
+    const fn = o=>o[s];
+    for (s of s.split('.')) targ = isArray(targ) ? targ.map(fn) : targ[s];
     return targ
   }],
   [isArray,pick],

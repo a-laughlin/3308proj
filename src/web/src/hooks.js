@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 
-import React,{useState, useEffect,Children,isElement,createElement} from 'react';
+import React,{useState,useLayoutEffect, useEffect,Children,isElement,createElement} from 'react';
 import {ma,cond,isFunction,isString,isPlainObject,stubTrue,pipe,oo,ensureArray,identity,ife,last,
         isArray,pget,over,plog,spread,rest,acceptArrayOrArgs,ensureFunction,ro,get,noop,merge,
         hasIn as has,flattenDeep,flatMap
       } from './utils'
 import {curryN,concat,flatten,capitalize} from 'lodash/fp'
 import {styleStringToObj} from './style-string-to-obj'
-import { useMutation,useQuery} from 'react-apollo-hooks';
+// import { useMutation,useQuery} from 'react-apollo-hooks';
+import {client} from './state';
 import {gql} from "apollo-boost";
 export const toHookComposer = (component)=>(...hooks)=>function hookComposer (...props){
   if(!isPlainObject(props[0])) return toHookComposer(component)(...hooks,...props);
@@ -81,13 +82,49 @@ export const fromDstr = p=>{
   console.log(`p`, p);
   return get('data-str');
 }
-// dest=>p=>pipe(
-//   prop(dest,pp=>p['data-str']),
-//   oo('data-str')
-// )(p);
 
+// options from https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.watchQuery
+export const useObservable = (observable, initialValue) => {
+  const [value, setValue] = useState(initialValue);
+  useEffect(()=>observable.subscribe(setValue).unsubscribe, [observable] );
+  return value;
+};
+
+export const query = (gqlStr='', options={})=>{
+  const parsed = gql`query {${gqlStr}}`;
+  const obs = client.watchQuery({query:parsed,...options});
+  const initial = {data:client.readQuery({query:parsed}),loading:false};
+  return function useQuery(p){
+    return useObservable(obs,initial);
+  }
+}
+export const mutate = ( gqlStr='', options={})=>{
+  console.log(`mutate`);
+  const parsed = gql`query {${gqlStr}}`;
+  console.log(`parsed`, {query:parsed});
+  const data = client.readQuery({query:parsed});
+  const pred = data.hr[1];
+  const hist = data.hr[0];
+  console.log(`current`,data);
+  client.writeQuery({
+    query:parsed,
+    fetchPolicy:"client-only",
+    data:{
+      hr:[
+        hist,
+        {...pred,beats:[...pred.beats,50]},
+      ]
+    }
+  });
+  // return client.mutate({
+  //   query:gql`mutation {${gqlStr}}`,
+  //   awaitRefetchQueries:true, // optimistic UI unneeded.
+  //   ...options
+  // });
+}
 
 export const ifLoad = fn=>ife(get('loading'),x=>fn('loading'));
 export const ifErr = fn=>ife(get('error'),x=>fn(x.error));
 export const ifData = fn=>ife(get('data'),x=>fn(x.data));
-export const query = (gqlStr,vars)=>p=>useQuery(gql`query {${gqlStr}}`,{variables:vars});
+// export const query = (gqlStr,vars)=>p=>useQuery(gql`query {${gqlStr}}`,{variables:vars});
+// export const query2 = (gqlStr,vars={})=>useQuery(gql`query {${gqlStr}}`,{variables:vars});
