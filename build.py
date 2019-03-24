@@ -23,7 +23,12 @@ default_ops = dict(
 opdirs = {op:{d:default_ops[op] for d in SRC_DIRS } for op in default_ops.keys()}
 
 # Customizations
-opdirs['test']['web']=lambda dir:run(['yarn','test','--no-watch'],cwd=SRC/dir) or exit(1)
+# def runWebTest():
+#   res = run(['yarn','test','--no-watch'],cwd=SRC/dir);
+#   if res.returncode
+#   exit(1)
+#   print(res.keys())
+opdirs['test']['web']=lambda dir:run(['yarn','test','--no-watch'],cwd=SRC/dir).returncode and exit(1)
 
 if __name__ == '__main__':
   if len(argv)==1:
