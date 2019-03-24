@@ -41,7 +41,7 @@ export const SvgMain = (props)=>{
 const Svg2 = Svg(
   children(pipe(useHeartRateQuery,cond(
     [isLoading,Text('Loading...')],
-    [isError,e=>Text(`${e}`)],
+    // [isError,e=>Text(`${e}`)],
     [isData,({hr:[ {beats:hist,freq}, {beats:pred} ]}) =>[
       Text(freq,style(`fill009 transy10`)),
       Polyline(style(`strkw1 fillT strk009 transy10`), prop('points',p=>beatsToXYStr(hist))),
@@ -53,6 +53,7 @@ const Svg2 = Svg(
 
 const AdamExperiment2 = Div(
   state('rabbits','more',2),
+  style('w100 h100 bg299 t80 lh140 fv fAIC fJCSE usN crD'),
   children(
     Svg2,
     p=>Div(`Rabbits:${p.rabbits}`,style('bg4BB fh fJCC')),
@@ -66,7 +67,6 @@ const AdamExperiment2 = Div(
       }))
     })),
   ),
-  style('w100 h100 bg299 t80 lh140 fv fAIC fJCSE usN crD'),
   oo('more')
 )
 

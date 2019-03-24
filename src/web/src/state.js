@@ -45,7 +45,7 @@ client.defaultOptions = {
   },
   mutate: {
     fetchPolicy: 'no-cache',
-    errorPolicy: 'all'
+    errorPolicy: 'none'// none(error or data)|ignore (no errors)|all (errors and data)
   }
 };
 client.writeData({data:{ // initial state
@@ -90,7 +90,6 @@ export const mutate = (options={})=>{
   return fn=>{
     client.writeQuery({...options,data:fn(client.readQuery(options))})
     // mutate is only for updating the server
-    // debugger;
     // client.mutate({...options,update:fn})
   }
 }
@@ -98,4 +97,4 @@ export const mutate = (options={})=>{
 export const isLoading = x=>x==='loading';
 export const isError = x=> x instanceof Error;
 export const isData = x=> !isLoading(x) && !isError(x);
-export const useHeartRateQuery = getUseWatchQuery({query:`query {hr @client {id @client,start @client,end @client,freq @client,beats @client}}`});
+export const useHeartRateQuery = getUseWatchQuery({query:`{hr @client {id @client,start @client,end @client,freq @client,beats @client}}`});
