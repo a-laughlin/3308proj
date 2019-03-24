@@ -1,20 +1,29 @@
 /* eslint-disable no-unused-vars */
-
-import React,{useState, useEffect,Children,isElement,createElement} from 'react';
+import React,{useState,useLayoutEffect, useEffect,Children,isElement,createElement} from 'react';
 import {ma,cond,isFunction,isString,isPlainObject,stubTrue,pipe,oo,ensureArray,identity,ife,last,
         isArray,pget,over,plog,spread,rest,acceptArrayOrArgs,ensureFunction,ro,get,noop,merge,
         hasIn as has,flattenDeep,flatMap
       } from './utils'
 import {curryN,concat,flatten,capitalize} from 'lodash/fp'
 import {styleStringToObj} from './style-string-to-obj'
-import { useMutation,useQuery} from 'react-apollo-hooks';
+// import { useMutation,useQuery} from 'react-apollo-hooks';
+import {client} from './state';
 import {gql} from "apollo-boost";
-export const toHookComposer = (component)=>(...hooks)=>function hookComposer (...props){
-  if(!isPlainObject(props[0])) return toHookComposer(component)(...hooks,...props);
-  return createElement(component, pipe(...hooks.map(ife(isString,s=>children(s))))(...props));
+export const toHookComposer = (component)=>(...hooks)=>{
+  function hookComposer (...props){
+    if(!isPlainObject(props[0])) return toHookComposer(component)(...hooks,...props);
+    return createElement(component, pipe(...hooks.map(ife(isString,s=>children(s))))(...props));
+  }
+  hookComposer.isHookComposer=true;
+  if (process.env.NODE_ENV !== 'production'){
+    // add dev friendly names for debugging
+    return Object.defineProperty(hookComposer,'name', {
+      value: component.name || (typeof component === 'string' ? component : 'hookComposer'), writable: false
+    });
+  }
+  return hookComposer;
 }
-export const isHookComposer = fn=>fn.name==='hookComposer';
-export const ensureHookComposer = ife(isHookComposer,identity,toHookComposer);
+export const isHookComposer = fn=>fn.isHookComposer===true;
 
 export const [Div,Span,Ul,Ol,Dt,Dd,Dl,Article,P,H1,H2,H3,H4,H5,H6,Li,Input,A,Label,Pre,Textarea] = (
              'div,span,ul,ol,dt,dd,dl,article,p,h1,h2,h3,h4,h5,h6,li,input,a,label,pre,textarea'
@@ -49,7 +58,7 @@ export const children = (...fnsOrComponents)=>prop('children',p=>React.Children.
     if(isFunction(C)) return C(p);
     if(isElement(C)) return C;
     throw new Error(`children accepts undefined,null,numbers,strings, hookComposers, and functions that return those. Received "${C}"`);
-  })(fnsOrComponents))({'data-str':p['data-str']}),
+  })(fnsOrComponents))({}),
 ],identity));
 
 
@@ -61,33 +70,22 @@ export const style = cond(
 );
 
 
-export const eventFactory = eventName => (setter=noop,fn=identity)=>p=>{
-  const stateSetter=isFunction(setter)?setter:p[setter];
-  const handler = evt=>fn(stateSetter,evt);
-  return {...p,[eventName]:handler};
-}
-
+export const eventFactory = evtName => (fn=identity)=>p=>(
+  {...p,[evtName]:evt=>console.log(`p,evtName`, p,evtName)||fn(p,evt)}
+);
 
 export const [onClick,onChange,onKeydown,onKeyup,onKeyPress,onSubmit,onInput] = (
              'onClick,onChange,onKeydown,onKeyup,onKeyPress,onSubmit,onInput'
              .split(',').map(s=>eventFactory(s)));
 
-
 export const state = (v, fn, getInitial)=>prop([v,fn],ensureFunction(getInitial),useState);
 
 
 export const toDstr = str=>prop('data-str',ensureFunction(str));
-export const fromDstr = p=>{
-  console.log(`p`, p);
-  return get('data-str');
-}
-// dest=>p=>pipe(
-//   prop(dest,pp=>p['data-str']),
-//   oo('data-str')
-// )(p);
+export const fromDstr = p=>p['data-str'];
 
-
-export const ifLoad = fn=>ife(get('loading'),x=>fn('loading'));
-export const ifErr = fn=>ife(get('error'),x=>fn(x.error));
-export const ifData = fn=>ife(get('data'),x=>fn(x.data));
-export const query = (gqlStr,vars)=>p=>useQuery(gql`query {${gqlStr}}`,{variables:vars});
+export const useObservable = (observable, initialValue) => {
+  const [value, setValue] = useState(initialValue);
+  useEffect(()=>observable.subscribe(setValue).unsubscribe, [observable] );
+  return value;
+};

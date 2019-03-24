@@ -131,10 +131,9 @@ export const partition = ifElse(isArray,partitionArray,partitionObject);
 // getters
 export {get,set,_set,unset,nth,first,last,keyBy};
 export const pget = cond(
-  [isString,s=>targ=>{
-    // eslint-disable-next-line no-loop-func
-    for (s of s.split('.')) targ = isArray(targ) ? targ.map(o=>o[s]) : targ[s];
-    return targ
+  [isString,str=>{
+    str=str.split('.');
+    return targ=>str.reduce((t,s)=>isArray(t) && !isInteger(+s) ? t.map(o=>o[s]) : t[s], targ)
   }],
   [isArray,pick],
   [isPlainObject, obj=>target=>mo(f=>pget(f)(target))(obj)],
@@ -155,6 +154,15 @@ export const groupByValues = ro((o,item,k,c)=>{
 
 // Objects
 export {values,keys}
+export const renameProps = obj=>target=>{
+  let newKey,oldKey,targetCopy = {...target};
+  for (newKey in obj){
+    oldKey=obj[newKey]
+    targetCopy[newKey]=target[oldKey]
+    delete targetCopy[oldKey];
+  }
+  return targetCopy;
+}
 export const objStringifierFactory = ({
   getPrefix=()=>'',
   getSuffix=()=>'',
