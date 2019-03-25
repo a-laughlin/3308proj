@@ -1,7 +1,5 @@
-
 /* eslint-disable no-unused-vars */
-import React,{useState} from 'react';
-import './App.css';
+import React from 'react';
 import {useHeartRateQuery,query,mutate,isLoading,isError,isData} from './state';
 import {Div,Pre,Button,Polyline,Svg,Text,style,children,prop,state,onClick,toDstr,fromDstr
 } from './hooks'
