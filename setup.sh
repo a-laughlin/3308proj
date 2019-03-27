@@ -9,6 +9,14 @@ elif ! [[ -f "./setup.sh" ]]; then
 else
   configfile="$HOME/.bashrc"
   cfg="$(cat $configfile)"
+  ensure_alias(){
+    cmd="alias $1='${@:2}';";
+    ! [[ $(command -v $1 ) ]] && eval "$cmd" || (echo "$cmd didn't work... exiting" && exit 1);
+    [[ "$cfg" != *"alias $1="* ]] && echo "$cmd" >> $configfile;
+  }
+  ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
+
+
 
   if ! [[ $(command -v brew) ]]; then
     if [[ $OSTYPE != *darwin* ]]; then #on linux
@@ -34,6 +42,7 @@ else
 
 
   # nvm
+  ensure_config_comment '3308 Project Exports'
   ! [[ $(brew --prefix nvm) ]] && brew install nvm;
   ! [[ $(brew --prefix nvm) ]] && echo "ERROR installing nvm (1)" && exit 1;
   [[ $NVM_DIR ]] && [[ "$NVM_DIR" != "$HOME/.nvm" ]] && echo "ERROR conflicting NVM_DIR... Remove it wherever it's defined." && exit 1;
@@ -90,12 +99,7 @@ else
 
   # add check that it isnt master branch
   # set up some aliases
-  ensure_alias(){
-    cmd="alias $1='${@:2}';";
-    ! [[ $(command -v $1 ) ]] && eval "$cmd" || (echo "$cmd didn't work... exiting" && exit 1);
-    [[ "$cfg" != *"alias $1="* ]] && echo "$cmd" >> $configfile;
-  }
-  ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
+
 
   # project aliases
   ensure_config_comment '3308 Project Aliases';
