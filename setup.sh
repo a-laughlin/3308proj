@@ -100,8 +100,7 @@ else
   # project aliases
   ensure_config_comment '3308 Project Aliases';
   ensure_alias 'pdir' "builtin cd \"$PWD\"";
-  ensure_alias 'pstart' 'pdir && ./setup.sh';
-  ensure_alias 'pgo' 'pstart';
+  ensure_alias 'pgo' 'pdir && ./setup.sh';
   ensure_alias 'pstop' '[[ $PIPENV_ACTIVE = 1 ]] && exit 0';
   ensure_alias 'ptest' 'pdir && ./build.py test';
   ensure_alias 'ppull' 'pdir && git pull';
@@ -115,19 +114,16 @@ else
   # api aliases
   ensure_config_comment '3308 Project API Aliases';
   ensure_alias 'papi' "builtin cd \"$PWD/src/api\"";
-  ensure_alias 'pastart' "(papi && node ./api.js)";
-  ensure_alias 'pago' "pastart";
+  ensure_alias 'pago' "(papi && node ./api.js)";
 
   # web aliases
   ensure_config_comment '3308 Project Web Aliases';
   ensure_alias 'pweb' "builtin cd \"$PWD/src/web/src\"";
-  ensure_alias 'pwstart' '(pweb && yarn start)';
-  ensure_alias 'pwgo' 'pwstart';
+  ensure_alias 'pwgo' '(pweb && yarn start)';
   ensure_alias 'pwtest' 'pweb && yarn test';
 
   ensure_config_comment '3308 Project API+Web Aliases';
-  ensure_alias 'pawstart' '(trap "kill 0" SIGINT; pwstart & pastart)';
-  ensure_alias 'pawgo' "pawstart";
+  ensure_alias 'pawgo' '(trap "kill 0" SIGINT; pwgo & pago)';
 
 
   # installations
