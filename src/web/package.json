@@ -7,8 +7,6 @@
     "graphql": "^14.1.1",
     "lodash": "^4.17.11",
     "react": "^16.8.4",
-    "react-apollo": "^2.5.2",
-    "react-apollo-hooks": "^0.4.3",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8"
   },

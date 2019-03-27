@@ -112,16 +112,25 @@ else
   ensure_alias 'pml' "builtin cd \"$PWD/src/ml\"";
   ensure_alias 'pmtest' "pdir \"$PWD/src/ml\"";
 
+  # api aliases
+  ensure_config_comment '3308 Project API Aliases';
+  ensure_alias 'papi' "builtin cd \"$PWD/src/api\"";
+  ensure_alias 'pastart' "(papi && node ./api.js)";
+  ensure_alias 'pago' "pastart";
+
   # web aliases
   ensure_config_comment '3308 Project Web Aliases';
   ensure_alias 'pweb' "builtin cd \"$PWD/src/web/src\"";
-  ensure_alias 'pwstart' 'pweb && yarn start';
+  ensure_alias 'pwstart' '(pweb && yarn start)';
   ensure_alias 'pwgo' 'pwstart';
   ensure_alias 'pwtest' 'pweb && yarn test';
 
+  ensure_config_comment '3308 Project API+Web Aliases';
+  ensure_alias 'pawstart' '(trap "kill 0" SIGINT; pwstart & pastart)';
+  ensure_alias 'pawgo' "pawstart";
+
 
   # installations
-
   builtin cd src/web
   yarn install || (echo "ERROR installing yarn" && exit 1);
   builtin cd -
