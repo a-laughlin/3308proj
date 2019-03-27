@@ -135,6 +135,10 @@ else
   yarn install || (echo "ERROR installing yarn" && exit 1);
   builtin cd -
 
+  builtin cd src/api
+  yarn install || (echo "ERROR installing yarn" && exit 1);
+  builtin cd -
+
 
   pipenv install --dev --skip-lock
   pipenv shell
