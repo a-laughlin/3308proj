@@ -3,6 +3,36 @@
 
 ![image](https://travis-ci.com/a-laughlin/3308proj.svg?token=VENBQopHKmrYbQjPRHSc&branch=master)
 
+## Developing
+
+### Installing
+* delete any preexisting [project aliases](https://github.com/a-laughlin/3308proj/blob/master/setup.sh#L100) from `~/.bashrc` (important!)
+* `git clone git@github.com:a-laughlin/3308proj.git 3308proj`
+* run [`./setup.sh`](https://github.com/a-laughlin/3308proj/blob/master/setup.sh) to:  
+  * install dependencies
+  * ensure you're on a non-master branch
+  * configure git pull to pull into that branch for a [triangle-shaped code contribution flow](https://github.com/a-laughlin/3308proj/blob/master/README.md#code-contribution-flow)
+  * create aliases for navigating to and running project parts
+  * add the aliases to .bashrc so they're always available (if they don't already exist, which is why deleting them on new installs is important)
+  * start a pipenv virtual environment with python dependencies installed
+
+### Running the Dev Environment
+Setup makes a number of [command line aliases](https://github.com/a-laughlin/3308proj/blob/master/setup.sh#L100) available.  The most common flow with them is:
+* `pgo`, navigates to the project directory, ensures dependencies are up to date and starts the pipenv shell.
+* (web and api only) `pawgo` starts the graphql api server and react dev server.
+* write code, commit any changes
+* `ppush` checks project has latest pull from master, runs all tests, pushes to your branch on github, and opens the github page to start a new pull request.
+* (web and api only) `ctrl+c` exits `pawgo`
+* `ctrl+d` exits `pgo`
+
+### Running Tests
+`ptest` to run all project tests
+`pwtest` to run web tests
+`patest` to run api tests
+`pmtest` to run ml tests
+`pawtest` to run web+api integration tests
+
+
 # Team member’s names
 > * Chris Powell
 > * Adam Laughlin
@@ -74,25 +104,6 @@ Apple Watch, Garmin, FitBit, Jawbone, etc, with different data types
 This could be luxury if we aren’t able to find time for it.
 Try to find an intermediary, such as Apple’s Health app, who already transforms and stores the data
 
-## Developing
-### Installing
-`git clone git@github.com:a-laughlin/3308proj.git 3308proj`
-* delete any preexisting project aliases from .bashrc (important!)
-[`./setup.sh`](https://github.com/a-laughlin/3308proj/blob/master/setup.sh) :
-* installs dependencies
-* ensures you're on a non-master branch, then configures git pull to pull into that branch for a [triangle-shaped code contribution flow](https://github.com/a-laughlin/3308proj/blob/master/README.md#code-contribution-flow)
-* creates aliases for navigating to and running project parts
-* adds the aliases to .bashrc so they're always available
-* starts a pipenv virtual environment with python dependencies installed
-
-### Running the Dev Environment
-Setup makes a number of [command line aliases](https://github.com/a-laughlin/3308proj/blob/master/setup.sh#L100) available.  The most common flow with them is:
-* `pgo`, navigates to the project directory, ensures dependencies are up to date and starts the pipenv shell.
-* (web and api only) `pawgo` starts the graphql api server and react dev server.
-* write code, commit any changes
-* `ppush` checks project has latest pull from master, runs all tests, pushes to your branch on github, and opens the github page to start a new pull request.
-* (web and api only) `ctrl+c` exits `pawgo`
-* `ctrl+d` exits `pgo`
 
 ## Project Management Process decided: (e.g., scrum, kanban: with specifics!)
 Yes, we're doing scrum with our weekly meetings.
