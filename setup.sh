@@ -9,6 +9,14 @@ elif ! [[ -f "./setup.sh" ]]; then
 else
   configfile="$HOME/.bashrc"
   cfg="$(cat $configfile)"
+  ensure_alias(){
+    cmd="alias $1='${@:2}';";
+    ! [[ $(command -v $1 ) ]] && eval "$cmd" || (echo "$cmd didn't work... exiting" && exit 1);
+    [[ "$cfg" != *"alias $1="* ]] && echo "$cmd" >> $configfile;
+  }
+  ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
+
+
 
   if ! [[ $(command -v brew) ]]; then
     if [[ $OSTYPE != *darwin* ]]; then #on linux
@@ -34,6 +42,7 @@ else
 
 
   # nvm
+  ensure_config_comment '3308 Project Exports'
   ! [[ $(brew --prefix nvm) ]] && brew install nvm;
   ! [[ $(brew --prefix nvm) ]] && echo "ERROR installing nvm (1)" && exit 1;
   [[ $NVM_DIR ]] && [[ "$NVM_DIR" != "$HOME/.nvm" ]] && echo "ERROR conflicting NVM_DIR... Remove it wherever it's defined." && exit 1;
@@ -90,18 +99,12 @@ else
 
   # add check that it isnt master branch
   # set up some aliases
-  ensure_alias(){
-    cmd="alias $1='${@:2}';";
-    ! [[ $(command -v $1 ) ]] && eval "$cmd" || (echo "$cmd didn't work... exiting" && exit 1);
-    [[ "$cfg" != *"alias $1="* ]] && echo "$cmd" >> $configfile;
-  }
-  ensure_config_comment(){ [[ "$cfg" != *"$*"* ]] && printf "\n\n# $*\n" >> $configfile; }
+
 
   # project aliases
   ensure_config_comment '3308 Project Aliases';
   ensure_alias 'pdir' "builtin cd \"$PWD\"";
-  ensure_alias 'pstart' 'pdir && ./setup.sh';
-  ensure_alias 'pgo' 'pstart';
+  ensure_alias 'pgo' 'pdir && ./setup.sh';
   ensure_alias 'pstop' '[[ $PIPENV_ACTIVE = 1 ]] && exit 0';
   ensure_alias 'ptest' 'pdir && ./build.py test';
   ensure_alias 'ppull' 'pdir && git pull';
@@ -112,17 +115,27 @@ else
   ensure_alias 'pml' "builtin cd \"$PWD/src/ml\"";
   ensure_alias 'pmtest' "pdir \"$PWD/src/ml\"";
 
+  # api aliases
+  ensure_config_comment '3308 Project API Aliases';
+  ensure_alias 'papi' "builtin cd \"$PWD/src/api\"";
+  ensure_alias 'pago' "(papi && node ./api.js)";
+
   # web aliases
   ensure_config_comment '3308 Project Web Aliases';
   ensure_alias 'pweb' "builtin cd \"$PWD/src/web/src\"";
-  ensure_alias 'pwstart' 'pweb && yarn start';
-  ensure_alias 'pwgo' 'pwstart';
+  ensure_alias 'pwgo' '(pweb && yarn start)';
   ensure_alias 'pwtest' 'pweb && yarn test';
+
+  ensure_config_comment '3308 Project API+Web Aliases';
+  ensure_alias 'pawgo' '(trap "kill 0" SIGINT; pwgo & pago)';
 
 
   # installations
-
   builtin cd src/web
+  yarn install || (echo "ERROR installing yarn" && exit 1);
+  builtin cd -
+
+  builtin cd src/api
   yarn install || (echo "ERROR installing yarn" && exit 1);
   builtin cd -
 

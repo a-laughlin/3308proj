@@ -2,11 +2,9 @@
 python_version = "3.7.2"
 
 [packages]
-torch = "*"
+torch="==1.0.1.post2"
 
 [dev-packages]
-numpy = "*"
-matplotlib = "*"
+matplotlib="==3.0.3"
 
-[scripts]
-foo = "bar"
+# [scripts]

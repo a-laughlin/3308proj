@@ -1,0 +1,28 @@
+{
+  "ecmaVersion": 8,
+  "libs": [
+    "browser",
+    "react",
+    "ecmascript",
+  ],
+  "loadEagerly": [
+    "src/api/**/*.js",
+    "src/web/src/**/*.js",
+  ],
+  "dontLoad": [
+    "src/web/node_modules/lodash/fp/*",
+    "src/mobile/**",
+    "src/api/node_modules/**",
+    "src/web/node_modules/**",
+    "src/web/src/sample_data/**",
+    "path/to/your/js/**/*.js"
+  ],
+  "plugins": {
+    "es_modules": {},
+    "node": {},
+    "doc_comment": {
+      "fullDocs": true,
+      "strong": true
+    }
+  }
+}
