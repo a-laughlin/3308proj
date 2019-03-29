@@ -113,12 +113,13 @@ else
 
   ensure_config_comment '3308 Project ML Aliases';
   ensure_alias 'pml' "builtin cd \"$PWD/src/ml\"";
-  ensure_alias 'pmtest' "pdir \"$PWD/src/ml\"";
+  ensure_alias 'pmtest' "pdir && ./build.py test ml";
 
   # api aliases
   ensure_config_comment '3308 Project API Aliases';
   ensure_alias 'papi' "builtin cd \"$PWD/src/api\"";
-  ensure_alias 'pago' "(papi && node ./api.js)";
+  ensure_alias 'pago' "(papi && node api.js)";
+  ensure_alias 'patest' "pdir && ./build.py test api";
 
   # web aliases
   ensure_config_comment '3308 Project Web Aliases';
