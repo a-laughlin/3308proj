@@ -39,12 +39,12 @@ class ml_utils_test(unittest.TestCase):
     def test_train(self):
         self.assertTrue(self.trained_model.trained == True)
 
-    def test_checkFileName(self):
+    def test_goodModelFileName(self):
 
         files = ['somethingpt', '.pt', "", "pt", "good.pt", self.output_file]
 
         expectedVals = [0, 0, 0, 0, 1, 1]
-        actualVals = list(map(ml_utils.checkFileName, files))
+        actualVals = list(map(ml_utils.goodModelFileName, files))
 
         self.assertEqual(actualVals, expectedVals)
 
