@@ -228,3 +228,5 @@ TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
 - Error Color: #900000
 - Text: White on error, black on everything else
 
+**Screenshot**
+![image](https://github.com/a-laughlin/3308proj/blob/master/src/web/main_screenshot.png?raw=true)
