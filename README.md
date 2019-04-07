@@ -219,3 +219,12 @@ Code Reviews are optional so we don't introduce unnecessary delays from async re
 
 ## Testing Strategy
 TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
+
+## Design
+- Primary Color: #C91B1B
+- Secondary Color: #1BC9C9
+- Surface Color: #69fdfc
+- Background Color: #FFFFFF
+- Error Color: #900000
+- Text: White on error, black on everything else
+
