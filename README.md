@@ -222,10 +222,10 @@ TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
 
 ## Design
 - Primary Color: #42A5F5
-- Secondary Color: TBD
-- Surface Color: TBD
-- Background Color: TBD
-- Error Color: TBD
+- Secondary Color: #42F5EC
+- Surface Color: #FFFFFF
+- Background Color: #FFFFFF
+- Error Color: #B71C1C
 - Text: White on error, black on everything else
 
 ## Mockups
