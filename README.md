@@ -221,16 +221,16 @@ Code Reviews are optional so we don't introduce unnecessary delays from async re
 TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
 
 ## Design
-- Primary Color: #C91B1B
-- Secondary Color: #1BC9C9
-- Surface Color: #69fdfc
-- Background Color: #FFFFFF
-- Error Color: #900000
+- Primary Color: #42A5F5
+- Secondary Color: TBD
+- Surface Color: TBD
+- Background Color: TBD
+- Error Color: TBD
 - Text: White on error, black on everything else
 
 ## Mockups
 ### V0.0
-<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/main_screenshot.png?raw=true" />
+<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Home_page_screenshot_V00.png?raw=true" />
 
 ### V0.1  
 TBD  
