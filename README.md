@@ -234,8 +234,8 @@ TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
 
 ### V0.1  
 Main mock up still applicable, adding loading and error states:
-<img width=32% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Loading_screenshot_V01.png?raw=true" />
-<img width=32% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Error_screenshot_V01.png?raw=true" />
+<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Loading_screenshot_V01.png?raw=true" />
+<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Error_screenshot_V01.png?raw=true" />
 
 ### V0.2  
 TBD 
