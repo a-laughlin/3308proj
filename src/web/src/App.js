@@ -56,14 +56,12 @@ const HR = [
 {name: '00:40', ghr: null, phr: [81]}];
 
 const primaryC = '#42A5F5'
-
-export const App = props=>
-  
-  <div {...props} style={s`taC`}>
-    
-    <div style={myHeader}>Heart-a-tracker</div>
-    
-    <LineChart width={1200} height={600} data={HR} margin={{top:5, right:20, bottom:5, left:0}}>
+const SvgMain = cond(
+  [isLoading,Text('Loading...')],
+  [isError,e=>Text(`${e}`)],
+  [isData,({heartRateList}) =>{
+    console.log(heartRateList)
+    return <LineChart width={1200} height={600} data={HR} margin={{top:5, right:20, bottom:5, left:0}}>
       <Line type="monotone" dataKey="ghr" stroke={primaryC} />
       <Line type="monotone" dataKey="phr" stroke={primaryC} strokeDasharray="5 5" />
       <CartesianGrid stroke="#ccc" strokeDasharray="2 2"/>
@@ -71,8 +69,18 @@ export const App = props=>
       <YAxis />
       <Tooltip />
     </LineChart>
+  }]
+)
+
+
+export const App = props=>
+  
+  <div {...props} style={s`taC`}>
     
-    
+    <div style={myHeader}>Heart-a-tracker</div>
+
+    <SvgMain />
+        
   </div>;
 
 export default App;
