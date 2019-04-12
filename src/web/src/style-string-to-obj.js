@@ -72,6 +72,7 @@ export const styleStringToObj = (()=>{
     fill:getColorObj('fill'),
     strk:getColorObj('stroke'),
     strkw:getSizeObj('strokeWidth'),
+    strkdsh:getSizeObj('strokeDasharray'),
     transx:pipe(getSizeVal,sz=>({transform:`translateX(${sz})`})),
     transy:pipe(getSizeVal,sz=>({transform:`translateY(${sz})`})),
     /* pseudoclasses: requires some lib (e.g., styletron) that converts styles to an actual stylesheet */
@@ -138,9 +139,9 @@ export const styleStringToObj = (()=>{
     tvaM:{verticalAlign:'middle'},
     tvaT:{verticalAlign:'top'},
     tvaB:{verticalAlign:'bottom'},
-    taC:{textAlign:'middle'},
-    taL:{textAlign:'top'},
-    taR:{textAlign:'bottom'},
+    taC:{textAlign:'center'},
+    taL:{textAlign:'left'},
+    taR:{textAlign:'right'},
     // tSans from https://css-tricks.com/snippets/css/system-font-stack/
     tSans:{ fontFamily: `-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,`+
       `Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif`},
