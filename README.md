@@ -219,3 +219,23 @@ Code Reviews are optional so we don't introduce unnecessary delays from async re
 
 ## Testing Strategy
 TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
+
+## Design
+- Primary Color: #42A5F5
+- Secondary Color: #84FFFF
+- Surface Color: #FFFFFF
+- Background Color: #FFFFFF
+- Error Color: #B71C1C
+- Text: White on error, black on everything else
+
+## Mockups
+### V0.0
+<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Home_page_screenshot_V00.png?raw=true" />
+
+### V0.1  
+Main mock up still applicable, adding loading and error states:
+<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Loading_screenshot_V01.png?raw=true" />
+<img width=50% src="https://github.com/a-laughlin/3308proj/blob/master/src/web/Error_screenshot_V01.png?raw=true" />
+
+### V0.2  
+TBD 
