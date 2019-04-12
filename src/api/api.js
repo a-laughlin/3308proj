@@ -39,7 +39,7 @@ const loadHeartRateHistories = ()=>{
         start:v.bedtime_start,
         end:v.bedtime_end,
         freq:30000,
-        samples:v.hr_5min
+        rates:v.hr_5min
       };
       return o;
     },{});
@@ -75,7 +75,7 @@ const typeDefs = gql`
     start: String! # Local ISO String
     end: String! # Local ISO String
     freq: Int! # Sample frequency in ms
-    samples: [Int]! # sample heartrates
+    rates: [Int]! # sample heartrates
   }
 
   type HeartRateListHistory implements HeartRateList {
@@ -83,7 +83,7 @@ const typeDefs = gql`
     start: String! # Local ISO String
     end: String! # Local ISO String
     freq: Int! # Sample frequency in ms
-    samples: [Int]! # sample heartrates
+    rates: [Int]! # sample heartrates
     predictions:[HeartRateListPrediction]!
   }
 
@@ -92,7 +92,7 @@ const typeDefs = gql`
     start: String! # Local ISO String
     end: String! # Local ISO String
     freq: Int! # Sample frequency in ms
-    samples: [Int]! # sample heartrates
+    rates: [Int]! # sample heartrates
     model: HeartRateListPredictionModel!
     history: HeartRateListHistory! # one prediction has one history
   }
@@ -103,7 +103,7 @@ const typeDefs = gql`
     heartRateListPrediction(pred_id: ID, hist_id: ID): [HeartRateListPrediction]!
   }
   # type Mutation {
-  #   predictHeartRate(hist_id: ID!, model_id: String!, model_version: String, model_type:String, num_samples: Int!, freq: Int!): [HeartRateListPrediction]!
+  #   predictHeartRate(hist_id: ID!, model_id: String!, model_version: String, model_type:String, num_rates: Int!, freq: Int!): [HeartRateListPrediction]!
   # }
 `;
 
@@ -134,8 +134,8 @@ const resolvers = {
     },
   },
   // Mutation: {
-  //   // hist_id: ID!, model_id: ID, model_version: String, model_type:String, num_samples: Int!, freq: Int!
-  //   predictHeartRate: (parent,{id,samples=3,freq=30000}={},context,info)=>new Promise(function(resolve, reject) {
+  //   // hist_id: ID!, model_id: ID, model_version: String, model_type:String, num_rates: Int!, freq: Int!
+  //   predictHeartRate: (parent,{id,rates=3,freq=30000}={},context,info)=>new Promise(function(resolve, reject) {
   //     // data.heartRatePredictionLists || (data.heartRatePredictionListsById[id] = {});
   //     // data.heartRatePredictionLists
   //     // .rates.slice(0,hist_steps).map(r=>r.rate);
