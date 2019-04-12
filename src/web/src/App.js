@@ -6,44 +6,17 @@ import {Div,Pre,Button,Polyline,Svg,Text,style,children,prop,state,onClick,toDst
 import {styleStringToObj as s} from './style-string-to-obj'
 import data from './sample_data/ml_output_foo.json';
 import {plog,pipe,get,oo,has,cond,is,ma,flatMap,pget} from './utils';
-const text_style = {fill:'#000',transform:'translateY(20%)'}
-const x_vals = [100,20,40,60,20,90,80,60,20,100,40,20,20,40,40]
-const y_vals = [0,10,15,20,30,40,60,80,120,160,240,320,400,480]
-const xy_vals = y_vals.map((y, x) => [x*10, 500-y].join(" "))
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
-
-const beatsToXYStr = b=>b.map((y,x)=>`${x*10} ${100-y}`).join(' ');
-
-export const SvgMain = (props)=>{
-  const queryResult = useHeartRateQuery(props); // graphql query
-  // console.log(`queryResult`, queryResult);
-  if(isLoading(queryResult)) {
-    return <svg style={s`w100 h100 dB op.7`}><text>Loading...</text></svg>
-  };
-  if(isError(queryResult)) {
-    return <svg style={s`w100 h100 dB op.7`}><text>`${queryResult}`</text></svg>
-  };
-  const {heartRateList} = queryResult;
-  const beats = queryResult.heartRateList.map(hr=>hr.rate);
-  return (
-    <svg style={s`w100 h100 dB op.7`}>
-      <text>data loaded</text>
-      <polyline points={beatsToXYStr(beats)} {...s`strk990 strkw1 fillT`}/>
-      <polyline points={xy_vals} {...s`strkw1 strk009 fillT`}/>
-      {x_vals.map((x,i) =>
-        <text key={i} style={s(`fill0 transy${i*5}`)}>{x}</text>
-      )}
-      <text style={s`fill0 transy100`}>{JSON.stringify(data)}</text>
-    </svg>);
-}
-
+const beatsToXYStr = b=>b.map((y,x)=>`${(x*30)+100} ${(400-y*2)}`).join(' ');
 
 const Svg2 = Svg(
   children(pipe(useHeartRateQuery,cond(
     [isLoading,Text('Loading...')],
     [isError,e=>Text(`${e}`)],
     [isData,({heartRateList}) =>[
-      Polyline(style(`strkw1 fillT strk009 transy10`), prop('points',p=>beatsToXYStr(heartRateList.map(o=>o.rate)))),
+      Polyline(style(`strkw1 fillT strk009 transy10`), 
+        prop('points',p=>beatsToXYStr(heartRateList.map(o=>o.rate)))),
       // Polyline(style(`strkw1 fillT strk990 transy50`), prop('points',p=>beatsToXYStr(pred))),
     ]]
   )))
@@ -63,11 +36,43 @@ const AdamExperiment2 = Div(
 )
 
 
+
+var myHeader = {
+      background: '#900000',
+      fontSize: '26px',
+      color: 'white',
+      fontWeight: 'bold'
+    };
+
+const HR = [
+{name: '00:00', ghr: [64], phr: null}, 
+{name: '00:05', ghr: [77], phr: null},
+{name: '00:10', ghr: [66], phr: null},
+{name: '00:15', ghr: [80], phr: null}, 
+{name: '00:20', ghr: [81], phr: [81]},
+{name: '00:25', ghr: null, phr: [77]},
+{name: '00:30', ghr: null, phr: [66]},
+{name: '00:35', ghr: null, phr: [80]}, 
+{name: '00:40', ghr: null, phr: [81]}];
+
+const primaryC = '#42A5F5'
+
 export const App = props=>
-// <img src="https://news.bitcoin.com/wp-content/uploads/2017/08/Markcap.png" alt="" style={s`w100 posA dB`} />
+  
   <div {...props} style={s`taC`}>
-    <div style={s`posF w100 h50 oH bgFFF`}><SvgMain/></div>
-    <div style={s`posF w100 h50 oH bottom0 bg077`}><AdamExperiment2/></div>
+    
+    <div style={myHeader}>Heart-a-tracker</div>
+    
+    <LineChart width={1200} height={600} data={HR} margin={{top:5, right:20, bottom:5, left:0}}>
+      <Line type="monotone" dataKey="ghr" stroke={primaryC} />
+      <Line type="monotone" dataKey="phr" stroke={primaryC} strokeDasharray="5 5" />
+      <CartesianGrid stroke="#ccc" strokeDasharray="2 2"/>
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+    </LineChart>
+    
+    
   </div>;
 
 export default App;
