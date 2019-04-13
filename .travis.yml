@@ -1,10 +1,12 @@
 matrix:
   include:
-    - language: node_js
+    - language: python
       dist: xenial
       node_js: lts/*
       python: 3.7
-      # cache: yarn, pip
+      cache:
+        - yarn
+        - pip
       install:
         - pip install --user torch
         - cd src/api && yarn && cd ../../
