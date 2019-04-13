@@ -5,8 +5,9 @@ import hr_history from './sample_data/ml_output_foo.json';
 import {useObservable} from './hooks';
 import {pipe,cond,renameProps,ife,isString} from './utils';
 
-
-
+/**
+ * the Apollo client handles data caching+exchange with the Apollo graphql server
+ */
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000/"
@@ -30,78 +31,49 @@ export const client = new ApolloClient({
  * - ignore: errors from the request do not stop the observable, but also don't call `next`
  * - all: errors are treated like data and will notify observables
  */
+
 client.defaultOptions = {
   // errorPolicy: ignore (no errors)|none(error or data)|all (errors and data)
   watchQuery: {fetchPolicy:'cache-first',errorPolicy:'none'},
   query: {fetchPolicy:'cache-first',errorPolicy:'none'},
   mutate: {fetchPolicy:'no-cache',errorPolicy:'none'}
 };
-client.writeData({data:{ // initial state
-  heartRateListHistory:{},
-  heartRateListPrediction:{},
-}});
-// networkStatus
-// https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts
-// const mutations = {
-//   'predictHeartRate(start,steps,freq)->heartRateList{id,end,rate}':gql`
-//     mutation predictHeartRate($start: String!,$steps: Int!,$freq: Int!) {
-//       predictHeartRate(start: $start,steps:$steps,freq: $freq) {id,end,rate}
-//     }
-//   `,
-// };
-const queries = {
-  '{heartRateList{id,end,rate}}':gql`{heartRateList{id,end,rate}}`
-}
+
+/* Initial State */
+client.writeData({data:{}})
+
+/** networkStatus from query responses
+ * https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts
+ */
+
 // options from https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.watchQuery
 export const getUseWatchQuery = (options={})=>{
-  if (typeof options === 'string') options = {query:options};
-  options={...options,query:(typeof options.query === 'string') ? gql(options.query) : options.query}
   const obs = client.watchQuery(options);
   const initial = {data:{},loading:true};
   return function useWatchQuery(p){
     const queryResult = useObservable(obs,initial);
     if(queryResult.loading) return 'loading';
-    if(queryResult.error) return queryResult.error;
+    if(queryResult.error) return new Error(queryResult.error);
+    if(queryResult.errors) return new Error(queryResult.errors);
     return queryResult.data;
   }
 }
 
-const stepDate = (date,steps=1,freq=5000)=>new Date((+date||Date.parse(date))+steps*freq);
-
-//
-// export const predictHeartRates = (steps=10)=>p=>{
-//   const query = gql`{ heartRateList{ id end rate } }`;
-//   const data = client.readQuery({query});
-//   console.log(`data`, data);
-//   const {id,end,rate} = data.heartRateList[data.heartRateList.length-1];
-//   client.mutate({
-//     mutation:mutations['predictHeartRate(start,steps,freq)->heartRateList{id,end,rate}'],
-//     variables:{start:end,steps,freq:5000}
-//   })
-//   .then(({data:{predictHeartRate:heartRateList}})=>{
-//     client.writeQuery({query,data:{heartRateList}});
-//   })
-//   .catch((...args)=>{
-//     console.log(`mutate.catch args`, args);
-//   })
-// }
-
 export const isLoading = x=>x==='loading';
 export const isError = x=> x instanceof Error;
 export const isData = x=> !isLoading(x) && !isError(x);
-export const useHeartRateQuery = variables=>getUseWatchQuery(
-  {
-    query:gql`query ($id: ID!,$steps:Int,$model_id: ID){
-      heartRatePredictions (id: $id,steps:$steps,model_id:$model_id){
-        id
-        start
+
+export const useHeartRateQuery = variables=>getUseWatchQuery({
+  query:gql`query ($id: ID!,$steps:Int,$model_id: ID){
+    heartRatePredictions (id: $id,steps:$steps,model_id:$model_id){
+      id
+      start
+      rates
+      history{
         rates
-        history{
-          rates
-        }
       }
-    }`,
-    fetchPolicy:'cache-and-network',
-    variables,
-  }
-);
+    }
+  }`,
+  fetchPolicy:'cache-and-network',
+  variables,
+});

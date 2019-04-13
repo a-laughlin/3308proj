@@ -2,23 +2,20 @@ matrix:
   include:
     - language: python
       dist: xenial
-      python: 3.7
-      cache: pip
-      install:
-        - pip install torch
-      script:
-        - ./build.py test ml,api
-
-
-    - language: node_js
       node_js: lts/*
-      cache: yarn
-      before_install:
-        - cd src/web
+      python: 3.7
+      cache:
+        directories:
+          - src/web/node_modules
+          - src/api/node_modules
       install:
-        - yarn install
+        # use smaller pytorch version for ci testing
+        # per https://github.com/pytorch/pytorch/issues/4178#issuecomment-356709106
+        - pip install --progress-bar off -- https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl
+        - cd src/api && yarn && cd ../../
+        - cd src/web && yarn && cd ../../
       script:
-        - yarn test --no-watch
+        - python3 build.py test all
 
 notifications:
   slack:

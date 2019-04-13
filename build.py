@@ -23,7 +23,7 @@ default_ops = dict(
 opdirs = {op:{d:default_ops[op] for d in SRC_DIRS } for op in default_ops.keys()}
 
 # Customizations
-opdirs['test']['api']=lambda dir:dir
+opdirs['test']['api']=lambda dir:run(['yarn','test','--no-watch'],cwd=SRC/dir).returncode and exit(1)
 opdirs['test']['web']=lambda dir:run(['yarn','test','--no-watch'],cwd=SRC/dir).returncode and exit(1)
 
 if __name__ == '__main__':
