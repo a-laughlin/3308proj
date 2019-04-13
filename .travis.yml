@@ -1,6 +1,6 @@
 matrix:
   include:
-    - language: node_js
+    - language: python
       dist: xenial
       node_js: lts/*
       python: 3.7
@@ -8,7 +8,7 @@ matrix:
         - yarn
         - pip
       install:
-        - pip install --progress-bar off --user -- torch
+        - pip install --progress-bar off -- torch
         - cd src/api && yarn && cd ../../
         - cd src/web && yarn && cd ../../
       script:
