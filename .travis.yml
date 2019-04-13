@@ -19,7 +19,8 @@ matrix:
         - cd src/api && yarn
         - cd ../web && yarn
       script:
-        - python3 ../../.build.py test all
+        - echo $PWD
+        - python3 ../../build.py test all
     #
     # - language: node_js
     #   node_js: lts/*
