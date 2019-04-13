@@ -91,8 +91,15 @@ export const isError = x=> x instanceof Error;
 export const isData = x=> !isLoading(x) && !isError(x);
 export const useHeartRateQuery = variables=>getUseWatchQuery(
   {
-    query:gql`query ($id: ID!){
-      heartRateListHistory (id: $id){ start rates freq }
+    query:gql`query ($id: ID!,$steps:Int,$model_id: ID){
+      heartRatePredictions (id: $id,steps:$steps,model_id:$model_id){
+        id
+        start
+        rates
+        history{
+          rates
+        }
+      }
     }`,
     fetchPolicy:'cache-and-network',
     variables,

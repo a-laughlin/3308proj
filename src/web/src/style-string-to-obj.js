@@ -64,6 +64,7 @@ export const styleStringToObj = (()=>{
     brad:getSizeObj('borderRadius'),
     lh:getSizeObj('lineHeight'),
     t:(num,unit)=>({fontSize:getSizeVal(num,unit),lineHeight:getSizeVal((+num+0.4).toFixed(1),unit)}),
+    ts:(num,unit)=>({fontSize:getSizeVal(num,unit)}),
     tc:getColorObj('color'),//text color
     bg:getColorObj('backgroundColor'),//text color
     bgc:getColorObj('backgroundColor'),//text color

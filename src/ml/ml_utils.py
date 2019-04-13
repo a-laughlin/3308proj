@@ -48,12 +48,8 @@ def goodInputFileName(filename):
     else:
         return GOOD_FILENAME
 
-def parse_input_file(input_file):
-
-    with open(input_file, 'r') as f:
-        y = torch.Tensor(json.load(f)).view(-1, 1)
-
-    return y
+def parse_input_list(input_list=[1,2,3,4]):
+    return torch.Tensor(input_list).view(-1, 1)
 
 def train(y, model_type = 'RNN',
           lr = 0.001, epochs = 500, teacher_forcing_ratio = 1):
