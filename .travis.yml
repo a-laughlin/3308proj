@@ -8,7 +8,7 @@ matrix:
         - yarn
         - pip
       install:
-        - pip install --user torch
+        - pip install --progress-bar off --user torch
         - cd src/api && yarn && cd ../../
         - cd src/web && yarn && cd ../../
       script:
