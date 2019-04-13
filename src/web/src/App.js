@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import {useHeartRateQuery,query,predictHeartRates,isLoading,isError,isData} from './state';
+import {useHeartRateQuery,query,predictHeartRates,isLoading,isError,isData} from './graphql-client';
 import {Div,Pre,Button,Svg,Text,style,children,prop,state,onClick,toDstr,fromDstr
 } from './hooks'
 import {styleStringToObj as s} from './style-string-to-obj'

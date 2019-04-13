@@ -6,9 +6,7 @@ import {ma,cond,isFunction,isString,isPlainObject,stubTrue,pipe,oo,ensureArray,i
       } from './utils'
 import {curryN,concat,flatten,capitalize} from 'lodash/fp'
 import {styleStringToObj} from './style-string-to-obj'
-// import { useMutation,useQuery} from 'react-apollo-hooks';
-import {client} from './state';
-import {gql} from "apollo-boost";
+
 export const toHookComposer = (component)=>(...hooks)=>{
   function hookComposer (...props){
     if(!isPlainObject(props[0])) return toHookComposer(component)(...hooks,...props);
