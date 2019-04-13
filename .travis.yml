@@ -5,8 +5,10 @@ matrix:
       node_js: lts/*
       python: 3.7
       cache:
-        - yarn
-        - pip
+        pip: true
+        directories:
+          - src/web/node_modules
+          - src/api/node_modules
       install:
         - pip install --progress-bar off -- torch
         - cd src/api && yarn && cd ../../
