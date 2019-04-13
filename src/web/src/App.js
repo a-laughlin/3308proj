@@ -9,32 +9,29 @@ import {plog,pipe,get,oo,has,cond,is,ma,flatMap,pget} from './utils';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 /* eslint-enable no-unused-vars */
 
-const ratesToObjs = ({rates})=>rates.map((s,i)=>({
-  name:i,
-  ghr:s,
-  phr:null,
-}),[]);
+const ratesToObjs = ({ghr,phr})=>
+  [...ghr,...phr].map((r,i)=>({name:i,[i>=ghr.length?'phr':'ghr']:r}));
 
-const primaryC = '#42A5F5';
-const SvgMain = pipe(useHeartRateQuery({id:1}),cond(
-  [isLoading,Div('Loading...')],
-  [isError,e=>Div(`${e}`)],
-  [isData,({heartRateListHistory:histories})=>histories.map(h=>
-    <LineChart width={1200} height={600} data={ratesToObjs(h)} margin={{top:5, right:20, bottom:5, left:0}}>
-      <Line type="monotone" dataKey="ghr" stroke={primaryC} />
-      <Line type="monotone" dataKey="phr" stroke={primaryC} strokeDasharray="5 5" />
+
+const DataMain = pipe(useHeartRateQuery({id:6}),cond(
+  [isLoading,x=><div>Loading...</div>],
+  [isError,x=><div>x</div>],
+  [isData,({heartRatePredictions:[{rates:phr,history:{rates:ghr}}]})=>
+    <LineChart width={1200} height={600} data={ratesToObjs({ghr,phr})} margin={{top:5, right:20, bottom:5, left:0}}>
+      <Line type="monotone" dataKey="ghr" stroke={'#42A5F5'} />
+      <Line type="monotone" dataKey="phr" stroke={'#42A5F5'} strokeDasharray="5 5" />
       <CartesianGrid stroke="#ccc" strokeDasharray="2 2"/>
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
     </LineChart>
-  )]
+  ]
 ));
 
 export const App = props=>
   <div {...props} style={s`taC`}>
     <div style={s`bg900000 ts26px tcFFF tBold`}>Heart-a-tracker</div>
-    <SvgMain />
+    <DataMain />
   </div>;
 
 export default App;

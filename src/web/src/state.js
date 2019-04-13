@@ -92,7 +92,7 @@ export const isData = x=> !isLoading(x) && !isError(x);
 export const useHeartRateQuery = variables=>getUseWatchQuery(
   {
     query:gql`query ($id: ID!){
-      heartRateListHistory (id: $id){ start rates freq }
+      heartRatePredictions (id: $id){ start rates freq history{ rates } }
     }`,
     fetchPolicy:'cache-and-network',
     variables,

@@ -10,15 +10,15 @@ if __name__ == '__main__':
 
     parser.add_argument('--future', type=int,
                         default = 50,
-                        help = "Future timesteps to predict")
+                        help = "Future timesteps to predict: default = 50")
 
     parser.add_argument('--input', type=str,
                         default = '[1,2,3,4,5,6]',
-                        help = "Input file name containing window of data")
+                        help = "List of ints: default = [1,2,3,4,5,6]")
 
     parser.add_argument('--model', type=str,
                         default = '../web/src/sample_data/ml_model_foo.pt',
-                        help = 'Location of trained model')
+                        help = 'Location of trained model: default = ../web/src/sample_data/ml_model_foo.pt')
 
     args = parser.parse_args()
 
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     prediction = ml_utils.predict(model, input_list, future_timesteps)
 
-    output = json.dumps(prediction.numpy().flatten().tolist())
+    output = json.dumps(prediction.numpy().astype(int).flatten().tolist())
     sys.stdout.write(output)
     sys.stdout.flush()
     sys.exit(0)
