@@ -9,7 +9,9 @@ matrix:
           - src/web/node_modules
           - src/api/node_modules
       install:
-        - pip install --progress-bar off -- torch
+        # use smaller pytorch version for ci testing
+        # per https://github.com/pytorch/pytorch/issues/4178#issuecomment-356709106
+        - pip install --progress-bar off -- https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl
         - cd src/api && yarn && cd ../../
         - cd src/web && yarn && cd ../../
       script:
