@@ -1,14 +1,5 @@
 matrix:
-  # include:
-  #   - language: python
-  #     dist: xenial
-  #     python: 3.7
-  #     cache: pip
-  #     install:
-  #       - pip install torch
-  #     script:
-  #       - ./build.py test ml,api
-
+  include:
     - language: node_js
       dist: xenial
       node_js: lts/*
@@ -16,11 +7,19 @@ matrix:
       # cache: yarn, pip
       install:
         - pip install --user torch
-        - cd src/api && yarn
-        - cd ../web && yarn
+        - cd src/api && yarn && cd ../../
+        - cd src/web && yarn && cd ../../
       script:
-        - echo $PWD
-        - python3 ../../build.py test all
+        - python3 build.py test all
+
+    #   - language: python
+    #     dist: xenial
+    #     python: 3.7
+    #     cache: pip
+    #     install:
+    #       - pip install torch
+    #     script:
+    #       - ./build.py test ml,api
     #
     # - language: node_js
     #   node_js: lts/*
