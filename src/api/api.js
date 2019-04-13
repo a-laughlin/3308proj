@@ -81,7 +81,7 @@ const resolvers = {
         const prediction_id=`${id}_${model_id}`;
         const {stdout,stderr} = spawn('python3',[
           '../ml/predict.py',
-          '--future', '3',
+          '--future', steps,
           `--input`, JSON.stringify(list.rates),
           // '--model',model_id,
           // api should either manage model locs, or hand that off to ml

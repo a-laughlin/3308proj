@@ -13,11 +13,11 @@ const ratesToObjs = ({ghr,phr})=>
   [...ghr,...phr].map((r,i)=>({name:i,[i>=ghr.length?'phr':'ghr']:r}));
 
 
-const DataMain = pipe(useHeartRateQuery({id:6}),cond(
+const DataMain = pipe(useHeartRateQuery({id:8,steps:20}),cond(
   [isLoading,x=><div>Loading...</div>],
   [isError,x=><div>x</div>],
   [isData,({heartRatePredictions:[{rates:phr,history:{rates:ghr}}]})=>
-    <LineChart width={1200} height={600} data={ratesToObjs({ghr,phr})} margin={{top:5, right:20, bottom:5, left:0}}>
+    <LineChart width={window.innerWidth} height={600} data={ratesToObjs({ghr,phr})} margin={{top:5, right:20, bottom:5, left:0}}>
       <Line type="monotone" dataKey="ghr" stroke={'#42A5F5'} />
       <Line type="monotone" dataKey="phr" stroke={'#42A5F5'} strokeDasharray="5 5" />
       <CartesianGrid stroke="#ccc" strokeDasharray="2 2"/>
