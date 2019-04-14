@@ -13,7 +13,7 @@ const ratesToObjs = ({ghr,phr})=>
   [...ghr,...phr].map((r,i)=>({name:i,[i>=ghr.length?'phr':'ghr']:r}));
 
 
-const DataMain = pipe(useHeartRateQuery({id:8,steps:20}),cond(
+const DataMain = pipe(useHeartRateQuery({id:6,steps:20}),cond(
   [isLoading,x=><div>Loading...</div>],
   [isError,x=><div>x</div>],
   [isData,({heartRatePredictions:[{rates:phr,history:{rates:ghr}}]})=>
