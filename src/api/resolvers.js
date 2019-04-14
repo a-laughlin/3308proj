@@ -1,10 +1,7 @@
-const { spawn } = require('child_process');
-const loadHeartRateHistories = require('./loadHeartRateHistories');
-const stepDate = (date,steps=1,freq=30000)=>new Date((+date||Date.parse(date))+steps*freq);
+const fs = require('./datasource-apis/filesystem');
+const ml = require('./datasource-apis/ml');
+const db = require('./datasource-apis/sqlite');
 
-const data = {
-  heartRateLists: loadHeartRateHistories()
-};
 
 // for generating errors with more helpful messages
 // and to mask stack traces
@@ -14,36 +11,28 @@ const data = {
 // https://www.apollographql.com/docs/apollo-server/essentials/data#type-signature
 const resolvers = {
   Query: {
-    heartRateList: (parent, {id}={}, context, info) =>{
-      return data.heartRateLists[id] ? [data.heartRateLists[id]] : [];
-    },
+    heartRateList: (parent, {id}={}, context, info) =>fs.readSleeps().then(sleep=>sleep[id]),
     heartRatePredictions: (parent, {id=0, steps=3, model_id='default'}={}, context, info) =>{
-      return new Promise((resolve,reject)=>{
-        const list = data.heartRateLists[id]
-        const prediction_id=`${id}_${model_id}`;
-        const {stdout,stderr} = spawn('python3',[
-          '../ml/predict.py',
-          '--future', steps,
-          `--input`, JSON.stringify(list.rates),
-          // '--model',model_id,
-          // api should either manage model locs, or hand that off to ml
-          // depends on when/how/why we create new models. May vary if we add users
-        ]);
-        stderr.on('data', reject);
-        stdout.on('data', rates=>{
-          data.heartRateLists[prediction_id] = {
-            ...list,
-            id:`${id}_${model_id}`,
-            start:stepDate(list.end,1).toISOString(),
-            end:stepDate(list.end,steps+1).toISOString(),
-            history:list,
-            rates:JSON.parse(rates),
-            prediction_model_id:model_id
-          }
-          resolve([data.heartRateLists[prediction_id]]);
-        });
-      });
-    },
+      const stepDate = (date,steps=1,freq=30000)=> new Date((+date||Date.parse(date))+steps*freq);
+      return fs.readSleeps()
+      .then(sleeps=>sleeps[id])
+      .then(sleep=>{
+        return ml.readRatesPrediction({rates:sleep.rates,steps})
+        .then(rates=>[{
+          // select a subset of the actual sleep data object to return as a prediction
+          // // add any additional properties we need for classification here
+          // // e.g.,
+          // // score:sleep.score,
+          id:`${id}_${model_id}`,
+          start:stepDate(sleep.end,1).toISOString(),
+          end:stepDate(sleep.end,steps+1).toISOString(),
+          history:sleep,
+          freq:30000,
+          rates:rates,
+          prediction_model_id:model_id
+        }]);
+      })
+    }
   }
 };
 
