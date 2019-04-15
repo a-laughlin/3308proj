@@ -8,9 +8,9 @@
 
 # Test Case 1
 ## Use case name
-    * Verify login with valid user name and password
+    * Verify the user can login with OAuth (like we do with our Google accounts on Moodle)
 ## Description
-    * Test the Google login page
+    * Test the OAuth login page
 ## Pre-conditions
     * User has valid user name and password
 ## Test steps
@@ -28,116 +28,54 @@
    * N/A
 ## Post-conditions
    > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.Use case name
-   > Verify login with valid user name and password
-## Description
-   > Test the Google login page
-## Pre-conditions
-   > User has valid user name and password
-## Test steps
-   > 1. Navigate to login page
-   > 2. Provide valid user name
-   > 3. Provide valid password
-   > 4. Click login button
-## Expected result
-   * User should be able to login
-## Actual result
-   * User is navigated to dashboard with successful login
-## Status (Pass/Fail)
-   * Pass
-## Notes
-   * N/A
-## Post-conditions
-   > User is validated with database and successfully signed into their account.
    > The account session details are logged in database.
+   > Verify login with valid user name and password
 
 # Test Case 2
 ## Use case name
-    * Verify login with valid user name and password
+    * Word "Loading..." appears until chart renders
 ## Description
-    * Test the Google login page
+    * Test to ensure the word "Loading..." appears until chart renders
 ## Pre-conditions
-    * User has valid user name and password
+    * User has logged in
 ## Test steps
    > 1. Navigate to login page
    > 2. Provide valid user name
    > 3. Provide valid password
    > 4. Click login button
+   > 5. Ensure the word "Loading..." appears until chart renders
 ## Expected result
-   * User should be able to login
+   * Word "Loading..." appears until chart renders
 ## Actual result
-   * User is navigated to dashboard with successful login
+   * Word "Loading..." appears until chart renders
 ## Status (Pass/Fail)
    * Pass
 ## Notes
    * N/A
 ## Post-conditions
-   > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.Use case name
-   > Verify login with valid user name and password
-## Description
-   > Test the Google login page
-## Pre-conditions
-   > User has valid user name and password
-## Test steps
-   > 1. Navigate to login page
-   > 2. Provide valid user name
-   > 3. Provide valid password
-   > 4. Click login button
-## Expected result
-   * User should be able to login
-## Actual result
-   * User is navigated to dashboard with successful login
-## Status (Pass/Fail)
-   * Pass
-## Notes
    * N/A
-## Post-conditions
-   > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.
    
 # Test Case 3
 ## Use case name
-    * Verify login with valid user name and password
+    * The chart renders successfully
 ## Description
-    * Test the Google login page
+    * Test that the chart renders successfully
 ## Pre-conditions
-    * User has valid user name and password
+    * User has logged in
 ## Test steps
    > 1. Navigate to login page
    > 2. Provide valid user name
    > 3. Provide valid password
    > 4. Click login button
+   > 5. Ensure the word "Loading..." appears until chart renders
+   > 6. The chart renders successfully
 ## Expected result
-   * User should be able to login
+   * The chart should render successfully
 ## Actual result
-   * User is navigated to dashboard with successful login
+   * The chart renders successfully
 ## Status (Pass/Fail)
    * Pass
 ## Notes
    * N/A
 ## Post-conditions
-   > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.Use case name
-   > Verify login with valid user name and password
-## Description
-   > Test the Google login page
-## Pre-conditions
-   > User has valid user name and password
-## Test steps
-   > 1. Navigate to login page
-   > 2. Provide valid user name
-   > 3. Provide valid password
-   > 4. Click login button
-## Expected result
-   * User should be able to login
-## Actual result
-   * User is navigated to dashboard with successful login
-## Status (Pass/Fail)
-   * Pass
-## Notes
    * N/A
-## Post-conditions
-   > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.
-
