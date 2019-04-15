@@ -51,8 +51,12 @@ else
     # ml doesn't start a server
     alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start) & runapi)';
 
+    alias ppull='cdroot && git pull';
+    alias ppush='cdroot && [[ "$(git pull)" = "Already up to date." ]] && testroot && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
+
     echo "";
     echo "3308 Project aliases";
+    echo "git    :    ppull ppush";
     echo "navigation: cdroot cdapi cdml cdweb";
     echo "testing:    testroot testapi testml testweb";
     echo "running:    runapi starts the graphql server on localhost:4000";
