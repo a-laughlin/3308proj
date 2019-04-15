@@ -57,7 +57,7 @@
    
 # Test Case 3
 ## Use case name
-    * Verify login with valid user name and password
+    * The chart renders successfully
 ## Description
     * Test the Google login page
 ## Pre-conditions
