@@ -11,7 +11,6 @@ SRC_DIRS = 'ml', 'api', 'web'
 
 def runTest(dir):
   TestRunner = TR()
-  print("\n---Testing : "+dir.upper())
   result = TestRunner.run(TL().discover(SRC/dir, pattern='*test.py'))
   if(len(result.errors) + len(result.failures)): exit(1);
 
@@ -31,6 +30,8 @@ if __name__ == '__main__':
     print(f"Usage: ./build.py [{'|'.join(default_ops.keys())}] [{','.join(SRC_DIRS)},...]");
   else:
     dirnames = SRC_DIRS if (len(argv)==2 or argv[2]=='all') else argv[2].split(',');
-    for dir in dirnames: opdirs[argv[1]][dir](dir,*(argv[3:]));
+    for dir in dirnames:
+      print("\n---Testing : "+dir.upper())
+      opdirs[argv[1]][dir](dir,*(argv[3:]));
 
 exit(0)
