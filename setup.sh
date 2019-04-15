@@ -9,7 +9,8 @@ elif [[ ! $(command -v yarn) ]]; then
 elif [[ $(python3 --version) != *3.7.* ]]; then
   # ensure correct python version.  Recommend running in a python virtual environment
   echo "ensure python3 points to a version of python 3.7.x";
-elif ([[ $(command -v pipenv) ]] && [[ $PIPENV_ACTIVE != 1 ]]); then
+elif ([[ $(command -v pipenv) ]] && [[ $PIPENV_ACTIVE != 1 ]] && [[ ! $CI ]] && [[ ! $DYNO ]]); then
+  # on dev with pipenv installed, run shell before installations
   pipenv shell;
 else
   # install API dependencies
