@@ -70,14 +70,12 @@
    > 5. Ensure the word "Loading..." appears until chart renders
    > 6. The chart renders successfully
 ## Expected result
-   * User should be able to login
+   * The chart should render successfully
 ## Actual result
-   * User is navigated to dashboard with successful login
+   * The chart renders successfully
 ## Status (Pass/Fail)
    * Pass
 ## Notes
    * N/A
 ## Post-conditions
-   > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.Use case name
-   > Verify login with valid user name and password
+   * N/A
