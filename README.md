@@ -5,16 +5,16 @@
 
 ## Developing
 
-### Installing
-* `git clone git@github.com:a-laughlin/3308proj.git 3308proj`
-* re-run `. setup.sh` until message `3308 Project aliases set` appears.
+### Installing  
+* `git clone git@github.com:a-laughlin/3308proj.git 3308proj`  
+* re-run `. setup.sh` until message `3308 Project aliases set` appears.  
 
-### Running the Web + API
-see `3308 Project aliases set` message for current instructions
+### Running the Web + API  
+see `3308 Project aliases set` message for current instructions  
 
 ## Testing
-when developing, see `3308 Project aliases set` message for current instructions
-otherwise see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md)
+when developing, see `3308 Project aliases set` message for current instructions  
+otherwise see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md)  
 
 # Team member’s names
 > * Chris Powell
