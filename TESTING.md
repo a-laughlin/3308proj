@@ -59,14 +59,16 @@
 ## Use case name
     * The chart renders successfully
 ## Description
-    * Test the Google login page
+    * Test that the chart renders successfully
 ## Pre-conditions
-    * User has valid user name and password
+    * User has logged in
 ## Test steps
    > 1. Navigate to login page
    > 2. Provide valid user name
    > 3. Provide valid password
    > 4. Click login button
+   > 5. Ensure the word "Loading..." appears until chart renders
+   > 6. The chart renders successfully
 ## Expected result
    * User should be able to login
 ## Actual result
