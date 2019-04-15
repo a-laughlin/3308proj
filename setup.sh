@@ -40,27 +40,25 @@ else
     [[ $ginfo != *"origin/master"* ]] && git branch --set-upstream-to origin/master; # ensure git always pulls from origin master on this branch
     [[ $( git config push.default ) != current ]] && git config push.default current;
 
-    if [[ $_ != $0 ]]; then
-      echo "WARNING: run with '. setup.sh' or 'source setup.sh' to set aliases"
-    else
-      # set up aliases for convenience
-      alias cdroot="builtin cd $PWD";
-      alias cdapi="builtin cd $PWD/src/api";
-      alias cdml="builtin cd $PWD/src/ml";
-      alias cdweb="builtin cd $PWD/src/web/src";
+    # set up aliases for convenience
+    alias cdroot="builtin cd $PWD";
+    alias cdapi="builtin cd $PWD/src/api";
+    alias cdml="builtin cd $PWD/src/ml";
+    alias cdweb="builtin cd $PWD/src/web/src";
 
-      alias testroot='cdroot && python3 build.py test';
-      alias testapi='cdroot && python3 build.py test api';
-      alias testml='cdroot && python3 build.py test ml';
-      alias testweb='cdroot && python3 build.py test web';
+    alias testroot='cdroot && python3 build.py test';
+    alias testapi='cdroot && python3 build.py test api';
+    alias testml='cdroot && python3 build.py test ml';
+    alias testweb='cdroot && python3 build.py test web';
 
-      alias runapi='(cdapi && yarn start)';
-      # ml doesn't start a server
-      alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start) & runapi)';
+    alias runapi='(cdapi && yarn start)';
+    # ml doesn't start a server
+    alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start) & runapi)';
 
-      alias ppull='cdroot && git pull';
-      alias ppush='cdroot && [[ "$(git pull)" = "Already up to date." ]] && testroot && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
+    alias ppull='cdroot && git pull';
+    alias ppush='cdroot && [[ "$(git pull)" = "Already up to date." ]] && testroot && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
 
+    if [[ $(command -v cdroot) ]]; then
       echo "";
       echo "3308 Project aliases set";
       echo "git    :    ppull ppush";
@@ -69,6 +67,8 @@ else
       echo "running:    runapi starts the graphql server on localhost:4000";
       echo "running:    runweb calls runapi and starts the web server on localhost:4000";
       echo "stopping:   ctrl+c cancels runapi and runweb";
+    else
+      echo "WARNING: run with '. setup.sh' or 'source setup.sh' to set aliases"
     fi
   fi
 fi
