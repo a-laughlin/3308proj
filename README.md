@@ -5,33 +5,16 @@
 
 ## Developing
 
-### Installing
-* delete any preexisting [project aliases](https://github.com/a-laughlin/3308proj/blob/master/setup.sh#L100) from `~/.bashrc` (important!)
-* `git clone git@github.com:a-laughlin/3308proj.git 3308proj`
-* run [`./setup.sh`](https://github.com/a-laughlin/3308proj/blob/master/setup.sh) to:  
-  * install dependencies
-  * ensure you're on a non-master branch
-  * configure git pull to pull into that branch for a [triangle-shaped code contribution flow](https://github.com/a-laughlin/3308proj/blob/master/README.md#code-contribution-flow)
-  * create aliases for navigating to and running project parts
-  * add the aliases to .bashrc so they're always available (if they don't already exist, which is why deleting them on new installs is important)
-  * start a pipenv virtual environment with python dependencies installed
+### Installing  
+* `git clone git@github.com:a-laughlin/3308proj.git 3308proj`  
+* re-run `. setup.sh` until message `3308 Project aliases set` appears.  
 
-### Running the Dev Environment
-Setup makes a number of [command line aliases](https://github.com/a-laughlin/3308proj/blob/master/setup.sh#L100) available.  The most common flow with them is:
-* `pgo`, navigates to the project directory, ensures dependencies are up to date and starts the pipenv shell.
-* (web and api only) `pawgo` starts the graphql api server and react dev server.
-* write code, commit any changes
-* `ppush` checks project has latest pull from master, runs all tests, pushes to your branch on github, and opens the github page to start a new pull request.
-* (web and api only) `ctrl+c` exits `pawgo`
-* `ctrl+d` exits `pgo`
+### Running the Web + API  
+see `3308 Project aliases set` message for current instructions  
 
-### Running Tests
-`ptest` to run all project tests
-`pwtest` to run web tests
-`patest` to run api tests
-`pmtest` to run ml tests
-`pawtest` to run web+api integration tests
-
+## Testing
+when developing, see `3308 Project aliases set` message for current instructions  
+otherwise see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md)  
 
 # Team member’s names
 > * Chris Powell
