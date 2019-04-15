@@ -33,28 +33,27 @@
 
 # Test Case 2
 ## Use case name
-    * Verify login with valid user name and password
+    * Word "Loading..." appears until chart renders
 ## Description
-    * Test the Google login page
+    * Test to ensure the word "Loading..." appears until chart renders
 ## Pre-conditions
-    * User has valid user name and password
+    * User has logged in
 ## Test steps
    > 1. Navigate to login page
    > 2. Provide valid user name
    > 3. Provide valid password
    > 4. Click login button
+   > 5. Ensure the word "Loading..." appears until chart renders
 ## Expected result
-   * User should be able to login
+   * Word "Loading..." appears until chart renders
 ## Actual result
-   * User is navigated to dashboard with successful login
+   * Word "Loading..." appears until chart renders
 ## Status (Pass/Fail)
    * Pass
 ## Notes
    * N/A
 ## Post-conditions
-   > User is validated with database and successfully signed into their account.
-   > The account session details are logged in database.Use case name
-   > Verify login with valid user name and password
+   * N/A
    
 # Test Case 3
 ## Use case name
