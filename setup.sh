@@ -9,6 +9,8 @@ elif [[ ! $(command -v yarn) ]]; then
 elif [[ $(python3 --version) != *3.7.* ]]; then
   # ensure correct python version.  Recommend running in a python virtual environment
   echo "ensure python3 points to a version of python 3.7.x";
+elif ([[ $(command -v pipenv) ]] && [[ $PIPENV_ACTIVE != 1 ]]); then
+  pipenv shell;
 else
   # install API dependencies
   builtin cd src/api && yarn && builtin cd -; # install api dependencies
@@ -55,17 +57,12 @@ else
     alias ppush='cdroot && [[ "$(git pull)" = "Already up to date." ]] && testroot && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
 
     echo "";
-    echo "3308 Project aliases";
+    echo "3308 Project aliases set";
     echo "git    :    ppull ppush";
     echo "navigation: cdroot cdapi cdml cdweb";
     echo "testing:    testroot testapi testml testweb";
     echo "running:    runapi starts the graphql server on localhost:4000";
     echo "running:    runweb calls runapi and starts the web server on localhost:4000";
     echo "stopping:   ctrl+c cancels runapi and runweb";
-
-    if ([[ $(command -v pipenv) ]] && [[ $PIPENV_ACTIVE != 1 ]]); then
-      pipenv shell;
-      exit 0;
-    fi
   fi
 fi
