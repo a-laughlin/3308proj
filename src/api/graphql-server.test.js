@@ -33,6 +33,5 @@ it('queries nested heartRatePredictions', async () => {
     }`,
     variables: { id: 2, steps:10 }
   });
-  console.log('result',result);
   expect(result).toMatchSnapshot();
 });
