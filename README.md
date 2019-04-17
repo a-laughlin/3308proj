@@ -20,7 +20,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 ```
 .
 ├── src
-│   ├── api
+│   ├── api                                     nodejs-based graphql api
 │   │   ├── __snapshots__                       jest testing snapshots
 │   │   ├── datasource-apis                     datasource interaction functions for api use
 │   │   │   ├── filesystem.js
@@ -32,15 +32,15 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 │   │   ├── package.json                        project dependencies/scripts
 │   │   ├── resolvers.js                        graphql resolvers for api types
 │   │   └── typeDefs.js                         type definitions for what API can return
-│   ├── ml                                      
+│   ├── ml                                      machine learning
 │   │   ├── README.md                           machine learning documentation
 │   │   ├── RNN.py
 │   │   ├── ml_utils.py
 │   │   ├── ml_utils_test.py
 │   │   ├── predict.py
 │   │   └── train.py
-│   ├── mobile                                  react-native mobile code (unused)
-│   └── web
+│   ├── mobile                                  react-native mobile ui (unused)
+│   └── web                                     react web ui
 │       ├── public                              static files
 │       │   ├── index.html                      main index.html
 │       │   └── manifest.json                   specify project behavior if "installed" as PWA
