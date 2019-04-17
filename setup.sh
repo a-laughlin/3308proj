@@ -1,17 +1,23 @@
 #!/bin/bash
 if [[ $SHELL != *bash ]];then
-  echo "Bash shell required for installation.";
+  echo "NEXT STEP! Bash shell required for installation.  Install or start bash";
+  echo "           then re-run '. setup.sh'";
 elif [[ ! -f "./setup.sh" ]]; then
-  echo "Must be in project root directory before running script";
+  echo "NEXT STEP! Switch to project root directory";
+  echo "           then re-run '. setup.sh'";
 elif [[ ! $(command -v yarn) ]]; then
   # yarn installs the latest version of nodejs. We use nvm and node 10.15.3, but any version after that should work
-  echo "install yarn (https://yarnpkg.com/lang/en/docs/install/)";
-elif [[ $(python3 --version) != *3.7.* ]]; then
-  # ensure correct python version.  Recommend running in a python virtual environment
-  echo "ensure python3 points to a version of python 3.7.x";
+  echo "NEXT STEP! install yarn (https://yarnpkg.com/lang/en/docs/install/), then re-run '. setup.sh'";
+  echo "           then re-run '. setup.sh'";
 elif ([[ $(command -v pipenv) ]] && [[ $PIPENV_ACTIVE != 1 ]] && [[ ! $CI ]] && [[ ! $DYNO ]]); then
   # on dev with pipenv installed, run shell before installations
+  echo "Starting pipenv shell..."
+  echo "NEXT STEP! re-run '. setup.sh' inside pipenv shell"
   pipenv shell;
+elif [[ $(python3 --version) != *3.7.* ]]; then
+  # ensure correct python version.  Recommend running in a python virtual environment
+  echo "NEXT STEP! ensure python3 points to a version of python 3.7.x";
+  echo "           then re-run '. setup.sh'";
 else
   # install API dependencies
   builtin cd src/api && yarn && builtin cd -; # install api dependencies
@@ -23,6 +29,7 @@ else
   if [[ $((python3 -c "import torch") 2>&1 | xargs echo) ]]; then
     # use smaller cpu-only pytorch version (gpu support adds 520mb!)
     # per https://github.com/pytorch/pytorch/issues/4178#issuecomment-356709106
+    # note, using pip3 to intall torch, even in pipenv, since pipenv had issues installing wheels directly
     pip3 install --progress-bar off -- https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl;
   fi
 
@@ -68,7 +75,8 @@ else
       echo "running:    runweb calls runapi and starts the web server on localhost:4000";
       echo "stopping:   ctrl+c cancels runapi and runweb";
     else
-      echo "WARNING: run with '. setup.sh' or 'source setup.sh' to set aliases"
+      echo "WARNING: pipenv likely ran in a subshell instead of a user shell, so aliases not set."
+      echo "NEXT STEP! run setup with '. setup.sh' or 'source setup.sh' to set aliases correctly"
     fi
   fi
 fi
