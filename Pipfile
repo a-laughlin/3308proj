@@ -1,10 +1,10 @@
 [requires]
-python_version = "3.7.2"
+python_version = "3.7"
 
 [packages]
-torch="==1.0.1.post2"
+# torch from wheel has error ... install with pip3 in setup.sh
+# torch = {file = "https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl"}
 
 [dev-packages]
 matplotlib="==3.0.3"
-
 # [scripts]
