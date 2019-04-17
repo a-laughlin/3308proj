@@ -1,4 +1,3 @@
-
 # Project Title: Heart-a-tracker
 
 ![image](https://travis-ci.com/a-laughlin/3308proj.svg?token=VENBQopHKmrYbQjPRHSc&branch=master)
@@ -7,14 +6,76 @@
 
 ### Installing  
 * `git clone git@github.com:a-laughlin/3308proj.git 3308proj`  
-* re-run `. setup.sh` until message `3308 Project aliases set` appears.  
+* re-run `. setup.sh` until message `3308 Project aliases set` appears.
 
 ### Running the Web + API  
 see `3308 Project aliases set` message for current instructions  
 
 ## Testing
-when developing, see `3308 Project aliases set` message for current instructions  
-otherwise see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md)  
+see `3308 Project aliases set` message for current automated testing instructions  
+see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) for user acceptance tests  
+
+## Project Diectory Structure  
+(tests colocated with files, suffixed with \_test or .test)  
+```
+.
+├── src
+│   ├── api
+│   │   ├── __snapshots__                       jest testing snapshots
+│   │   ├── datasource-apis                     datasource interaction functions for api use
+│   │   │   ├── filesystem.js
+│   │   │   ├── ml.js
+│   │   │   └── sqlite.js
+│   │   ├── api.js                              starts the api server
+│   │   ├── graphql-server.js                   main graphql server code
+│   │   ├── graphql-server.test.js              integration tests
+│   │   ├── package.json                        project dependencies/scripts
+│   │   ├── resolvers.js                        graphql resolvers for api types
+│   │   └── typeDefs.js                         type definitions for what API can return
+│   ├── ml                                      
+│   │   ├── README.md                           machine learning documentation
+│   │   ├── RNN.py
+│   │   ├── ml_utils.py
+│   │   ├── ml_utils_test.py
+│   │   ├── predict.py
+│   │   └── train.py
+│   ├── mobile                                  react-native mobile code (unused)
+│   └── web
+│       ├── public                              static files
+│       │   ├── index.html                      main index.html
+│       │   └── manifest.json                   specify project behavior if "installed" as PWA
+│       ├── src
+│       │   ├── sample_data                     sample data for testing (in web to work w/ react build)
+│       │   │   ├── README.md
+│       │   │   ├── ml_input_foo.json
+│       │   │   ├── ml_input_sine.json
+│       │   │   ├── ml_model_foo.pt
+│       │   │   ├── ml_output_foo.json
+│       │   │   └── sleeps.json                 sleep data to train/predict on
+│       │   ├── App.js                          main web code
+│       │   ├── App.test.js                     integration tests (disabled until react update fixes warnings)
+│       │   ├── graphql-client.js               apollo graphql client
+│       │   ├── hooks.js                        react "hooks" for components to use
+│       │   ├── hooks.test.js                   unit+integration tests
+│       │   ├── index.css                       global tag styles + reset.  (other styles inline)
+│       │   ├── index.js                        loads app
+│       │   ├── serviceWorker.js                for use if we go the PWA route
+│       │   ├── style-string-to-obj.js          inline style generator
+│       │   ├── style-string-to-obj.test.js     unit tests
+│       │   ├── utils.js                        utlities (mostly FP utilities)
+│       │   └── utils.test.js                   unit tests
+│       ├── Home_page_screenshot_V00.png        mockup for v0.0
+│       ├── Error_screenshot_V01.png            mockup for v0.1
+│       ├── Loading_screenshot_V01.png          mockup for v0.1
+│       ├── README.md                           web docs
+│       ├── jest.config.js                      configure jest testing
+│       └── package.json                        react project config
+├── Pipfile                                     pipenv setup
+├── README.md                                   main project documentation
+├── TESTING.md                                  user acceptance test cases
+├── build.py                                    for building/testing/cleaning tasks
+└── setup.sh                                    project setup/installation for different platforms
+```
 
 # Team member’s names
 > * Chris Powell
@@ -198,10 +259,6 @@ Code Reviews are optional so we don't introduce unnecessary delays from async re
 
 **CI Tooling**
 - Travis CI
-
-
-## Testing Strategy
-TBD (unit vs integration vs use case (aka behavioral) vs manual user testing)
 
 ## Design
 - Primary Color: #42A5F5
