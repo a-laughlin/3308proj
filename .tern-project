@@ -14,7 +14,7 @@
     "src/mobile/**",
     "src/api/node_modules/**",
     "src/web/node_modules/**",
-    "src/web/src/sample_data/**",
+    "src/sample_data/**",
     "path/to/your/js/**/*.js"
   ],
   "plugins": {

@@ -4,7 +4,6 @@ import {useHeartRateQuery,query,predictHeartRates,isLoading,isError,isData} from
 import {Div,Pre,Button,Svg,Text,style,children,prop,state,onClick,toDstr,fromDstr
 } from './hooks'
 import {styleStringToObj as s} from './style-string-to-obj'
-import data from './sample_data/ml_output_foo.json';
 import {plog,pipe,get,oo,has,cond,is,ma,flatMap,pget} from './utils';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 /* eslint-enable no-unused-vars */

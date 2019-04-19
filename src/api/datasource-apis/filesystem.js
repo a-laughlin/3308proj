@@ -4,7 +4,7 @@ const fs = require("fs");
 // and fs.writeFile happens from the calling directory
 // so use the absolute path
 // We need better directory handling via envs.
-const SAMPLE_DIR = `${__dirname}/../../web/src/sample_data`;
+const SAMPLE_DIR = './sample_data';
 const ALL_DATA = `${SAMPLE_DIR}/oura_2019-03-05T18-00-21.json`;
 const HEARTRATE_LISTS = `${SAMPLE_DIR}/hr.json`;
 const SLEEPS = `${SAMPLE_DIR}/sleeps.json`;
@@ -14,11 +14,11 @@ const loaded = {};
 
 fileSystem.readSleeps = ()=>{
   try{
-    return Promise.resolve(loaded.sleeps || (loaded.sleeps = require(SLEEPS)));
+    return Promise.resolve(loaded.sleeps || (loaded.sleeps = require(`.${SLEEPS}`)));
   } catch(e){
     return new Promise((resolve,reject)=>{
       console.log(`loading all`);
-      const sleeps = require(ALL_DATA).sleep.reduce((o,v,i)=>{
+      const sleeps = require(`.${ALL_DATA}`).sleep.reduce((o,v,i)=>{
         o[i]={
           ...v,
           // add other props for current API compatibility

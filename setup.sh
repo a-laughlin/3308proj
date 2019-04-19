@@ -27,6 +27,7 @@ else
 
   # install torch ml dependencies
   if [[ $((python3 -c "import torch") 2>&1 | xargs echo) ]]; then # torch not installed
+    pip3 install --progress-bar off -- numpy
     if [ "$(uname)" == "Darwin" ]; then #mac
       pip3 install --progress-bar off -- torch
     else #linux (no one is using windows on proj)
@@ -37,9 +38,8 @@ else
     fi
   fi
 
-
   if [[ $CI ]]; then # continuous integration server
-    echo "running on CI"
+    echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku"
   else #dev
@@ -62,7 +62,7 @@ else
     alias testml='cdroot && python3 build.py test ml';
     alias testweb='cdroot && python3 build.py test web';
 
-    alias runapi='(cdapi && yarn start)';
+    alias runapi="(API_PORT=4000 && SAMPLE_DATA='$SAMPLE_DATA' && cdapi && yarn start)";
     # ml doesn't start a server
     alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start) & runapi)';
 

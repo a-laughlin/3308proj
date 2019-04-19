@@ -135,8 +135,8 @@ Object {
           ],
           "start": "2018-11-08T01:54:33-07:00",
         },
-        "id": "2_default",
-        "prediction_model_id": "default",
+        "id": "2_ml_model_foo",
+        "prediction_model_id": "ml_model_foo",
         "rates": Array [
           29,
           12,
