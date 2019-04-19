@@ -17,8 +17,8 @@ if __name__ == '__main__':
                         help = "List of ints: default = [1,2,3,4,5,6]")
 
     parser.add_argument('--model', type=str,
-                        default = '../web/src/sample_data/ml_model_foo.pt',
-                        help = 'Location of trained model: default = ../web/src/sample_data/ml_model_foo.pt')
+                        default = '../api/sample_data/ml_model_foo.pt',
+                        help = 'Location of trained model: default = ../api/sample_data/ml_model_foo.pt')
 
     args = parser.parse_args()
 

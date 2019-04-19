@@ -6,12 +6,13 @@
   "repository": "https://github.com/a-laughlin/3308proj",
   "license": "MIT",
   "private": true,
-  "scripts":{
-    "test":"jest",
-    "start":"node api.js"
+  "scripts": {
+    "test": "jest",
+    "start": "node api.js"
   },
   "dependencies": {
     "apollo-server": "^2.4.8",
+    "apollo-server-express": "^2.4.8",
     "graphql": "^14.1.1"
   },
   "devDependencies": {

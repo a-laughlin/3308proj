@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React,{createElement} from 'react';
 import ApolloClient, { gql } from "apollo-boost";
-import hr_history from './sample_data/ml_output_foo.json';
 import {useObservable} from './hooks';
 import {pipe,cond,renameProps,ife,isString} from './utils';
 
@@ -10,7 +9,7 @@ import {pipe,cond,renameProps,ife,isString} from './utils';
  */
 
 export const client = new ApolloClient({
-  uri: "http://localhost:4000/"
+  uri: `http://localhost:${process.env.REACT_APP_API_PORT}/graphql`,
 });
 
 // client.defaultOptions
