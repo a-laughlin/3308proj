@@ -1,0 +1,14 @@
+{
+  "name": "3308root",
+  "repository": "https://github.com/a-laughlin/3308proj",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": "lts/dubnium"
+  },
+  "scripts": {
+    "heroku-prebuild": "./setup.sh",
+    "start": "node dist/api.js",
+    "heroku-postbuild": "echo This runs afterwards."
+  }
+}
