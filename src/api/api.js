@@ -49,8 +49,10 @@ server.applyMiddleware({ app:api, path: '/graphql' });
 
 
 api.use(express.static(path.join(__dirname, 'web')))
-  .get('/', (req, res) => res.render('web/index'))
+  .get('/', (req, res) => res.render('web/index'));
 
-api.listen({ port: process.env.REACT_APP_API_PORT || 4000 }, () => {
-  console.log(`Apollo Server on http://localhost:${process.env.REACT_APP_API_PORT || 4000}/graphql`);
-});
+const apiArgs = {
+  //    PORT is Heroku,     REACT_APP_API_PORT is create_react_app for dev, with a 4000 fallback
+  port: process.env.PORT || process.env.REACT_APP_API_PORT || 4000
+}
+api.listen(apiArgs, ()=> console.log(`Express listening on ${ apiArgs.port}`));
