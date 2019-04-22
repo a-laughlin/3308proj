@@ -8,8 +8,14 @@ import {pipe,cond,renameProps,ife,isString} from './utils';
  * the Apollo client handles data caching+exchange with the Apollo graphql server
  */
 
+const {protocol,hostname} = document.location;
+
+const uri = process.env.NODE_ENV === 'production'
+  ? `/graphql`
+  : `${protocol}://${hostname}:${process.env.REACT_APP_API_PORT}/graphql`;
+
 export const client = new ApolloClient({
-  uri: `http://localhost:${process.env.REACT_APP_API_PORT}/graphql`,
+  uri
 });
 
 // client.defaultOptions
