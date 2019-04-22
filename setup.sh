@@ -42,7 +42,7 @@ else
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku"
     mkdir dist
-    mv src/api/* dist/.
+    mv src/api dist/.
     mv src/ml dist/.
     cd src/web && yarn build && cd -
     mv src/web/build dist/web
