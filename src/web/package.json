@@ -2,7 +2,6 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:4000/graphql",
   "dependencies": {
     "apollo-boost": "^0.3.1",
     "graphql": "^14.1.1",
@@ -14,7 +13,8 @@
   },
   "devDependencies": {
     "react-hooks-testing-library": "*",
-    "react-testing-library": "*"
+    "react-testing-library": "*",
+    "http-proxy-middleware": "*"
   },
   "scripts": {
     "start": "react-scripts start",
