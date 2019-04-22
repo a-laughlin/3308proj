@@ -16,14 +16,17 @@ const app = express();
 
 server.applyMiddleware({ app, path: '/graphql' });
 
-app.use(express.static(`${__dirname}/../web`))
-  .get('/', (req, res) => res.render('/index'));
+// __dirname should end in api .../dist/api or .../src/api
+const src_dir = `${__dirname}/..`;
+app.use(express.static(`${src_dir}/web/build`))
+  .get('/', (req, res) =>res.render('/index'))
+  .get('/graphql', (req, res) => res.render('/graphql'))
 
 const apiArgs = {
   //    PORT is Heroku,     4000 is dev
   port: process.env.PORT || 4000
 }
 app.listen(apiArgs, ()=>{
-  console.log(`Express listening on ${ apiArgs.port}`)
+  console.log(`${process.env.PWD}/web/build/index served on ${apiArgs.port}`)
   console.log(`graphql listening on ${ apiArgs.port}/graphql`)
 });
