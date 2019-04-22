@@ -11,5 +11,10 @@
     "heroku-prebuild": "./setup.sh",
     "start": "node dist/api.js",
     "heroku-postbuild": "echo This runs afterwards."
-  }
+  },
+  "cacheDirectories": [
+    "src/api/node_modules",
+    "src/web/node_modules"
+  ]
+
 }
