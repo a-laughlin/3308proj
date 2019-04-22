@@ -24,7 +24,6 @@ else
 
   # install web ui dependencies
   builtin cd src/web && yarn && builtin cd -; # install api dependencies
-
   # install torch ml dependencies
   if [[ $((python3 -c "import torch") 2>&1 | xargs echo) ]]; then # torch not installed
     pip3 install --progress-bar off -- numpy
@@ -42,6 +41,10 @@ else
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku"
+    mv src/api/* dist/.
+    mv src/ml dist/.
+    cd src/web && yarn build && cd -
+    mv src/web/build dist/web
   else #dev
     # git configuration
 
@@ -51,7 +54,7 @@ else
     [[ $ginfo != *"origin/master"* ]] && git branch --set-upstream-to origin/master; # ensure git always pulls from origin master on this branch
     [[ $( git config push.default ) != current ]] && git config push.default current;
 
-    # set up aliases for convenience
+    # set up aliases for convenience (effectively in place of makefile)
     alias cdroot="builtin cd $PWD";
     alias cdapi="builtin cd $PWD/src/api";
     alias cdml="builtin cd $PWD/src/ml";
