@@ -17,8 +17,12 @@ const app = express();
 server.applyMiddleware({ app, path: '/graphql' });
 
 // __dirname should end in api .../dist/api or .../src/api
-app.use(express.static(__dirname))
-  .get('/', (req, res) => res.render('web/index'))
+console.log(`__dirname`, __dirname);
+console.log(`process.env.PWD`, process.env.PWD);
+console.log(`process.env.PWD`, process.env.PWD+'/web/build/index');
+
+app.use(express.static(process.env.PWD+'/web/build'))
+  .get('/', (req, res) =>res.render('/index'))
   .get('/graphql', (req, res) => res.render('/graphql'))
 
 const apiArgs = {
@@ -26,6 +30,6 @@ const apiArgs = {
   port: process.env.PORT || 4000
 }
 app.listen(apiArgs, ()=>{
-  console.log(`Express listening on ${ apiArgs.port}`)
+  console.log(`${process.env.PWD}/web/build/index served on ${apiArgs.port}`)
   console.log(`graphql listening on ${ apiArgs.port}/graphql`)
 });
