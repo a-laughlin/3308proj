@@ -14,8 +14,7 @@
     "heroku-postbuild": "echo This runs afterwards."
   },
   "cacheDirectories": [
-    "src/api/node_modules",
+    "dist/api/node_modules",
     "src/web/node_modules"
   ]
-
 }
