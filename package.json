@@ -7,14 +7,14 @@
     "node": "10.15",
     "yarn": "1.15"
   },
-  "main": "dist/api/api.js",
+  "main": "src/api/api.js",
   "scripts": {
     "heroku-prebuild": "./setup.sh",
-    "start": "(cd dist/api && node api.js && cd -)",
+    "start": "(cd src && node api/api.js && cd -)",
     "heroku-postbuild": "echo This runs afterwards."
   },
   "cacheDirectories": [
-    "dist/api/node_modules",
+    "src/api/node_modules",
     "src/web/node_modules"
   ]
 }

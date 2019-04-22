@@ -40,12 +40,8 @@ else
   if [[ $CI ]]; then # continuous integration server
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
-    echo "running on heroku"
-    mkdir dist
-    mv src/api dist/.
-    mv src/ml dist/.
+    echo "building src/web/build for heroku deployment";
     cd src/web && yarn build && cd -
-    mv src/web/build dist/web
   else #dev
     # git configuration
 
@@ -66,9 +62,11 @@ else
     alias testml='cdroot && python3 build.py test ml';
     alias testweb='cdroot && python3 build.py test web';
 
-    alias runapi="(API_PORT=4000 && SAMPLE_DATA='$SAMPLE_DATA' && cdapi && yarn start)";
+    alias runapi="(cd src && node api/api.js && cd -)";
     # ml doesn't start a server
-    alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start) & runapi)';
+    alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start && cd -) & runapi)';
+
+    alias buildweb='cdweb && yarn build && cd -';
 
     alias ppull='cdroot && git pull';
     alias ppush='cdroot && [[ "$(git pull)" = "Already up to date." ]] && testroot && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
