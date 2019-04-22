@@ -10,12 +10,8 @@ import {pipe,cond,renameProps,ife,isString} from './utils';
 
 const {protocol,hostname} = document.location;
 
-const uri = process.env.NODE_ENV === 'production'
-  ? `/graphql`
-  : `${protocol}://${hostname}:${process.env.REACT_APP_API_PORT}/graphql`;
-
 export const client = new ApolloClient({
-  uri
+  uri:'/graphql'
 });
 
 // client.defaultOptions
