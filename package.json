@@ -10,7 +10,7 @@
   "main": "dist/api/api.js",
   "scripts": {
     "heroku-prebuild": "./setup.sh",
-    "start": "(cd dist/api && node api.js && cd -)",
+    "start": "(cd dist && node api/api.js && cd -)",
     "heroku-postbuild": "echo This runs afterwards."
   },
   "cacheDirectories": [

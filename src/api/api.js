@@ -16,8 +16,10 @@ const app = express();
 
 server.applyMiddleware({ app, path: '/graphql' });
 
-app.use(express.static(`${__dirname}/../web`))
-  .get('/', (req, res) => res.render('/index'));
+// __dirname should end in api .../dist/api or .../src/api
+app.use(express.static(__dirname))
+  .get('/', (req, res) => res.render('web/index'))
+  .get('/graphql', (req, res) => res.render('/graphql'))
 
 const apiArgs = {
   //    PORT is Heroku,     4000 is dev
