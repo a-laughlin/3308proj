@@ -26,14 +26,14 @@ else
   builtin cd src/web && yarn && builtin cd -; # install api dependencies
   # install torch ml dependencies
   if [[ $((python3 -c "import torch") 2>&1 | xargs echo) ]]; then # torch not installed
-    pip3 install --progress-bar off -- numpy
+    pip3 install numpy
     if [ "$(uname)" == "Darwin" ]; then #mac
       pip3 install --progress-bar off -- torch
     else #linux (no one is using windows on proj)
       # use smaller cpu-only pytorch version (gpu support adds 520mb!)
       # per https://github.com/pytorch/pytorch/issues/4178#issuecomment-356709106
       # note, using pip3 to intall torch, even in pipenv, since pipenv had issues installing wheels directly
-      pip3 install --progress-bar off -- https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl;
+      pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl;
     fi
   fi
 
@@ -41,6 +41,7 @@ else
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku"
+    mkdir dist
     mv src/api/* dist/.
     mv src/ml dist/.
     cd src/web && yarn build && cd -
