@@ -7,6 +7,7 @@
     "node": "10.15",
     "yarn": "1.15"
   },
+  "main": "dist/api.js",
   "scripts": {
     "heroku-prebuild": "./setup.sh",
     "start": "node dist/api.js",
