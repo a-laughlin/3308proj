@@ -4,7 +4,8 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "10.15.3"
+    "node": "10.15",
+    "yarn": "1.15"
   },
   "scripts": {
     "heroku-prebuild": "./setup.sh",
