@@ -12,19 +12,18 @@ const path = require('path')
 // }
 
 
-const api = express();
+const app = express();
 
-server.applyMiddleware({ app:api, path: '/graphql' });
+server.applyMiddleware({ app, path: '/graphql' });
 
-
-api.use(express.static(path.join(__dirname, 'web')))
-  .get('/', (req, res) => res.render('web/index'));
+app.use(express.static(`${__dirname}/../web`))
+  .get('/', (req, res) => res.render('/index'));
 
 const apiArgs = {
   //    PORT is Heroku,     4000 is dev
   port: process.env.PORT || 4000
 }
-api.listen(apiArgs, ()=>{
+app.listen(apiArgs, ()=>{
   console.log(`Express listening on ${ apiArgs.port}`)
   console.log(`graphql listening on ${ apiArgs.port}/graphql`)
 });
