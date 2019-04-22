@@ -17,11 +17,8 @@ const app = express();
 server.applyMiddleware({ app, path: '/graphql' });
 
 // __dirname should end in api .../dist/api or .../src/api
-console.log(`__dirname`, __dirname);
-console.log(`process.env.PWD`, process.env.PWD);
-console.log(`process.env.PWD`, process.env.PWD+'/web/build/index');
-
-app.use(express.static(process.env.PWD+'/web/build'))
+const src_dir = `${__dirname}/..`;
+app.use(express.static(`${src_dir}/web/build`))
   .get('/', (req, res) =>res.render('/index'))
   .get('/graphql', (req, res) => res.render('/graphql'))
 

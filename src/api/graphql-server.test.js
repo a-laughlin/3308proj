@@ -1,5 +1,5 @@
 const { createTestClient } = require('apollo-server-testing');
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 const server = require('./graphql-server');
 
 // we don't need to create a test version of the server or mock outside data
