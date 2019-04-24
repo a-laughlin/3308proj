@@ -8,13 +8,18 @@ def loadData(filename, npoints=100):
       return torch.Tensor(load(f))[:npoints]
 
 
-def loadModel(input_file):
-    model = torch.load(input_file)
-    model.eval()
+def loadModel(input_file, model_type = 'RNN'):
+    if model_type == 'RNN':
+        model = RNN(1, 32, 1)
+
+    else:
+        return None
+
+    model.load_state_dict(torch.load(input_file))
     return model
 
 def saveModel(model, output_file):
-    torch.save(model, output_file)
+    torch.save(model.state_dict(), output_file)
 
 def goodModelFileName(filename):
     BAD_FILENAME = 0
