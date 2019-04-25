@@ -7,8 +7,8 @@ import RNN
 
 if __name__ == '__main__':
 
-    train_array_file = '../web/src/sample_data/ml_input_foo.json'
-    output_model_file = '../web/src/sample_data/ml_model_foo.pt'
+    train_array_file = '../api/sample_data/ml_input_foo.json'
+    output_model_file = '../api/sample_data/ml_model_foo.pt'
 
     y = ml_utils.parse_input_file(train_array_file)
 

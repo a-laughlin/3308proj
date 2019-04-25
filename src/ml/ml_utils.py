@@ -56,8 +56,12 @@ def goodInputFileName(filename):
 def parse_input_list(input_list=[1,2,3,4]):
     return torch.Tensor(input_list).view(-1, 1)
 
+def parse_input_file(input_file):
+    with open(input_file, 'r') as f:
+        return torch.Tensor(json.load(f)).view(-1, 1)
+
 def train(y, model_type = 'RNN',
-          lr = 0.001, epochs = 500, teacher_forcing_ratio = 1):
+          lr = 0.001, epochs = 500, teacher_forcing_ratio = 1, verbose = True):
 
     if y is None:
         raise Exception("Must enter input array to train with")
@@ -72,7 +76,8 @@ def train(y, model_type = 'RNN',
         return None
 
 
-    model.mytrain(y, lr = lr, epochs = epochs, teacher_forcing_ratio = teacher_forcing_ratio)
+    model.mytrain(y, lr = lr, epochs = epochs, teacher_forcing_ratio = teacher_forcing_ratio,
+                  verbose = verbose)
 
     return model
 

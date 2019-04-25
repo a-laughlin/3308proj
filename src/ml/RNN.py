@@ -30,7 +30,7 @@ class RNN(nn.Module):
         return torch.zeros(1, self.hidden_size)
 
 
-    def mytrain(self, y, lr = 0.001, epochs = 1000, teacher_forcing_ratio = 1):
+    def mytrain(self, y, lr = 0.001, epochs = 1000, teacher_forcing_ratio = 1, verbose = True):
 
         criterion = nn.MSELoss()
         optimizer = optim.Adam(self.parameters(), lr = lr)
@@ -66,6 +66,10 @@ class RNN(nn.Module):
 
                         l = criterion(output, train_target[i])
                         loss += l
+
+                if verbose:
+                    if epoch % 100 == 0:
+                        print("Epoch: {}, Loss: {}".format(epoch, loss))
 
                 optimizer.zero_grad()
                 loss.backward()
