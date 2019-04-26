@@ -21,6 +21,8 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 - API: [Apollo GraphQL Server](https://www.apollographql.com/docs/apollo-server/) to route data requests to the appropriate resources (e.g., file system, database, python machine-learning code).
 - ML: [Pytorch](https://pytorch.org/) RNN, LSTM, and ODENet for heart rate predictions.
 - Database: [Sqlite](https://sqlite.org).
+![image](https://github.com/a-laughlin/3308proj/blob/master/src/web/HeartATrackerTechDiagram.jpg)  
+[original](https://drive.google.com/file/d/14Pxzt_tIRWcwD3xJCAxVa3ltICnrxhy_/view?ts=5cc350d6)
 
 \* For performance, we'd normally use something like nginx or apache to route static file requests, but using express for everything is simpler, and simplicity trumps performance in a learning context.
 
@@ -29,15 +31,15 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 ```
 .
 ├── src
-│   ├── api                                     nodejs-based graphql api
+│   ├── api                                     see src/api/README.md
 │   │   ├── __snapshots__                       jest testing snapshots
-│   │   ├── datasource-apis                     see src/api/README.md
+│   │   ├── datasource-apis
 │   │   │   ├── filesystem.js
 │   │   │   ├── ml.js
 │   │   │   └── sqlite.js
-│   │   ├── api.js                              
-│   │   ├── graphql-server.js                   
-│   │   ├── graphql-server.test.js              
+│   │   ├── api.js
+│   │   ├── graphql-server.js
+│   │   ├── graphql-server.test.js
 │   │   ├── package.json                        api project dependencies/scripts
 │   ├── ml                                      pytorch machine learning
 │   │   ├── README.md                           machine learning documentation
