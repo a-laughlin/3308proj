@@ -13,25 +13,25 @@ it('queries nested heartRatePredictions', async () => {
 
   // run query against the server and snapshot the output
   const result = await query({
-    query: gql`query ($id: ID!,$steps:Int,$model_id: ID){
-      heartRatePredictions (id: $id, steps: $steps, model_id: $model_id){
-        id
-        start
-        end
+    query: gql`query ($summary_date: ID!,$steps:Int,$model_id: ID){
+      heartRatePredictions (summary_date: $summary_date, steps: $steps, model_id: $model_id){
+        summary_date
+        bedtime_start
+        bedtime_end
         freq
         rates
         prediction_model_id
         history{
-          id
-          start
-          end
+          summary_date
+          bedtime_start
+          bedtime_end
           freq
           rates
           prediction_model_id
         }
       }
     }`,
-    variables: { id: 2, steps:10 }
+    variables: { summary_date: "2018-11-05", steps:10 }
   });
   expect(result).toMatchSnapshot();
 });

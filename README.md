@@ -31,16 +31,14 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 ├── src
 │   ├── api                                     nodejs-based graphql api
 │   │   ├── __snapshots__                       jest testing snapshots
-│   │   ├── datasource-apis                     datasource interaction functions for api use
+│   │   ├── datasource-apis                     see src/api/README.md
 │   │   │   ├── filesystem.js
 │   │   │   ├── ml.js
 │   │   │   └── sqlite.js
-│   │   ├── api.js                              starts the api server
-│   │   ├── graphql-server.js                   main graphql server code
-│   │   ├── graphql-server.test.js              integration tests
-│   │   ├── package.json                        project dependencies/scripts
-│   │   ├── resolvers.js                        graphql resolvers for api types
-│   │   └── typeDefs.js                         type definitions for what API can return
+│   │   ├── api.js                              
+│   │   ├── graphql-server.js                   
+│   │   ├── graphql-server.test.js              
+│   │   ├── package.json                        api project dependencies/scripts
 │   ├── ml                                      pytorch machine learning
 │   │   ├── README.md                           machine learning documentation
 │   │   ├── RNN.py
@@ -59,8 +57,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 │       │   │   ├── ml_input_foo.json
 │       │   │   ├── ml_input_sine.json
 │       │   │   ├── ml_model_foo.pt             stored prediction model
-│       │   │   ├── ml_output_foo.json
-│       │   │   └── sleeps.json                 sleep data to train/predict on
+│       │   │   └── ml_output_foo.json
 │       │   ├── App.js                          main web code
 │       │   ├── App.test.js                     integration tests (disabled until react update fixes warnings)
 │       │   ├── graphql-client.js               apollo graphql client
@@ -85,6 +82,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 ├── build.py                                    for building/testing/cleaning tasks
 └── setup.sh                                    project setup/installation for different platforms
 ```
+
 
 # Team member’s names
 > * Chris Powell
