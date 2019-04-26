@@ -4,8 +4,7 @@ import sqlite3
 import pandas as pd
 
 db = sqlite3.connect('3308proj.sqlite');
-# db.execute('PRAGMA foreign_keys = ON;')
-# exec,execmany,execscript = with_auto_rollback(db)
+db.execute('PRAGMA foreign_keys = ON;')
 
 mins_keys = ["hr_5min","rmssd_5min","hypnogram_5min"]
 days_keys = list(set(data[0].keys()) - set(mins_keys))
@@ -14,6 +13,7 @@ days_dict = dict(**{k:[] for k in days_keys})
 mins_dict = dict(summary_date=[],minute=[],**{k:[] for k in mins_keys})
 
 for sleep in data:
+
   for k in days_keys:
     days_dict[k].append(sleep[k]);
 
@@ -25,11 +25,24 @@ for sleep in data:
     mins_dict['summary_date'].append(sleep['summary_date'])
     mins_dict['minute'].append(days_dict['bedtime_start'][-1] + pd.Timedelta(f"{i*5} minutes"))
     for k,lst in mins_lists.items():
-      mins_dict[k].append(int(lst[i]) if i < len(lst) else None);
+      mins_dict[k].append(lst[i] if i < len(lst) else None);
 
-days = pd.DataFrame(days_dict).set_index('summary_date')
-mins = pd.DataFrame(mins_dict).set_index('minute')
-days_sql = days.to_sql(name='days',con=db);
+days = pd.DataFrame(days_dict)
+mins = pd.DataFrame(mins_dict)
+days.summary_date = pd.to_datetime(days.summary_date,yearfirst=True,utc=True)
+days.bedtime_start = pd.to_datetime(days.bedtime_start,yearfirst=True,utc=True)
+days.bedtime_end = pd.to_datetime(days.bedtime_end,yearfirst=True,utc=True)
+mins.summary_date = pd.to_datetime(mins.summary_date,yearfirst=True,utc=True)
+mins.minute = pd.to_datetime(mins.minute,yearfirst=True,utc=True)
+mins.hypnogram_5min=mins.hypnogram_5min.fillna('0').apply(int)
+# print(mins.hypnogram_5min.iloc[0])
+print('days.summary_date duplicates:',len(days.summary_date[days.summary_date.duplicated()]))
+print('mins.minute duplicates:',len(mins.minute[mins.minute.duplicated()]))
 
+mins = mins.set_index('minute')
+days = days.set_index('summary_date')
+#
+days.to_sql(name='days',con=db,if_exists='append');
+mins.to_sql(name='minutes',con=db,if_exists='append');
 
 db.close()
