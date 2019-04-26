@@ -29,7 +29,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 
 
 
-## Project Diectory Structure  
+## Project Directory Structure  
 (tests colocated with files, suffixed with \_test or .test)  
 ```
 .
