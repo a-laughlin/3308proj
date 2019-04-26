@@ -20,7 +20,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 - UI: Single static html page. Data rendered by [React](https://reactjs.org/) using [Apollo Client](https://www.apollographql.com/docs/react/) to request and cache it from our GraphQL API.
 - API: [Apollo GraphQL Server](https://www.apollographql.com/docs/apollo-server/) to route data requests to the appropriate resources (e.g., file system, database, python machine-learning code).
 - ML: [Pytorch](https://pytorch.org/) RNN, LSTM, and ODENet for heart rate predictions.
-- Database: [Sqlite](https://sqlite.org).
+- Database: [Sqlite](https://sqlite.org).  
 ![image](https://github.com/a-laughlin/3308proj/blob/master/src/web/HeartATrackerTechDiagram.jpg)  
 [original](https://drive.google.com/file/d/14Pxzt_tIRWcwD3xJCAxVa3ltICnrxhy_/view?ts=5cc350d6)
 
