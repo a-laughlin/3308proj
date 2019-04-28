@@ -5,22 +5,23 @@ import {Div,Pre,Button,Svg,Text,style,children,prop,state,onClick,toDstr,fromDst
 } from './hooks'
 import {styleStringToObj as s} from './style-string-to-obj'
 import {plog,pipe,get,oo,has,cond,is,ma,flatMap,pget} from './utils';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 /* eslint-enable no-unused-vars */
 
-const ratesToObjs = ({ghr,phr})=>
-  [...ghr,...phr].map((r,i)=>({name:i,[i>=ghr.length?'phr':'ghr']:r}));
+const ratesToObjs = ({Given_Heart_Rate,Predicted_Heart_Rate})=>
+  [...Given_Heart_Rate,...Predicted_Heart_Rate].map((r,i)=>({name:i,[i>=Given_Heart_Rate.length?'Predicted_Heart_Rate':'Given_Heart_Rate']:r}));
 
 
 const DataMain = pipe(useHeartRateQuery({summary_date:"2018-11-05",steps:20}),cond(
   [isLoading,x=><div>Loading...</div>],
   [isError,x=><div>x</div>],
-  [isData,({heartRatePredictions:[{rates:phr,history:{rates:ghr}}]})=>
-    <LineChart width={window.innerWidth} height={600} data={ratesToObjs({ghr,phr})} margin={{top:5, right:20, bottom:5, left:0}}>
-      <Line type="monotone" dataKey="ghr" stroke={'#42A5F5'} />
-      <Line type="monotone" dataKey="phr" stroke={'#42A5F5'} strokeDasharray="5 5" />
+  [isData,({heartRatePredictions:[{rates:Predicted_Heart_Rate,history:{rates:Given_Heart_Rate}}]})=>
+    <LineChart width={window.innerWidth} height={600} data={ratesToObjs({Given_Heart_Rate,Predicted_Heart_Rate})} margin={{top:5, right:20, bottom:5, left:0}}>
+      <Line type="monotone" dataKey="Given_Heart_Rate" stroke={'#42A5F5'} />
+      <Line type="monotone" dataKey="Predicted_Heart_Rate" stroke={'#42A5F5'} strokeDasharray="5 5" />
       <CartesianGrid stroke="#ccc" strokeDasharray="2 2"/>
       <XAxis dataKey="name" />
+      <Legend />
       <YAxis />
       <Tooltip />
     </LineChart>
@@ -29,8 +30,9 @@ const DataMain = pipe(useHeartRateQuery({summary_date:"2018-11-05",steps:20}),co
 
 export const App = props=>
   <div {...props} style={s`taC`}>
-    <div style={s`bg900000 ts26px tcFFF tBold`}>Heart-a-tracker</div>
+    <div style={s`bgFFF ts26px tc000 tBold fJCS`}>Heart-a-tracker</div>
     <DataMain />
+    <div><text><a href="https://github.com/a-laughlin/3308proj">Click here for more information about the project.</a></text></div>
   </div>;
 
 export default App;
