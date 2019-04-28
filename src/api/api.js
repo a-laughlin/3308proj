@@ -1,4 +1,4 @@
-const server = require('./graphql-server');
+const {server} = require('./graphql-server');
 const express = require('express')
 const path = require('path')
 
@@ -14,19 +14,21 @@ const path = require('path')
 
 const app = express();
 
-server.applyMiddleware({ app, path: '/graphql' });
 
-// __dirname should end in api .../dist/api or .../src/api
-const src_dir = `${__dirname}/..`;
-app.use(express.static(`${src_dir}/web/build`))
-  .get('/', (req, res) =>res.render('/index'))
-  .get('/graphql', (req, res) => res.render('/graphql'))
+const static_dir = process.env.DYNO
+  ? `${__dirname}/../web/build`
+  : `${__dirname}/../web/build`;
+
+server.applyMiddleware({ app, path: '/graphql' });
+app.use(express.static(static_dir))
+  .get('/', (req, res) => res.render('/index'))
+
 
 const apiArgs = {
   //    PORT is Heroku,     4000 is dev
   port: process.env.PORT || 4000
 }
 app.listen(apiArgs, ()=>{
-  console.log(`${process.env.PWD}/web/build/index served on ${apiArgs.port}`)
+  console.log(`${static_dir} served on /`)
   console.log(`graphql listening on ${ apiArgs.port}/graphql`)
 });

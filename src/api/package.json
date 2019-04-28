@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "start": "node api.js"
+    "start": "node api.js",
+    "dev": "nodemon api.js"
   },
   "dependencies": {
     "apollo-server": "^2.4.8",

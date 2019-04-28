@@ -10,11 +10,16 @@
   "main": "src/api/api.js",
   "scripts": {
     "heroku-prebuild": "./setup.sh",
-    "start": "(cd src && node api/api.js && cd -)",
-    "heroku-postbuild": "echo This runs afterwards."
+    "heroku-postbuild": "echo This runs afterwards.",
+    "start": "(cd src/api && node api.js && cd -)",
+    "test":"concurrently --kill-others --success 'first' -- \"(cd src/web && yarn test --no-watch)\" \"(cd src/api && node api.js)\"",
+    "dev":"concurrently --kill-others \"(cd src/api && yarn dev)\" \"(cd src/web && yarn dev)\""
   },
   "cacheDirectories": [
     "src/api/node_modules",
     "src/web/node_modules"
-  ]
+  ],
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
 }

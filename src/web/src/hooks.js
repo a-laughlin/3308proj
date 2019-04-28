@@ -84,6 +84,9 @@ export const fromDstr = p=>p['data-str'];
 
 export const useObservable = (observable, initialValue) => {
   const [value, setValue] = useState(initialValue);
-  useEffect(()=>observable.subscribe(setValue).unsubscribe, [observable] );
+  useEffect(()=>{
+    const subscription = observable.subscribe(setValue);
+    return subscription.unsubscribe.bind(subscription);
+  }, [observable] );
   return value;
 };

@@ -3,7 +3,6 @@ import { renderHook, cleanup, act } from 'react-hooks-testing-library';
 import {style} from './hooks';
 // for more examples, see https://github.com/mpeyper/react-hooks-testing-library/tree/master/test
 describe('useStateExample', () => {
-  afterEach(cleanup)
   it('uses state', () => {
     const {result} = renderHook(() => useState('foo'))
     expect(result.current[0]).toBe('foo')
@@ -13,7 +12,6 @@ describe('useStateExample', () => {
 })
 
 describe('style', () => {
-  afterEach(cleanup)
   it('converts strings to styles', () => {
     const fn = style('w100px');
     expect(fn({})).toEqual({style:{width:'100px'}})

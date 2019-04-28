@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {useHeartRateQuery,query,predictHeartRates,isLoading,isError,isData} from './graphql-client';
-import {Div,Pre,Button,Svg,Text,style,children,prop,state,onClick,toDstr,fromDstr
+import {style,children,prop,state,onClick,toDstr,fromDstr
 } from './hooks'
 import {styleStringToObj as s} from './style-string-to-obj'
 import {plog,pipe,get,oo,has,cond,is,ma,flatMap,pget} from './utils';
@@ -12,11 +12,11 @@ const ratesToObjs = ({Given_Heart_Rate,Predicted_Heart_Rate})=>
   [...Given_Heart_Rate,...Predicted_Heart_Rate].map((r,i)=>({name:i,[i>=Given_Heart_Rate.length?'Predicted_Heart_Rate':'Given_Heart_Rate']:r}));
 
 
-const DataMain = pipe(useHeartRateQuery({summary_date:"2018-11-05",steps:20}),cond(
+export const DataMain = pipe(useHeartRateQuery({summary_date:"2018-11-05",steps:20}),cond(
   [isLoading,x=><div>Loading...</div>],
-  [isError,x=><div>x</div>],
-  [isData,({heartRatePredictions:[{rates:Predicted_Heart_Rate,history:{rates:Given_Heart_Rate}}]})=>
-    <LineChart width={window.innerWidth} height={600} data={ratesToObjs({Given_Heart_Rate,Predicted_Heart_Rate})} margin={{top:5, right:20, bottom:5, left:0}}>
+  [isError,({errors})=><pre>{errors}</pre>],
+  [isData,({data:{heartRatePredictions:[{rates:Predicted_Heart_Rate,history:{rates:Given_Heart_Rate}}]}})=>
+    <LineChart width={window.innerWidth} height={window.innerWidth*.5} data={ratesToObjs({Given_Heart_Rate,Predicted_Heart_Rate})} margin={{top:5, right:20, bottom:5, left:0}}>
       <Line type="monotone" dataKey="Given_Heart_Rate" stroke={'#42A5F5'} />
       <Line type="monotone" dataKey="Predicted_Heart_Rate" stroke={'#42A5F5'} strokeDasharray="5 5" />
       <CartesianGrid stroke="#ccc" strokeDasharray="2 2"/>

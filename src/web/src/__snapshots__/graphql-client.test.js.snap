@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useHeartRateQuery hook renders correct data 1`] = `
+Object {
+  "heartRatePredictions": Array [
+    Object {
+      "__typename": "HeartRateList",
+      "bedtime_start": "1970-01-01T00:00:30.013Z",
+      "history": Object {
+        "__typename": "HeartRateList",
+        "rates": Array [
+          80,
+          80,
+          79,
+          78,
+          79,
+          80,
+          80,
+          78,
+          79,
+          79,
+        ],
+      },
+      "rates": Array [
+        77,
+        77,
+        76,
+        76,
+        76,
+        76,
+        76,
+        76,
+        76,
+        76,
+        76,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+      ],
+      "summary_date": "2018-11-05_ml_model_foo",
+    },
+  ],
+}
+`;
