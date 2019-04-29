@@ -25,9 +25,9 @@ describe('useHeartRateQuery hook', () => {
   it('renders correct data', async () => {
 
     const {waitForNextUpdate,result,unmount} = renderHook(()=>
-      useHeartRateQuery({summary_date:"2018-11-05",steps:20})({}));
+      useHeartRateQuery({summary_date:"2018-11-06",steps:20})({}));
     expect(result.current.loading).toBe(true);
-    await act(()=>waitForNextUpdate())
+    await act(waitForNextUpdate)
     expect(result.current.loading).toBe(false);
     expect(result.current.data).toMatchSnapshot();
     unmount();

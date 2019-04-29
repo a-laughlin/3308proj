@@ -50,11 +50,7 @@ client.writeData({data:{}})
 // options from https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.watchQuery
 export const getUseWatchQuery = (options={})=>{
   const obs = client.watchQuery(options);
-  const initial = {data:{},loading:true};
-  return function useWatchQuery(p){
-    const queryResult = useObservable(obs,initial);
-    return queryResult
-  }
+  return function useWatchQuery(props){return useObservable(obs,{data:{},loading:true});}
 }
 
 export const isLoading = x=>x.loading;
@@ -72,6 +68,5 @@ export const useHeartRateQuery = variables=>getUseWatchQuery({
       }
     }
   }`,
-  fetchPolicy:'cache-first',
   variables,
 });
