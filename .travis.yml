@@ -2,7 +2,7 @@ matrix:
   include:
     - language: python
       dist: xenial
-      node_js: lts/*
+      node_js: 10.15
       python: 3.7
       cache:
         pip: true
