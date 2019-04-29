@@ -28,29 +28,32 @@ const typeDefs = gql`
 `;
 
 // resolvers get the data for responses
+const logAndThrow = (msg='')=>e=>{console.log('ERROR: '+msg);console.error(e); throw e;}
 const resolvers = {
   Query: {
     // heartRateList: (parent, {summary_date}={}, context, info) =>readSleeps().then(sleep=>sleep[summary_date]),
     heartRatePredictions: (parent, {summary_date=0, steps=3, model_id='ml_model_foo'}={}, context, info) =>{
-      const stepDate = (date,steps=1,freq=30000)=> new Date((+date||Date.parse(date))+steps*freq);
       return readSleeps()
-      .then(sleeps=>sleeps[summary_date])
-      .then(sleep=>{
+      .catch(logAndThrow('resolvers.Query.heartRatePredictions.readSleeps'))
+      .then(({[summary_date]:sleep})=>{
+        if (!sleep) throw new Error(`No data for date ${summary_date}`);
         return readRatesPrediction({ rates:sleep.rates, steps, model_id })
+        .catch(logAndThrow('resolvers.Query.heartRatePredictions.readSleeps.readRatesPrediction'))
         .then(rates=>[{
           // select a subset of the actual sleep data object to return as a prediction
           // // add any additional properties we need for classification here
           // // e.g.,
           // // score:sleep.score,
           summary_date:`${summary_date}_${model_id}`,
-          bedtime_start:stepDate(sleep.bedtime_end,1).toISOString(),
-          bedtime_end:stepDate(sleep.bedtime_end,steps+1).toISOString(),
+          bedtime_start:sleep.bedtime_end,
+          bedtime_end:sleep.bedtime_end,
           history:sleep,
           freq:30000,
           rates:rates,
           prediction_model_id:model_id
-        }]);
+        }])
       })
+      .catch(logAndThrow('resolvers.Query.heartRatePredictions end'))
     }
   }
 };
