@@ -22,7 +22,7 @@
   "cacheDirectories": [
     "src/api/node_modules",
     "src/web/node_modules",
-    "node_modules"
+    "./node_modules"
   ],
   "dependencies": {
     "concurrently": "^4.1.0"
