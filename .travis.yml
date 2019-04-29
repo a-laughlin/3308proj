@@ -5,17 +5,19 @@ matrix:
       node_js: lts/*
       python: 3.7
       cache:
+        pip: true
         directories:
           - src/web/node_modules
           - src/api/node_modules
+          - node_modules
       install:
         - . setup.sh
       script:
-        - python3 build.py test all
+        - python src/ml/ml_utils_test.py && yarn test
 
 notifications:
   slack:
-    on_success: always
+    on_success: false
     on_failure: always
     on_pull_requests: false
     rooms:
