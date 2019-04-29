@@ -16,8 +16,9 @@ ml.readRatesPrediction = ({rates=[],steps=3,model_id='ml_model_foo'}={})=>{
     // depends on when/how/why we create new models. May vary if we add users
     ]);
     stderr.on('data', e=>{
-      console.error(e);
-      reject(e);
+      console.log('ERROR: readRatesPrediction');
+      console.error(e.toString());
+      reject(e.toString());
     });
     stdout.on('data', rates=>resolve(JSON.parse(rates)));
   })
