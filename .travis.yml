@@ -2,16 +2,15 @@ matrix:
   include:
     - language: python
       dist: xenial
-      node_js: lts/*
+      node_js: 10.15.3
       python: 3.7
       cache:
         pip: true
         directories:
           - src/web/node_modules
           - src/api/node_modules
-          - node_modules
+          - ./node_modules
       install:
-        - nvm use lts/*
         - . setup.sh
       script:
         - python src/ml/ml_utils_test.py && yarn test
