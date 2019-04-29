@@ -3,7 +3,7 @@ import numpy as np
 import torch
 
 import ml_utils
-import RNN
+import Models
 
 if __name__ == '__main__':
 
@@ -12,5 +12,7 @@ if __name__ == '__main__':
 
     y = ml_utils.parse_input_file(train_array_file)
 
-    model = ml_utils.train(y)
+    model = Models.RNN(1, 32, 1)
+
+    ml_utils.train(model, y)
     ml_utils.saveModel(model, output_model_file)
