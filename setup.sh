@@ -20,10 +20,14 @@ elif [[ $(python3 --version) != *3.7.* ]]; then
   echo "           then re-run '. setup.sh'";
 else
   # install API dependencies
+  yarn; # install root dependencies
+
   builtin cd src/api && yarn && builtin cd -; # install api dependencies
 
   # install web ui dependencies
   builtin cd src/web && yarn && builtin cd -; # install api dependencies
+
+
   # install torch ml dependencies
   if [[ $((python3 -c "import torch") 2>&1 | xargs echo) ]]; then # torch not installed
     pip3 install numpy
@@ -40,49 +44,15 @@ else
   if [[ $CI ]]; then # continuous integration server
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
-    echo "building src/web/build for heroku deployment";
-    cd src/web && yarn build && cd -
+    echo "running on heroku";
   else #dev
-    # git configuration
-
+    # git configuration for developer project flow
+    branchName=$(git rev-parse --abbrev-ref HEAD)
     ginfo=$(git status -sb | head -n1) # outputs ## <branchname>...origin/master [ahead 3]
-    [[ $ginfo = *"master..."* ]] && echo "WARNING: on master branch - create a new branch like 'git checkout -b $USER' and re-run this script" && exit 1;
+    [[ $branchName = "master" ]] && echo "WARNING: on master branch - create a new branch like 'git checkout -b $USER' and re-run this script" && exit 1;
     [[ $ginfo = *"behind"* ]] && echo "WARNING: git pull needed, then re-run this script" && exit 1
     [[ $ginfo != *"origin/master"* ]] && git branch --set-upstream-to origin/master; # ensure git always pulls from origin master on this branch
     [[ $( git config push.default ) != current ]] && git config push.default current;
-
-    # set up aliases for convenience (effectively in place of makefile)
-    alias cdroot="builtin cd $PWD";
-    alias cdapi="builtin cd $PWD/src/api";
-    alias cdml="builtin cd $PWD/src/ml";
-    alias cdweb="builtin cd $PWD/src/web/src";
-
-    alias testroot='cdroot && python3 build.py test';
-    alias testapi='cdroot && python3 build.py test api';
-    alias testml='cdroot && python3 build.py test ml';
-    alias testweb='cdroot && python3 build.py test web';
-
-    alias runapi="(cd src && node api/api.js && cd -)";
-    # ml doesn't start a server
-    alias runweb='(trap "kill 0" SIGINT; (cdweb && yarn start && cd -) & runapi)';
-
-    alias buildweb='cdweb && yarn build && cd -';
-
-    alias ppull='cdroot && git pull';
-    alias ppush='cdroot && [[ "$(git pull)" = "Already up to date." ]] && testroot && git push && open "https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)"';
-
-    if [[ $(command -v cdroot) ]]; then
-      echo "";
-      echo "3308 Project aliases set";
-      echo "git    :    ppull ppush";
-      echo "navigation: cdroot cdapi cdml cdweb";
-      echo "testing:    testroot testapi testml testweb";
-      echo "running:    runapi starts the graphql server on localhost:4000";
-      echo "running:    runweb calls runapi and starts the web server on localhost:4000";
-      echo "stopping:   ctrl+c cancels runapi and runweb";
-    else
-      echo "WARNING: pipenv likely ran in a subshell instead of a user shell, so aliases not set."
-      echo "NEXT STEP! run setup with '. setup.sh' or 'source setup.sh' to set aliases correctly"
-    fi
+    echo "git configuration set to pull from origin master into ${branchName}";
   fi
 fi

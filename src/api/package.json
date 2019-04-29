@@ -8,7 +8,9 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "start": "node api.js"
+    "start": "node api.js",
+    "dev": "nodemon api.js",
+    "oura-to-sql": "cd datasource-apis && node -p \"require('./sqlite').write_oura_migrations(require('./oura_2019-04-28T18-05-30.json'))\""
   },
   "dependencies": {
     "apollo-server": "^2.4.8",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "apollo-server-testing": "^2.4.8",
-    "jest": "^24.7.1"
+    "jest": "^24.7.1",
+    "lodash": "^4.17.11"
   }
 }

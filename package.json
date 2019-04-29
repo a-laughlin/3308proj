@@ -4,17 +4,27 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "10.15",
+    "node": "10.15.3",
     "yarn": "1.15"
   },
   "main": "src/api/api.js",
   "scripts": {
-    "heroku-prebuild": "./setup.sh",
-    "start": "(cd src && node api/api.js && cd -)",
-    "heroku-postbuild": "echo This runs afterwards."
+    "heroku-prebuild": "(cd src/web && yarn build && cd -)",
+    "heroku-postbuild": "echo This runs afterwards.",
+    "start": "(cd src/api && node api.js && cd -)",
+    "test-ml": "python src/ml/ml_utils_test.py",
+    "test": "concurrently --kill-others --success 'first' -- \"(cd src/web && yarn test --no-watch)\" \"(cd src/api && node api.js)\"",
+    "update-test-snapshots": "concurrently --kill-others --success 'first' -- \"(cd src/web && yarn test -u --no-watch)\" \"(cd src/api && node api.js)\"",
+    "dev": "concurrently --names UItest,API,UI --kill-others --handle-input --default-input-target UItest -- '(cd src/web && yarn test --watch)' '(cd src/api && yarn dev)' '(cd src/web && yarn dev)'",
+    "pull": "git pull",
+    "push": "git pull && yarn run test && git push && open \"https://github.com/a-laughlin/3308proj/pull/new/$(git rev-parse --abbrev-ref HEAD)\""
   },
   "cacheDirectories": [
     "src/api/node_modules",
-    "src/web/node_modules"
-  ]
+    "src/web/node_modules",
+    "./node_modules"
+  ],
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
 }
