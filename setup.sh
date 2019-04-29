@@ -19,14 +19,6 @@ elif [[ $(python3 --version) != *3.7.* ]]; then
   echo "NEXT STEP! ensure python3 points to a version of python 3.7.x";
   echo "           then re-run '. setup.sh'";
 else
-  # install API dependencies
-  yarn; # install root dependencies
-
-  builtin cd src/api && yarn && builtin cd -; # install api dependencies
-
-  # install web ui dependencies
-  builtin cd src/web && yarn && builtin cd -; # install api dependencies
-
 
   # install torch ml dependencies
   if [[ $((python3 -c "import torch") 2>&1 | xargs echo) ]]; then # torch not installed
@@ -41,10 +33,21 @@ else
     fi
   fi
 
+  # install root dependencies
+  yarn;
+
+  # install API dependencies
+  builtin cd src/api && yarn && builtin cd -; 
+
+  # install web ui dependencies
+  builtin cd src/web && yarn && builtin cd -;
+
+
   if [[ $CI ]]; then # continuous integration server
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku";
+    cd src/web && yarn build && cd -;
   else #dev
     # git configuration for developer project flow
     branchName=$(git rev-parse --abbrev-ref HEAD)
