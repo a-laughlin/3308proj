@@ -3,7 +3,7 @@ const express = require('express')
 const app = express();
 
 server.applyMiddleware({ app, path: '/graphql' });
-app.use(express.static(`${__dirname}/../web/build`))
+app.use(express.static(`../web/build`))
   .get('/', (req, res) => res.render('/index'))
 
 
