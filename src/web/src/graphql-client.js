@@ -6,14 +6,13 @@ import {pipe,cond,renameProps,ife,isString} from './utils';
 /**
  * the Apollo client handles data caching+exchange with the Apollo graphql server
  */
-export const uri = process.env.NODE_ENV==='production'?
-  document.location.host :
-  'http://localhost:4000';
 export {gql};
 
-export const client = new ApolloClient({
-  uri:uri+'/graphql'
-});
+export const uri = process.env.NODE_ENV==='production'?
+  '/graphql' :
+  'http://localhost:4000/graphql';
+
+export const client = new ApolloClient({uri});
 
 // client.defaultOptions
 
