@@ -9,7 +9,7 @@
   },
   "main": "src/api/api.js",
   "scripts": {
-    "heroku-prebuild": ".setup.sh; cd src/web; yarn build; cd -;",
+    "heroku-prebuild": "./setup.sh",
     "heroku-postbuild": "echo This runs afterwards.",
     "start": "(cd src/api && node api.js && cd -)",
     "test-ml": "python src/ml/ml_utils_test.py",

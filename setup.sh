@@ -31,6 +31,8 @@ else
       # note, using pip3 to intall torch, even in pipenv, since pipenv had issues installing wheels directly
       pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp37-cp37m-linux_x86_64.whl;
     fi
+  else
+    echo "torch already installed";
   fi
 
   # install root dependencies
@@ -47,6 +49,7 @@ else
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku";
+    cd src/web && yarn build && cd -;
   else #dev
     # git configuration for developer project flow
     branchName=$(git rev-parse --abbrev-ref HEAD)
