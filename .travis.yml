@@ -11,7 +11,7 @@ matrix:
           - src/api/node_modules
           - ./node_modules
       install:
-        - nvm use 10.15.3 && . setup.sh
+        - nvm use 10.15.3 && yarn && ./setup.sh
       script:
         - python src/ml/ml_utils_test.py && yarn test
 
