@@ -3,8 +3,8 @@ const express = require('express')
 const app = express();
 
 server.applyMiddleware({ app, path: '/graphql' });
-app.use(express.static(`${__dirname}/../web/build`)) // serves all files in dir
-  .get('/', (req, res) => res.render('/index'))
+app.use(express.static(`${__dirname}/../web/build`)); // serves all files in dir
+  // .get('/', (req, res) => res.render('/index'))
 
 
 const apiArgs = {
