@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "10.15",
+    "node": "10.15.3",
     "yarn": "1.15"
   },
   "main": "src/api/api.js",
