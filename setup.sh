@@ -37,7 +37,7 @@ else
   yarn;
 
   # install API dependencies
-  builtin cd src/api && yarn && builtin cd -; 
+  builtin cd src/api && yarn && builtin cd -;
 
   # install web ui dependencies
   builtin cd src/web && yarn && builtin cd -;
@@ -47,7 +47,6 @@ else
     echo "running on travis"
   elif [[ $DYNO ]]; then # heroku
     echo "running on heroku";
-    cd src/web && yarn build && cd -;
   else #dev
     # git configuration for developer project flow
     branchName=$(git rev-parse --abbrev-ref HEAD)

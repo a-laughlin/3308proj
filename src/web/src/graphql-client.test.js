@@ -4,17 +4,7 @@ import ReactDOM from 'react-dom';
 import {act} from 'react-testing-library';
 import { useState } from 'react';
 import { renderHook } from 'react-hooks-testing-library';
-import { useHeartRateQuery,uri,client,gql } from './graphql-client';
-// describe('useStateExample', () => {
-//   it('uses state', () => {
-//     // const {result,unmount,waitForNextUpdate} = renderHook(() => useState('foo'));
-//     const {result,waitForNextUpdate,unmount} = renderHook(() => useState('foo'));
-//     expect(result.current[0]).toBe('foo')
-//     act(() => result.current[1]('bar'))
-//     expect(result.current[0]).toBe('bar')
-//     // obj.unmount(); // only necessary with useffect
-//   })
-// });
+import { useHeartRateQuery } from './graphql-client';
 
 // current (any) - the return value of the callback function
 // error (Error) - the error that was thrown if the callback function threw an error during rendering
@@ -34,3 +24,14 @@ describe('useHeartRateQuery hook', () => {
   });
   // need error test now that tests are working
 });
+
+// describe('useStateExample', () => {
+//   it('uses state', () => {
+//     // const {result,unmount,waitForNextUpdate} = renderHook(() => useState('foo'));
+//     const {result,waitForNextUpdate,unmount} = renderHook(() => useState('foo'));
+//     expect(result.current[0]).toBe('foo')
+//     act(() => result.current[1]('bar'))
+//     expect(result.current[0]).toBe('bar')
+//     // obj.unmount(); // only necessary with useffect
+//   })
+// });
