@@ -1,8 +1,7 @@
 import React,{createElement} from 'react';
 import ApolloClient, { gql } from "apollo-boost";
 import {useObservable} from './hooks';
-import {pipe,cond,renameProps,ife,isString} from './utils';
-// import {envs} from '../../../envs';
+
 /**
  * the Apollo client handles data caching+exchange with the Apollo graphql server
  */

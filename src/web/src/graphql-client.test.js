@@ -13,7 +13,6 @@ import { useHeartRateQuery } from './graphql-client';
 // unmount (function()) - function to unmount the test component, commonly used to trigger cleanup effects for useEffect hooks.
 describe('useHeartRateQuery hook', () => {
   it('renders correct data', async () => {
-
     const {waitForNextUpdate,result,unmount} = renderHook(()=>
       useHeartRateQuery({summary_date:"2018-11-06",steps:20})({}));
     expect(result.current.loading).toBe(true);

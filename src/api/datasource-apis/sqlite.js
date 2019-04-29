@@ -21,8 +21,7 @@ sqlite.readSleeps = withLoadedDb(db=>
     db.all(`select summary_date, bedtime_start, bedtime_end from "days"`)
   ])
   .then(([minutes,days])=>{
-    const minutes_by_summary_date = minutes.reduce((acc,min)=>{
-      const {summary_date, rates} = min;
+    const minutes_by_summary_date = minutes.reduce((acc,{summary_date, rates})=>{
       acc[summary_date] || (acc[summary_date] = [])
       acc[summary_date].push(rates);
       return acc;
@@ -119,7 +118,7 @@ const tables = {
     {oura_key:"rmssd_5min",map_schema:()=>'"rmssd_5min" INTEGER',
       map_val:identity,},
     {oura_key:"hypnogram_5min",map_schema:()=>'"hypnogram_5min" INTEGER',
-      map_val:v=>v.split('').map(i=>+i)},
+      map_val:(hypnogram_5min,sleep)=>sleep.hr_5min.map(_=>(+(hypnogram_5min[0])||0))},
   ]
 };
 
