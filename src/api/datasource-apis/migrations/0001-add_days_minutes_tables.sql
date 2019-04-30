@@ -1,6 +1,5 @@
 -- Up
 DROP TABLE IF EXISTS days;
-DROP TABLE IF EXISTS minutes;
 CREATE TABLE days (
   "summary_date" TEXT PRIMARY KEY,
   "restless" INTEGER,
@@ -10,7 +9,6 @@ CREATE TABLE days (
   "onset_latency" INTEGER,
   "hr_lowest" INTEGER,
   "score_deep" INTEGER,
-  "rmssd" INTEGER,
   "total" INTEGER,
   "period_id" INTEGER,
   "bedtime_start_delta" INTEGER,
@@ -35,7 +33,7 @@ CREATE TABLE days (
   "temperature_delta" REAL,
   "score_rem" INTEGER
 );
-
+DROP TABLE IF EXISTS minutes;
 CREATE TABLE minutes (
   "minute" TEXT PRIMARY KEY,
   "summary_date" TIMESTAMP,
@@ -45,6 +43,5 @@ CREATE TABLE minutes (
 );
 
 -- Down
-
-DROP TABLE days;
-DROP TABLE minutes;
+DROP TABLE IF EXISTS days;
+DROP TABLE IF EXISTS minutes;

@@ -7,4 +7,6 @@ python_version = "3.7"
 
 [dev-packages]
 matplotlib="==3.0.3"
-# [scripts]
+
+[scripts]
+test="python src/ml/ml_utils_test.py"

@@ -1,18 +1,17 @@
-/* eslint-disable no-unused-vars */
 import React,{createElement} from 'react';
 import ApolloClient, { gql } from "apollo-boost";
 import {useObservable} from './hooks';
-import {pipe,cond,renameProps,ife,isString} from './utils';
 
 /**
  * the Apollo client handles data caching+exchange with the Apollo graphql server
  */
+export {gql};
 
-const {protocol,hostname} = document.location;
+export const uri = process.env.NODE_ENV==='production'?
+  '/graphql' :
+  'http://localhost:4000/graphql';
 
-export const client = new ApolloClient({
-  uri:'/graphql'
-});
+export const client = new ApolloClient({uri});
 
 // client.defaultOptions
 
@@ -46,23 +45,15 @@ client.writeData({data:{}})
 /** networkStatus from query responses
  * https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts
  */
-
 // options from https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.watchQuery
 export const getUseWatchQuery = (options={})=>{
   const obs = client.watchQuery(options);
-  const initial = {data:{},loading:true};
-  return function useWatchQuery(p){
-    const queryResult = useObservable(obs,initial);
-    if(queryResult.loading) return 'loading';
-    if(queryResult.error) return new Error(queryResult.error);
-    if(queryResult.errors) return new Error(queryResult.errors);
-    return queryResult.data;
-  }
+  return function useWatchQuery(props){return useObservable(obs,{data:{},loading:true});}
 }
 
-export const isLoading = x=>x==='loading';
-export const isError = x=> x instanceof Error;
-export const isData = x=> !isLoading(x) && !isError(x);
+export const isLoading = x=>x.loading;
+export const isError = x=>x.errors && x.errors.length;
+export const isData = x=>!isLoading(x) && !isError(x);
 
 export const useHeartRateQuery = variables=>getUseWatchQuery({
   query:gql`query ($summary_date: ID!,$steps:Int,$model_id: ID){
@@ -75,6 +66,5 @@ export const useHeartRateQuery = variables=>getUseWatchQuery({
       }
     }
   }`,
-  fetchPolicy:'cache-and-network',
   variables,
 });

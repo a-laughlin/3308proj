@@ -3,3 +3,4 @@ __pycache__/
 secrets.py
 *.log
 node_modules
+oura_*.json
