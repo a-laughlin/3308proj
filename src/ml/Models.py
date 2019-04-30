@@ -71,7 +71,7 @@ class AbstractModel(nn.Module):
             pass
 
 
-    def predict(self, y, future = 50, plot = True):
+    def predict(self, y, future = 50):
 
         hidden_states = self.initHidden()
 
