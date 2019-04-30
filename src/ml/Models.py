@@ -26,7 +26,7 @@ class AbstractModel(nn.Module):
         train_input, train_target = y[:-1].view(-1,1,1), y[1:]
 
         try:
-            for epoch in range(epochs):
+            for epoch in range(1, epochs + 1):
 
                 hidden_states = self.initHidden()
 
@@ -62,6 +62,7 @@ class AbstractModel(nn.Module):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+
 
 
             self.trained = True
@@ -139,7 +140,7 @@ class LSTM(AbstractModel):
                 Variable(torch.randn(self.batch_size, self.hidden_size)))
 
 
-class GRU(nn.Module):
+class GRU(AbstractModel):
 
     def __init__(self, input_size, hidden_size, output_size, batch_size = 1):
         super(GRU, self).__init__()
