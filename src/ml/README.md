@@ -12,7 +12,7 @@ output_dimension = 1
 model = Models.RNN(input_dimension, hidden_dimension, output_dimension)
 ```
 
-Each model inherits from the AbstractRNN class, which defines the mytrain and predict methods that are common for each RNN variant.
+Each model inherits from the AbstractModel class, which defines the mytrain and predict methods that are common for each RNN variant.
 
 Currently available models include: Recurrent Neural Network ([RNN](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)), Long Short-Term Memory Network [LSTM](https://colah.github.io/posts/2015-08-Understanding-LSTMs/), and Gated Reccurent Unit ([GRU](https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be).
 
