@@ -67,6 +67,8 @@ optional arguments:
 ```
 As you can see, it requires a saved model (.pt). 
 
+The predicted output is directed to stdout (you should see it in your terminal if you run ```python predict.py```).
+
 ## Testing
 Testing can be performed by running ```./ml_utils_test.py``` on the command line.
 ## References
