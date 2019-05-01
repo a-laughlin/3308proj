@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import json
 import os
 import numpy as np
 import torch
 import unittest
 
 import ml_utils
+import Models
 
 class ml_utils_test(unittest.TestCase):
 
@@ -22,22 +24,38 @@ class ml_utils_test(unittest.TestCase):
 
         y_train, y_test = y[:cls.npoints], y[cls.npoints-1:]
 
-        cls.trainY = torch.Tensor(y_train).view(-1,1)
-        cls.testY = torch.Tensor(y_test).view(-1,1)
+        cls.trainY = y_train
+        cls.testY = y_test
 
-        # Train a model and save it
-        cls.trained_model = ml_utils.train(cls.trainY, epochs = 300)
+        cls.input_file = 'input_test.json'
 
+        if os.path.exists(cls.input_file):
+            os.remove(cls.input_file)
+
+        with open(cls.input_file, 'w') as f:
+            json.dump(list(cls.trainY), f)
+
+        cls.model = Models.RNN(1, 32, 1)
         cls.output_file = 'model_test.pt'
-        ml_utils.saveModel(cls.trained_model, cls.output_file)
+
+        if os.path.exists(cls.output_file):
+            os.remove(cls.output_file)
+
+        ml_utils.train(cls.model, ml_utils.parse_input_list(y_train),
+                        lr = 0.003, epochs = 300, teacher_forcing_ratio = 1, verbose = False)
+
+        ml_utils.saveModel(cls.model, cls.output_file)
 
     @classmethod
     def tearDownClass(cls):
         if os.path.exists(cls.output_file):
             os.remove(cls.output_file)
 
+        if os.path.exists(cls.input_file):
+            os.remove(cls.input_file)
+
     def test_train(self):
-        self.assertTrue(self.trained_model.trained == True)
+        self.assertTrue(self.model.trained == True)
 
     def test_goodModelFileName(self):
 
@@ -48,6 +66,29 @@ class ml_utils_test(unittest.TestCase):
 
         self.assertEqual(actualVals, expectedVals)
 
+    def test_goodInputFileName(self):
+
+        files = ['somethingjson', '.json', "", "json", "good.json", self.input_file]
+
+        expectedVals = [0, 0, 0, 0, 1, 1]
+        actualVals = list(map(ml_utils.goodInputFileName, files))
+
+        self.assertEqual(actualVals, expectedVals)
+
+    def test_parse_input_list(self):
+
+        expectedParsedList = torch.Tensor(self.trainY).view(-1, 1)
+        returnedParsedList = ml_utils.parse_input_list(self.trainY)
+
+        self.assertTrue(torch.all(expectedParsedList.eq(returnedParsedList)))
+
+    def test_parse_input_file(self):
+
+        expectedParsedFile = torch.Tensor(self.trainY).view(-1, 1)
+        returnedParsedFile = ml_utils.parse_input_file(self.input_file)
+
+        self.assertTrue(torch.all(expectedParsedFile.eq(returnedParsedFile)))
+
     def test_saveModel(self):
         self.assertTrue(os.path.exists(self.output_file))
 
@@ -55,12 +96,14 @@ class ml_utils_test(unittest.TestCase):
         loaded_model = ml_utils.loadModel(self.output_file)
 
         # Check to see if the loaded model has the same parameters
-        for i, (p1, p2) in enumerate(zip(loaded_model.parameters(), self.trained_model.parameters())):
+        for i, (p1, p2) in enumerate(zip(loaded_model.parameters(), self.model.parameters())):
             self.assertLessEqual(p1.data.ne(p2.data).sum(), 0)
 
     def test_predict(self):
-        predY = ml_utils.predict(self.trained_model, self.trainY, self.nfuture)
-        np.testing.assert_almost_equal(predY.tolist(), self.testY.tolist(), 2)
+
+
+        predY = ml_utils.predict(self.model, ml_utils.parse_input_list(self.trainY), self.nfuture)
+        np.testing.assert_almost_equal(torch.flatten(predY).tolist(), self.testY, 1)
 
 
 if __name__ == '__main__':
