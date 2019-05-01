@@ -46,7 +46,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 │   │   ├── package.json                        api project dependencies/scripts
 │   ├── ml                                      pytorch machine learning
 │   │   ├── README.md                           machine learning documentation
-│   │   ├── RNN.py
+│   │   ├── Models.py
 │   │   ├── ml_utils.py
 │   │   ├── ml_utils_test.py
 │   │   ├── predict.py
