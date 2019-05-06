@@ -13,7 +13,7 @@ const ratesToObjs = ({Given_Heart_Rate,Predicted_Heart_Rate})=>
 
 
 export const DataMain = pipe(useHeartRateQuery({summary_date:"2018-11-05",steps:20}),cond(
-  [isLoading,x=><div>Loading...</div>],
+  [isLoading,x=><div>Loading....</div>],
   [isError,({errors})=><pre>{errors}</pre>],
   [isData,({data:{heartRatePredictions:[{rates:Predicted_Heart_Rate,history:{rates:Given_Heart_Rate}}]}})=>
     <LineChart width={window.innerWidth} height={window.innerWidth/3} data={ratesToObjs({Given_Heart_Rate,Predicted_Heart_Rate})} margin={{top:5, right:20, bottom:5, left:0}}>
