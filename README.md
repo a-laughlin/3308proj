@@ -238,10 +238,10 @@ meeting_notes (taken during meetings, like sprint retrospective/planning)
   - CI tests passing (once implemented)
 
 ## Dev Process (i.e., Git Flow, vs Trunk-Based Development)
-### Code Contribution Flow
+### Code Contribution Flow  
 Mostly trunk-based, with single individual branches to work in.
 Code Reviews are optional so we don't introduce unnecessary delays from async reviews.
-![image](https://user-images.githubusercontent.com/1176527/52918815-b6937880-32b8-11e9-8663-8c03599be61f.png)
+![image](https://user-images.githubusercontent.com/1176527/57257383-7c638880-7016-11e9-9867-4460385ed708.png)
 ### Build Process Flow
 ![image](https://user-images.githubusercontent.com/1176527/52918848-4e916200-32b9-11e9-9f37-df9837c098ac.png)
 
