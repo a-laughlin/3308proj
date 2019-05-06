@@ -13,6 +13,7 @@
     "heroku-postbuild": "echo This runs afterwards.",
     "start": "(cd src/api && node api.js && cd -)",
     "test-ml": "python src/ml/ml_utils_test.py",
+    "setup": "./setup.sh",
     "test": "concurrently --kill-others --success 'first' -- \"(cd src/web && yarn test --no-watch)\" \"(cd src/api && node api.js)\"",
     "update-test-snapshots": "concurrently --kill-others --success 'first' -- \"(cd src/web && yarn test -u --no-watch)\" \"(cd src/api && node api.js)\"",
     "dev": "concurrently --names UItest,API,UI --kill-others --handle-input --default-input-target UItest -- '(cd src/web && yarn test --watch)' '(cd src/api && yarn dev)' '(cd src/web && yarn dev)'",
