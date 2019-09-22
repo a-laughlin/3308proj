@@ -1,18 +1,45 @@
 # Project Title: Heart-a-tracker
 
-![image](https://travis-ci.com/a-laughlin/3308proj.svg?token=VENBQopHKmrYbQjPRHSc&branch=master)
+![image](https://travis-ci.com/a-laughlin/3308proj.svg?token=VENBQopHKmrYbQjPRHSc&branch=master)  
 
 ## Developing
 
+#### Requirements
+```Python  >= 3.7```  
+```Node.js >= 10```  
+```Yarn    >= 1.15```  
+UI built with create-react-app.  
+[UI dependencies](https://github.com/a-laughlin/3308proj/blob/master/src/web/package.json)  
+[Express+GraphQL API Dependencies](https://github.com/a-laughlin/3308proj/blob/master/src/api/package.json)  
+
+
 #### Installing  
 * `git clone git@github.com:a-laughlin/3308proj.git 3308proj`  
-* re-run `. setup.sh` until message `3308 Project aliases set` appears.
+* run `. setup.sh` until `Next Step!` stops appearing. (Installs all dependencies.)  
 
-#### Running the Web + API  
-see `3308 Project aliases set` message for current instructions  
+#### Pulling from Master to your personal branch
+```
+git checkout <your branchname>
+yarn pull
+```  
+See [Code Contribution Flow](https://github.com/a-laughlin/3308proj#code-contribution-flow) for more details on our flow.  
+
+#### Pushing from your personal branch to your remote branch (to PR master)  
+```yarn push```  
+For development speed and process consistency, this runs all tests locally, pushes to github, and triggers a travis CI build. If all pass, it then opens a new browser tab with PR to master prepopulated.  
+See [Code Contribution Flow](https://github.com/a-laughlin/3308proj#code-contribution-flow) for more details on our flow.  
+
+
+#### Running the Web + API  in dev mode  
+```yarn dev```  
+Starts the API and UI  
+On change, reloads UI/API and re-runs affected UI tests  
+
 
 #### Testing
-see `3308 Project aliases set` message for current automated testing instructions  
+Machine Learning: "yarn test-ml"
+All integration & unit tests ```yarn test```
+Update Jest snapshots "yarn update-test-snapshots" 
 see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) for user acceptance tests  
 
 ## Tech Stack Overview (at V0.2, aka project end)
@@ -22,7 +49,7 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 - ML: [Pytorch](https://pytorch.org/) RNN, LSTM, and ODENet for heart rate predictions.
 - Database: [Sqlite](https://sqlite.org).  
 
-\* For performance, we'd normally use something like nginx or apache to route static file requests, but using express for everything is simpler, and simplicity trumps performance in a learning context.  
+\* For performance, we'd normally use something like nginx or apache to route static file requests, but using express for everything is simpler, and simplicity trumps performance in our context.  
 
 ![image](https://github.com/a-laughlin/3308proj/blob/master/src/web/HeartATrackerTechDiagram.jpg)  
 [Tech Stack Image Source](https://drive.google.com/file/d/14Pxzt_tIRWcwD3xJCAxVa3ltICnrxhy_/view?ts=5cc350d6)
@@ -90,10 +117,10 @@ see [TESTING.md](https://github.com/a-laughlin/3308proj/blob/master/TESTING.md) 
 
 
 # Team member’s names
-> * Chris Powell
 > * Adam Laughlin
 > * Ben Wilson
 > * Brian Solar
+> * Chris Powell
 
 # Vision statement: what would you tell potential customers?
 Predict future heart behavior.
