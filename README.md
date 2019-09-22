@@ -266,8 +266,11 @@ meeting_notes (taken during meetings, like sprint retrospective/planning)
 
 ## Dev Process (i.e., Git Flow, vs Trunk-Based Development)
 ### Code Contribution Flow  
-Mostly trunk-based, with single individual branches to work in.
-Code Reviews are optional so we don't introduce unnecessary delays from async reviews.
+Mostly trunk-based for speed.  Active development happens in non-changing individual branches to:
+- promote small+frequent commits
+- enable optional code reviews via Github's PR UI
+- revert fast
+
 ![image](https://user-images.githubusercontent.com/1176527/57257383-7c638880-7016-11e9-9867-4460385ed708.png)
 ### Build Process Flow
 ![image](https://user-images.githubusercontent.com/1176527/52918848-4e916200-32b9-11e9-9f37-df9837c098ac.png)
